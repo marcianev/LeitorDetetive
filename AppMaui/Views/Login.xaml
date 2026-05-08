@@ -1,0 +1,307 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:AppMaui.Views"
+    xmlns:vm="clr-namespace:AppMaui.ViewsModels"
+    x:DataType="vm:LoginViewModel"
+    x:Class="AppMaui.Views.Login"
+    BackgroundColor="{StaticResource begeClaro}"
+    Shell.NavBarIsVisible="False">
+
+    <Grid>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="{OnIdiom Phone=0.5*, Desktop=1*}"/>
+            <RowDefinition Height="{OnIdiom Phone=0.5*, Desktop=1*}"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--cabeçalho-->
+        <!--backgrounds do cabeçalho-->
+        <Rectangle x:Name="rtgSuperior" 
+                Grid.ColumnSpan="2"     
+                Fill="{StaticResource azulMedio}" 
+                Stroke="{StaticResource azulMedio}"
+                />
+        <Rectangle x:Name="rtgInferior" 
+                Grid.Row="1" Grid.ColumnSpan="2"  
+                Fill="{StaticResource palhaEscuro}" 
+                Stroke="{StaticResource palhaEscuro}"
+                />
+
+        <!--Logo-->
+        <Image x:Name="imgCabecalho" 
+            Grid.RowSpan="2"       
+            Source="logo.webp" 
+            Style="{StaticResource sImgCabecalho}"
+            />
+
+        <!--titulo-->
+        <Label x:Name="lbTitulo1Sombra1" 
+            Grid.Column="1"            
+            Text="AGÊNCIA DOS JOVENS" 
+            Style="{StaticResource sLbSombra1}"
+            />
+        <Label x:Name="lbTitulo1Sombra2" 
+            Grid.Column="1"           
+            Text="AGÊNCIA DOS JOVENS" 
+            Style="{StaticResource sLbSombra2}"
+            />
+        <Label x:Name="lbTitulo1Sombra3" 
+            Grid.Column="1"    
+            Text="AGÊNCIA DOS JOVENS"
+            Style="{StaticResource sLbSombra3}"    
+            />
+        <Label x:Name="lbTitulo1Sombra4" 
+            Grid.Column="1"            
+            Text="AGÊNCIA DOS JOVENS" 
+            Style="{StaticResource sLbSombra4}"
+            />
+        <Label x:Name="lbTitulo1" 
+            Grid.Column="1"      
+            Text="AGÊNCIA DOS JOVENS" 
+            Style="{StaticResource sLbTitulo}" 
+            />
+        <Label x:Name="lbTitulo2Sombra1" 
+            Grid.Column="1"
+            Grid.Row="1"
+            Text="LEITORES DETETIVES" 
+            Style="{StaticResource sLbSombra1}"
+            />
+        <Label x:Name="lbTitulo2Sombra2" 
+            Grid.Column="1" Grid.Row="1"
+            Text="LEITORES DETETIVES" 
+            Style="{StaticResource sLbSombra2}"
+            />
+        <Label x:Name="lbTitulo2Sombra3" 
+            Grid.Column="1" 
+            Grid.Row="1"
+            Text="LEITORES DETETIVES" 
+            Style="{StaticResource sLbSombra3}"
+            />
+        <Label x:Name="lbTitulo2Sombra4" 
+            Grid.Column="1" 
+            Grid.Row="1"
+            Text="LEITORES DETETIVES" 
+            Style="{StaticResource sLbSombra4}"
+            />
+        <Label x:Name="lbTitulo2"
+            Grid.Column="1"
+            Grid.Row="1"
+            Text="LEITORES DETETIVES"
+            Style="{StaticResource sLbTitulo}"
+            />
+
+        <!--area de conteudo-->
+        <!--formulario login-->
+        <!--borda externa-->
+        <Border x:Name="brdLogin" 
+             Grid.Row="2" 
+             Grid.ColumnSpan="2"
+             Stroke="{StaticResource azulMedio}" 
+             WidthRequest="300"    
+             HeightRequest="300"  
+             Style="{StaticResource sBrdPrincipal}">
+            <Grid>
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="0.7*"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Cabeçalho formulário login-->
+                <Rectangle x:Name="rtgLoginTitulo" 
+                        Grid.ColumnSpan="2"
+                        Fill="{StaticResource azulMedio}" 
+                        Stroke="{StaticResource azulMedio}"
+                        />
+                <Label x:Name="lbLoginTituloSombra1" 
+                    Grid.ColumnSpan="2"
+                    Text="ACESSO À AGÊNCIA" 
+                    VerticalOptions="Center"
+                    TranslationX="{OnIdiom Phone=80, Desktop=15}"
+                    Style="{StaticResource sLbSombra1}" 
+                    />
+                <Label x:Name="lbLoginTituloSombra2" 
+                    Grid.ColumnSpan="2"
+                    Text="ACESSO À AGÊNCIA"
+                    VerticalOptions="Center"
+                    TranslationX="{OnIdiom Phone=80, Desktop=15}"
+                    Style="{StaticResource sLbSombra2}"   
+                    />
+                <Label x:Name="lbLoginTituloSombra3" 
+                    Grid.ColumnSpan="2"
+                    VerticalOptions="Center"
+                    TranslationX="{OnIdiom Phone=81, Desktop=16}"
+                    Text="ACESSO À AGÊNCIA" 
+                    Style="{StaticResource sLbSombra3}"
+                    />
+                <Label x:Name="lbLoginTituloSombra4" 
+                    Grid.ColumnSpan="2"
+                    VerticalOptions="Center"
+                    TranslationX="{OnIdiom Phone=79, Desktop=14}"
+                    Text="ACESSO À AGÊNCIA" 
+                    Style="{StaticResource sLbSombra4}"   
+                    />
+                <Label x:Name="lbLoginTitulo" 
+                    Grid.ColumnSpan="2"
+                    VerticalOptions="Center"
+                    TranslationX="{OnIdiom Phone=80, Desktop=15}"
+                    Text="ACESSO À AGÊNCIA" 
+                    Style="{StaticResource sLbTitulo}"   
+                    />
+
+                <!--label e entry usuario-->
+                <Border x:Name="brdUser"
+                     Grid.Row="1"   
+                     Margin="10,15,0,0" 
+                     Style="{StaticResource sBrdAzul}">
+                    <Label TextColor="{StaticResource begeClaro}"
+                        FontAttributes="Bold" 
+                        Text="Usuário"    
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                     />
+                </Border>
+                <Border Grid.Row="1" 
+                     Grid.Column="1"    
+                     Style="{StaticResource sBrdEntry}">
+                    <Entry x:Name="etrLogin"
+                        Text="{Binding Usuario}"
+                        TextColor="{StaticResource marromEscuro}"/>
+                </Border>
+
+                <!--label e entry de senha-->
+                <Border x:Name="brdSenha" 
+                     Grid.Row="2" 
+                     Margin="10,15,0,0"
+                     Style="{StaticResource sBrdAzul}">
+                    <Label TextColor="{StaticResource begeClaro}"
+                        FontAttributes="Bold" 
+                        Text="Senha"
+                           HorizontalOptions="Center"
+VerticalOptions="Center"
+                        />
+                </Border>
+                <Border Grid.Row="2" 
+                     Grid.Column="1"
+                     Style="{StaticResource sBrdEntry}">
+                    <Entry x:Name="etrSenha"
+                        Text="{Binding Senha}"
+                        TextColor="{StaticResource marromEscuro}"/>
+                </Border>
+                <!--label para mensagem-->
+                <Label x:Name="lbMsm"
+                    Grid.Row="3"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Margin="10,0,0,15"
+                    Text="{Binding Mensagem}"   
+                    TextColor="{StaticResource marromEscuro}"
+                    
+         />
+
+                <!--botão solicitar nova senha-->
+                <Button x:Name="BtnEsqueci" 
+                     Grid.Row="3" 
+                     Grid.ColumnSpan="2"
+                     Margin="10, 0, 10, 10" 
+                     HorizontalOptions="Start"  
+                     Text="Esqueci a senha"
+                     Style="{StaticResource sBtnTransparente}"
+                     Command="{Binding AbrirNovaSenhaCommand}"
+                     />
+
+                <!--botão para cadastrar novo professor-->
+                <Button x:Name="BtnCadProfessor" 
+                     Grid.Row="3" 
+                     Grid.Column="1" 
+                     Margin="10,0,10,10" 
+                     HorizontalOptions="End"  
+                     Text="Novo Professor" 
+                     Style="{StaticResource sBtnTransparente}"
+                     Command="{Binding AbrirCadastroCommand}"                      
+                     />
+
+                <!--botão para primeiro acesso-->
+                <Button x:Name="BtnPrimeiroAcesso" 
+                     Grid.Row="4" 
+                     Grid.ColumnSpan="2" 
+                     Margin="10" 
+                     HorizontalOptions="Start"  
+                     Text="Primeiro Acesso" 
+                     Style="{StaticResource sBtnTransparente}"
+                     Command="{Binding AbrirPrimeiroAcessoCommand}"                      
+                     />
+                <!--botão de entrada-->
+                <Button x:Name="BtnEntrar" 
+                     Grid.Row="4" 
+                     Grid.Column="1"
+                     HorizontalOptions="End"
+                     Text="ENTRAR"
+                     Style="{StaticResource sBtn}"
+                     BackgroundColor="{StaticResource verdeMedio}"     
+                     Command="{Binding EntrarCommand}"
+                     />
+            </Grid>
+        </Border>
+
+        <!--rodapé-->
+        <Rectangle  x:Name="retRoda"  
+                 Grid.Row="4"  
+                 Grid.ColumnSpan="2"  
+                 Fill="{StaticResource azulMedio}" 
+                 Stroke="{StaticResource azulMedio}"
+                 />
+        <Label  Grid.Row="4"
+             Grid.ColumnSpan="2"
+             Text="Devma © 2026" 
+             TextColor="{StaticResource begeClaro}"
+             FontSize="8"
+             HorizontalOptions="Center"/>
+
+        <!--abre a tela de cadastro e alterar senha (overlay) e Primeiro Acesso-->
+        <ContentView            
+         x:Name="cvCadastro"
+         Grid.RowSpan="5" 
+         Grid.ColumnSpan="2"
+         IsVisible="{Binding MostrarCadastro}"
+         InputTransparent="False">
+            <views:CadastroPView 
+             BindingContext="{Binding CadastroPVM}"/>
+        </ContentView>
+
+        <ContentView 
+             x:Name="cvNovaSenha"
+             Grid.RowSpan="5" 
+             Grid.ColumnSpan="2"
+             IsVisible="{Binding MostrarNovaSenha}"
+             InputTransparent="False">
+            <views:NovaSenhaView 
+                 BindingContext="{Binding NovaSenhaVM}"/>
+        </ContentView>
+
+        <ContentView 
+             x:Name="cvPrineiroAcesso"
+             Grid.RowSpan="5" 
+             Grid.ColumnSpan="2"
+             IsVisible="{Binding MostrarPrimeiroAcesso}"
+             InputTransparent="False">
+            <views:PrimeiroAcessoView 
+                 BindingContext="{Binding PrimeiroAcessoVM}"/>
+        </ContentView>
+    </Grid>
+</ContentPage>

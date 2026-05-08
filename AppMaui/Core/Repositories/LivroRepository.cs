@@ -1,0 +1,33 @@
+﻿using AppMaui.Core.Data;
+using AppMaui.Core.Models;
+using SQLite;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AppMaui.Core.Repositories
+{
+    // classe já recebe injeção de dependecia do contexto]
+    public class LivroRepository(DatabaseService context)
+    {
+        //declaração de variavel do contexto recebe conexao
+        private readonly SQLiteAsyncConnection _db = context.Conexao;
+
+        //metodo add
+        public async Task<int> Add(Livro livro) => await _db.InsertAsync(livro);
+
+        //metodo listar
+        public async Task<List<Livro>> GetAll() => await _db.Table<Livro>().ToListAsync();
+
+        //metodo buscar por id
+        public async Task<Livro?> GetById(int id) => await _db.Table<Livro>().Where(l => l.Id == id).FirstOrDefaultAsync();
+
+        //metodo atualizar
+        public async Task<int> Update(Livro livro) => await _db.UpdateAsync(livro);
+
+        //metodo deletar
+        public async Task<int> Delete(Livro livro) => await _db.DeleteAsync<Livro>(livro);
+    }
+}

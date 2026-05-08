@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="ApiBackend/ApiBackend.csproj" Id="a0b924d1-0904-4c1f-8b40-14b1d6c08922" />
+  <Project Path="AppMaui/AppMaui.csproj" Id="1798249e-661e-4196-967a-2a3c772c9493">
+    <Deploy Solution="Debug|*" />
+  </Project>
+  <Project Path="Shared/Shared.csproj" Id="d77d721b-5ce1-440e-bb4f-aa4ffcd9e2b6" />
+</Solution>

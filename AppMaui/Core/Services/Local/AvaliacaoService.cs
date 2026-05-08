@@ -1,0 +1,104 @@
+﻿using AppMaui.Core.Models;
+using AppMaui.Core.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AppMaui.Core.Services.Local
+{
+    public class AvaliacaoService(AvaliacaoRepository _repositorio)
+    {
+        //receve o modelo de avaliação, salva uma avaliação no banco de dados
+
+        public async Task<bool> SalvarAvaliacao(Avaliacao avaliacao)
+        {
+            try
+            {
+                //validações
+                if (avaliacao.Nota < 1 
+                    || avaliacao.Nota > 5 ||
+                    string.IsNullOrEmpty(avaliacao.Comentario) ||
+                    avaliacao.Comentario.Length > 100)
+                    return false;
+                string s = avaliacao.Status.ToString();
+                if (s.Length > 20)
+                    return false;
+
+                await _repositorio.Add(avaliacao);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception ($"Erro ao salvar avaliação: {ex.Message}");
+            }
+        }//fecha método salvar avaliação
+
+        //metodo para listar avaliações
+        public async Task<List<Avaliacao>> ListarAvaliacoes(int turmaId)
+        {
+            try
+            {
+                //validação do id da turma
+                if (turmaId <= 0)
+                    throw new Exception("ID do aluno é inválido.");
+
+                var avaliacoes = await _repositorio.GetByTurma(turmaId);
+                return avaliacoes;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao listar avaliações: {ex.Message}");
+            }
+        }//fim listar
+
+        //metodo para atualizar avaliação
+        public async Task<bool> AtualizarAvaliacao(Avaliacao avaliaca)
+        {
+            try
+            {
+                //validações
+                if (avaliaca.Id <= 0 ||
+                    avaliaca.Nota < 1 || 
+                    avaliaca.Nota > 5 ||
+                    string.IsNullOrEmpty(avaliaca.Comentario) ||
+                    avaliaca.Comentario.Length > 100)
+                    return false;
+                string s = avaliaca.Status.ToString();
+                if (s.Length > 20)
+                    return false;
+
+                await _repositorio.Update(avaliaca);
+                return true;
+                //chamar o metodo de validação automática aqui
+            }
+            catch (Exception ex)
+            {
+                throw new Exception ($"Erro ao atualizar avaliação: {ex.Message}");
+            }
+        }//fecha método atualizar avaliação
+
+        //metodo para deletar avaliação
+        public async Task<bool> DeletarAvaliacao(int id)
+        {
+            try
+            {
+                //validação do id da avaliação
+                if (id <= 0)
+                    return false;
+                var avaliacao = await _repositorio.GetById(id);
+                if (avaliacao == null)
+                    return false;
+
+                await _repositorio.Delete(avaliacao);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception ($"Erro ao deletar avaliação: {ex.Message}");
+            }
+        }//fecha método deletar avaliação      
+
+    }
+}

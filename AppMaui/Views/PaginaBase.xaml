@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMaui.Views.PaginaBase"
+             xmlns:views="clr-namespace:AppMaui.Views"
+             BackgroundColor="{StaticResource begeClaro}"
+             Shell.NavBarIsVisible="False"
+             Title="PaginaBase">
+
+    <Grid>
+    <Grid.RowDefinitions >
+        <!--linha do cabeçaho principal-->
+        <RowDefinition Height="{OnIdiom Phone=0.15*, Desktop=0.3*}"/>
+        <!--linha de conteudo-->
+        <RowDefinition Height="{OnIdiom Phone=1*, Desktop=2.1*}"/>
+        <!--linha de navegação-->
+        <RowDefinition Height="{OnIdiom Phone=0.1*, Desktop=0.3*}"/>
+        <!--linha de rodapé-->
+        <RowDefinition Height="0.05*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+    <!--cabeçalho principal-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{OnIdiom Phone=0.5*, Desktop=0.1*}"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!-- cabeçalho-->
+        <!-- backgrounds do cabeçalho-->
+        <Rectangle x:Name="rtgSuperior" 
+                  Grid.ColumnSpan="2"   
+                  Fill="{StaticResource palhaEscuro}" 
+                  Stroke="{StaticResource palhaEscuro}"
+                  />
+        <Rectangle x:Name="rtgInferior"  
+                  Grid.Row="1" 
+                  Grid.ColumnSpan="2"  
+                  Fill="{StaticResource azulMedio}" 
+                  Stroke="{StaticResource azulMedio}"
+                  />
+
+        <!-- Logo-->
+        <Image x:Name="imgCabecalho" 
+              Grid.RowSpan="2"    
+              Source="professor.webp" 
+              Style="{StaticResource sImgCabecalho}"
+          />
+
+        <!-- titulo-->
+        <Label x:Name="lbTitulo1Sombra1" 
+              Grid.Column="1"   
+              Text="AGÊNCIA DOS JOVENS" 
+              Style="{StaticResource sLbSombra1}"          
+              />
+        <Label x:Name="lbTitulo1Sombra2" 
+              Grid.Column="1"  
+              Text="AGÊNCIA DOS JOVENS" 
+              Style="{StaticResource sLbSombra2}"           
+              />
+        <Label x:Name="lbTitulo1Sombra3" 
+              Grid.Column="1"  
+              Text="AGÊNCIA DOS JOVENS" 
+              Style="{StaticResource sLbSombra3}"            
+              />
+        <Label x:Name="lbTitulo1Sombra4" 
+              Grid.Column="1"     
+              Text="AGÊNCIA DOS JOVENS" 
+              Style="{StaticResource sLbSombra4}"             
+              />
+        <Label x:Name="lbTitulo1" 
+              Grid.Column="1"        
+              Text="AGÊNCIA DOS JOVENS" 
+              Style="{StaticResource sLbTitulo}"           
+              />
+        <Label x:Name="lbTitulo2Sombra1" 
+              Grid.Column="1"
+              Text="LEITORES DETETIVES" 
+              Style="{StaticResource sLbSombra5}"
+              VerticalOptions="End"
+              />
+        <Label x:Name="lbTitulo2Sombra2" 
+              Grid.Column="1"
+              Text="LEITORES DETETIVES" 
+              Style="{StaticResource sLbSombra6}"
+              VerticalOptions="End"
+              />
+        <Label x:Name="lbTitulo2Sombra3" 
+              Grid.Column="1"
+              Text="LEITORES DETETIVES" 
+              Style="{StaticResource sLbSombra7}"
+              VerticalOptions="End"
+              />
+        <Label x:Name="lbTitulo2Sombra4" 
+              Grid.Column="1"
+              Text="LEITORES DETETIVES" 
+              Style="{StaticResource sLbSombra8}"
+              VerticalOptions="End"
+              />
+        <Label x:Name="lbTitulo2" 
+              Grid.Column="1"
+              Text="LEITORES DETETIVES" 
+              Style="{StaticResource sLbTitulo1}"
+              VerticalOptions="End"
+              />
+
+        <!-- Sino Notificação-->
+        <Image x:Name="imgSino" 
+              Grid.Column="1"  
+              Margin="15,5" 
+              HorizontalOptions="End"
+              Source="sino.webp" Style="{StaticResource sImgCabecalho}"
+              />
+
+        <!-- Estrela-->
+        <Image x:Name="imgStela" 
+              Grid.Row="1" 
+              Grid.Column="1"  
+              Margin="5" 
+              HorizontalOptions="Start"
+              Source="estrela.webp"
+              Style="{StaticResource sImgCabecalho}"
+              />
+        <Label x:Name="lbProfessor" 
+              Grid.Row="1" 
+              Grid.Column="1"
+              Text="Professor Carlos" 
+              Style="{StaticResource sLbUsuario}"/>
+
+    </Grid>
+
+    <!--View corpo-->
+    <ContentView x:Name="Corpo" Grid.Row="1"/>
+
+    <!--view navegação-->
+    <!-- rodapé-->
+    <Grid Grid.Row="2">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition />
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!-- BOTÃO HOME-->
+        <Rectangle  x:Name="retRoda"  
+                  Grid.Row="2"     
+                  Grid.ColumnSpan="4"
+                  Fill="{StaticResource azulMedio}"
+                  Stroke="{StaticResource azulMedio}"
+                  />
+        <ImageButton x:Name="BtnHome" 
+                   Grid.RowSpan="2"
+                   BackgroundColor="Transparent"
+                   Source="home.webp" 
+                   Margin="10"
+                   />
+        <!-- BOTÃO ALUNOS-->
+        <Border x:Name="brdBtFundo1" 
+              Grid.RowSpan="2"
+              Grid.Column="1"
+              TranslationY="6"
+              Margin="5"
+              Style="{StaticResource sBrdPrincipalSS}"
+              Stroke="{StaticResource palhaMedio}">
+            <Label Padding="5"/>
+        </Border>
+        <ImageButton x:Name="BtnAlunos" 
+                   Grid.RowSpan="2"  
+                   Grid.Column="1" 
+                   Margin="5"
+                   Source="alunos.webp"
+                   TranslationY="-15"                        
+                   />
+        <Border x:Name="brdBtAlunos" 
+              Grid.RowSpan="2"  
+              Grid.Column="1" 
+              Margin="5"
+              TranslationY="6" 
+              VerticalOptions="Center"
+              Padding="0"
+              Style="{StaticResource sBrdAzulSS}"
+              Stroke="{StaticResource palhaMedio}">
+            <Label Text="ALUNOS" 
+                 TextColor="{StaticResource begeClaro}"
+                 HorizontalOptions="Center"/>
+        </Border>
+
+        <!-- BOTÃO TURMAS-->
+        <Border x:Name="brdBtFundo2" 
+              Grid.RowSpan="2"
+              Grid.Column="2"
+              TranslationY="5" 
+              Margin="5"
+              Style="{StaticResource sBrdPrincipalSS}"
+              Stroke="{StaticResource palhaMedio}">
+            <Label Padding="5"/>
+        </Border>
+        <ImageButton x:Name="BtnTurmas" 
+                   Grid.Column="2" 
+                   Grid.RowSpan="2" 
+                   Margin="5"
+                   Source="turmas.webp" 
+                   TranslationY="-10"
+                  />
+        <Border x:Name="brdBtTurmas" 
+              Grid.Column="2" 
+              Grid.RowSpan="2"
+              Margin="5"
+              TranslationY="6" 
+              VerticalOptions="Center"
+              Padding="0"
+              Style="{StaticResource sBrdAzulSS}"
+              Stroke="{StaticResource palhaMedio}">
+            <Label Text="TURMAS" 
+                 TextColor="{StaticResource begeClaro}"
+                 HorizontalOptions="Center"/>
+        </Border>
+
+        <!-- BOTÃO COMENTÁRIOS-->
+        <Border x:Name="brdBtFundo3" 
+              Grid.Column="3" 
+              Grid.RowSpan="2"
+              TranslationY="5" 
+              Margin="5"
+              Style="{StaticResource sBrdPrincipalSS}"
+              Stroke="{StaticResource palhaMedio}">
+            <Label Padding="5"
+     />
+        </Border>
+        <ImageButton x:Name="BtnComentarios" 
+                   Grid.Column="3" 
+                   Grid.RowSpan="2" 
+                   Margin="5"
+                   Source="comentarios.webp"  
+                   TranslationY="-10"
+                   />
+        <Border x:Name="brdBtComentarios" 
+              Grid.Column="3" 
+              Grid.RowSpan="2" 
+              Margin="5"
+              TranslationY="6" 
+              VerticalOptions="Center"
+              Padding="0"
+              Style="{StaticResource sBrdAzulSS}"
+              Stroke="{StaticResource palhaMedio}">
+            <Label Text="COMENTÁRIOS" 
+                 TextColor="{StaticResource begeClaro}" 
+                 Padding="0,3"
+                   HorizontalOptions="Center">
+                <Label.FontSize>
+                    <OnIdiom x:TypeArguments="x:Double"
+                           Phone ="10"
+                           Tablet="12" />
+                </Label.FontSize>
+            </Label>
+        </Border>
+    </Grid>
+
+    <!--view rodapé-->
+    <Grid Grid.Row="3"
+        BackgroundColor="{StaticResource azulMedio}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Text="Devma © 2026" 
+             TextColor="{StaticResource begeClaro}"
+             FontSize="8"
+               HorizontalTextAlignment="Center"
+               TranslationY="-5"/>
+    </Grid>
+    </Grid>
+</ContentPage>

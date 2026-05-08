@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
+
+    <Color x:Key="Primary">#512BD4</Color>
+    <Color x:Key="PrimaryDark">#ac99ea</Color>
+    <Color x:Key="PrimaryDarkText">#242424</Color>
+    <Color x:Key="Secondary">#DFD8F7</Color>
+    <Color x:Key="SecondaryDarkText">#9880e5</Color>
+    <Color x:Key="Tertiary">#2B0B98</Color>
+
+    <Color x:Key="White">White</Color>
+    <Color x:Key="Black">Black</Color>
+    <Color x:Key="Magenta">#D600AA</Color>
+    <Color x:Key="MidnightBlue">#190649</Color>
+    <Color x:Key="OffBlack">#1f1f1f</Color>
+
+    <Color x:Key="Gray100">#E1E1E1</Color>
+    <Color x:Key="Gray200">#C8C8C8</Color>
+    <Color x:Key="Gray300">#ACACAC</Color>
+    <Color x:Key="Gray400">#919191</Color>
+    <Color x:Key="Gray500">#6E6E6E</Color>
+    <Color x:Key="Gray600">#404040</Color>
+    <Color x:Key="Gray900">#212121</Color>
+    <Color x:Key="Gray950">#141414</Color>
+
+    <!--PALETA DO PROJETO-->
+    <Color x:Key="preto">#170e0c</Color>
+    <Color x:Key="cinzaClaro">#9e9f96</Color>
+    <Color x:Key="marromMedio">#823416</Color>
+    <Color x:Key="begeEscuro">#f3d1aa</Color>
+    <Color x:Key="verdeEscuro">#20553b</Color>
+    <Color x:Key="verdeMedio">#628d69</Color>
+    <Color x:Key="palhaMedio">#e2a455</Color>
+    <Color x:Key="palhaEscuro">#d97520</Color>
+    <Color x:Key="azulMedio">#0f4e70</Color>
+    <Color x:Key="begeMedio">#fbe1c0</Color>
+    <Color x:Key="marromEscuro">#481e0b</Color>
+    <Color x:Key="cinzaEscuro">#505f4e</Color>
+    <Color x:Key="palhaClaro">#f8ca7b</Color>
+    <Color x:Key="begeUltra">#d5b797</Color>
+    <Color x:Key="begeClaro">#fde9cd</Color>
+    <Color x:Key="marromClaro">#985b3d</Color>
+    <Color x:Key="azulCinza">#283041</Color>
+    <Color x:Key="azulEscuro">#152025</Color>
+    <Color x:Key="azulClaro">#47667b</Color>
+    <Color x:Key="cinzaMedio">#897a70</Color>
+    <Color x:Key="vermelho">#af1717</Color>
+    <Color x:Key="vermelhoMedio">#a35e5e</Color>
+    
+    
+
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
+    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
+
+    <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}"/>
+    <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}"/>
+    <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}"/>
+    <SolidColorBrush x:Key="Gray400Brush" Color="{StaticResource Gray400}"/>
+    <SolidColorBrush x:Key="Gray500Brush" Color="{StaticResource Gray500}"/>
+    <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
+    <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}"/>
+    <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}"/>
+</ResourceDictionary>
