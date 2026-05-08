@@ -29,6 +29,7 @@ namespace AppMaui
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Font Awesome 6 Free-Solid-900.otf", "FontAwesome");
                 });
 
             //congifurar o email settings
@@ -81,6 +82,7 @@ namespace AppMaui
             builder.Services.AddSingleton<EmailService>();   
             builder.Services.AddSingleton<SenhaService>();
             builder.Services.AddSingleton<OpenAIService>();
+            builder.Services.AddSingleton<CriptogramaService>();
            
 
             //registrar viewmodels
