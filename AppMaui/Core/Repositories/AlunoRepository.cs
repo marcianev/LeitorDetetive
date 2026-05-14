@@ -29,7 +29,7 @@ namespace AppMaui.Core.Repositories
         public async Task<int> Update(Aluno aluno) => await _db.UpdateAsync(aluno);
 
         //metodo deletar
-        public async Task<int> Delete(Aluno aluno) => await _db.DeleteAsync<Aluno>(aluno);
+        public async Task<int> Delete(int id) => await _db.DeleteAsync<Aluno>(id);
 
         //metodo para listar alunos por turma
         public async Task<List<Aluno>> GetByTurma(int turmaId) =>

@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMaui.Views.TurmaPView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{OnIdiom Phone=1*, Desktop=*}"/>
+            <RowDefinition Height="{OnIdiom Phone=1*, Desktop=*}"/>
+            <RowDefinition Height="{OnIdiom Phone=1*, Desktop=*}"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{OnIdiom Phone=*, Desktop=1*}"/>
+            <ColumnDefinition Width="{OnIdiom Phone=*, Desktop=1*}"/>
+            <ColumnDefinition Width="{OnIdiom Phone=*, Desktop=1*}"/>
+        </Grid.ColumnDefinitions>
+        <!--lista de turmas-->
+        <Border x:Name="brdListaTurmas"  
+          Stroke="{StaticResource palhaMedio}" 
+          Margin="10"                                                 
+          Style="{StaticResource sBrdPrincipal}"
+                Grid.Column="2"
+          Grid.RowSpan="{OnIdiom Phone=1, Desktop=3}"
+          Grid.ColumnSpan="{OnIdiom Phone=3, Desktop=1}"
+          VerticalOptions="Fill">
+            <Grid>
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="{OnIdiom Phone= 0.2*, Desktop= 0.1*}"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Cabeçalho lista Turmas-->
+                <Rectangle x:Name="rtgLista" 
+                       Grid.ColumnSpan="3"
+                       Fill="{StaticResource marromClaro}" 
+                       Stroke="{StaticResource marromClaro}"
+                        />
+                <Image x:Name="imgLtTurmas" 
+                   TranslationX="10" 
+                   HorizontalOptions="Start"
+                   Source="turmas.webp" 
+                   Style="{StaticResource sImgCabecalho}"
+                   />
+                <Label x:Name="lbTurmasTituloSombra1" 
+                   Grid.ColumnSpan="3"     
+                   FontSize="20"
+                   Text="TURMAS" 
+                    TranslationX="{OnIdiom Phone=130, Desktop=90}"
+                   Style="{StaticResource sLbSombra1}"   
+                   />
+                <Label x:Name="lbTurmasTituloSombra2" 
+                   Grid.ColumnSpan="3"    
+                   FontSize="20"
+                   Text="TURMAS" 
+                    TranslationX="{OnIdiom Phone=130, Desktop=90}"
+                   Style="{StaticResource sLbSombra2}"     
+                   />
+                <Label x:Name="lbTurmasTituloSombra3" 
+                   Grid.ColumnSpan="3"
+                   FontSize="20"
+                   Text="TURMAS" 
+                    TranslationX="{OnIdiom Phone=131, Desktop=91}"
+                   Style="{StaticResource sLbSombra3}"       
+                   />
+                <Label x:Name="lbTurmasTituloSombra4" 
+                   Grid.ColumnSpan="3" 
+                   FontSize="20"
+                   Text="TURMAS" 
+                   TranslationX="{OnIdiom Phone=129, Desktop=89}"
+                   Style="{StaticResource sLbSombra4}"  
+                   />
+                <Label x:Name="lbTurmasTitulo" 
+                   Grid.ColumnSpan="3"   
+                   FontSize="20"
+                   Text="TURMAS"                               
+                   TranslationX="{OnIdiom Phone=130, Desktop=90}"
+                   Style="{StaticResource sLbTitulo}"   
+                   />
+
+                <!-- lista-->
+                <Border Grid.Row="1"         
+                    BackgroundColor="{StaticResource verdeEscuro}"   
+                    VerticalOptions="Center"  
+                    Margin="5"
+                    Style="{StaticResource sBrdAzul}">
+                    <Label x:Name="lbTurma"
+                       Text="5º ano A"
+                       TextColor="{StaticResource begeClaro}"
+                       />
+                </Border>
+                <Label x:Name="lbQtdAluno"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   Text="15"
+                   FontAttributes="Bold"  
+                   TextColor="{StaticResource marromEscuro}"
+                   />
+                <Label x:Name="lbTamTrilha"
+                   Grid.Row="1"
+                   Grid.Column="2"
+                   Text="15"
+                   FontAttributes="Bold"                              
+                   TextColor="{StaticResource marromEscuro}"
+                   />
+            </Grid>
+
+        </Border>
+
+        <!--borda externa livros mais lidos-->
+        <Border x:Name="brdListaLivros"                         
+          Stroke="{StaticResource palhaMedio}" 
+          Margin="10"     
+          Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+          Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+          Style="{StaticResource sBrdPrincipal}"    
+          Grid.RowSpan="{OnIdiom Phone=1, Desktop=3}"
+          Grid.ColumnSpan="{OnIdiom Phone=3, Desktop=1}"
+          VerticalOptions="Fill">
+            <Grid>
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="{OnIdiom Phone=0.2*, Desktop=0.1*}"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Cabeçalho lista Livros-->
+                <Rectangle x:Name="rtgListaLivros"                            
+                     Grid.ColumnSpan="3"
+                     Fill="{StaticResource marromClaro}" 
+                     Stroke="{StaticResource marromClaro}"
+                     />
+                <Image x:Name="imgLtLivros" 
+                 TranslationX="10" 
+                 HorizontalOptions="Start"
+                 Source="trofeu.webp"
+                 Margin="4"
+                 Style="{StaticResource sImgCabecalho}"
+                 />
+                <Label x:Name="lbLivrosTituloSombra1" 
+                 Grid.ColumnSpan="3"    
+                 FontSize="20"
+                 TranslationX="60"
+                 Text="LIVROS MAIS LIDOS" 
+                 Style="{StaticResource sLbSombra1}"   
+                 />
+                <Label x:Name="lbLivrosTituloSombra2" 
+                 Grid.ColumnSpan="3"    
+                 FontSize="20"
+                 TranslationX="60"
+                 Text="LIVROS MAIS LIDOS"
+                 Style="{StaticResource sLbSombra2}"    
+                 />
+                <Label x:Name="lbLivrosTituloSombra3" 
+                 Grid.ColumnSpan="3"
+                 FontSize="20"
+                 TranslationX="61"
+                 Text="LIVROS MAIS LIDOS"
+                 Style="{StaticResource sLbSombra3}"       
+                 />
+                <Label x:Name="lbLivrosTituloSombra4" 
+                 Grid.ColumnSpan="3" 
+                 FontSize="20"
+                 TranslationX="59"
+                 Text="LIVROS MAIS LIDOS"
+                 Style="{StaticResource sLbSombra4}"  
+                 />
+                <Label x:Name="lbLivrosTitulo" 
+                 Grid.ColumnSpan="3"   
+                 FontSize="20"
+                 TranslationX="60"
+                 Text="LIVROS MAIS LIDOS"
+                 Style="{StaticResource sLbTitulo}"   
+                 />
+
+                <!-- lista-->
+                <Border Grid.Row="1"    
+                  BackgroundColor="{StaticResource verdeEscuro}"   
+                  VerticalOptions="Center"  
+                  Margin="5"
+                  Style="{StaticResource sBrdAzul}">
+                    <Label x:Name="lbTurmaL"
+                     Text="5º ano A"
+                     TextColor="{StaticResource begeClaro}"
+                     />
+                </Border>
+                <Image x:Name="imgLivro"
+                 Grid.Row="1"
+                 Grid.Column="1"
+                 Source="livros.webp"      
+                 Margin="20"
+                 />
+                <Label x:Name="lbQtdLido"
+                 Grid.Row="1"
+                 Grid.Column="2"
+                 Text="15"
+                 FontAttributes="Bold"                             
+                 TextColor="{StaticResource marromEscuro}"
+                 />
+            </Grid>
+        </Border>
+        
+        <!--melhores avaliados-->
+        <Border x:Name="brdListaAva"                      
+          Stroke="{StaticResource palhaMedio}" 
+          Margin="10"     
+          Grid.Row="{OnIdiom Phone=2, Desktop=0}"         
+          Style="{StaticResource sBrdPrincipal}"                         
+          Grid.RowSpan="{OnIdiom Phone=1, Desktop=3}"
+          Grid.ColumnSpan="{OnIdiom Phone=3, Desktop=1}"
+          VerticalOptions="Fill">
+            <Grid>
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="{OnIdiom Phone=0.2*, Desktop=0.1*}"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Cabeçalho lista avaliações-->
+                <Rectangle x:Name="rtgListaAva" 
+                      Grid.ColumnSpan="3"
+                      Fill="{StaticResource marromClaro}" 
+                      Stroke="{StaticResource marromClaro}"
+                      />
+                <Image x:Name="imgLtLivrosAva"
+                  TranslationX="10" 
+                  HorizontalOptions="Start"
+                  Source="comentarios.webp"                          
+                  Style="{StaticResource sImgCabecalho}"
+                  />
+                <Label x:Name="lbAvaTituloSombra1" 
+                  Grid.ColumnSpan="3"    
+                  FontSize="{OnIdiom Phone=20, Desktop=16}"
+                  TranslationX="54"
+                  Text="MELHORES AVALIADOS" 
+                  Style="{StaticResource sLbSombra1}"   
+                  />
+                <Label x:Name="lbAvaTituloSombra2" 
+                  Grid.ColumnSpan="3"    
+                  FontSize="{OnIdiom Phone=20, Desktop=16}"
+                  TranslationX="56"
+                  Text="MELHORES AVALIADOS"
+                  Style="{StaticResource sLbSombra2}"    
+                  />
+                <Label x:Name="lbAvaTituloSombra3" 
+                  Grid.ColumnSpan="3"
+                  FontSize="{OnIdiom Phone=20, Desktop=16}"
+                  TranslationX="55"
+                  Text="MELHORES AVALIADOS"
+                  Style="{StaticResource sLbSombra3}"  
+                  />
+                <Label x:Name="lbAvaTituloSombra4" 
+                  Grid.ColumnSpan="3" 
+                  FontSize="{OnIdiom Phone=20, Desktop=16}"
+                  TranslationX="55"
+                  Text="MELHORES AVALIADOS"
+                  Style="{StaticResource sLbSombra4}"  
+                  />
+                <Label x:Name="lbAvaTitulo" 
+                  Grid.ColumnSpan="3"   
+                  FontSize="{OnIdiom Phone=20, Desktop=16}"
+                  TranslationX="55"
+                  Text="MELHORES AVALIADOS"
+                  Style="{StaticResource sLbTitulo}"   
+                  />
+
+                <!--lista-->
+                <Border Grid.Row="1"   
+                   BackgroundColor="{StaticResource verdeEscuro}"  
+                   VerticalOptions="Center"  
+                   Margin="5"
+                   Style="{StaticResource sBrdAzul}">
+                    <Label x:Name="lbTurmaA"
+                      Text="5º ano A"
+                      TextColor="{StaticResource begeClaro}"
+                      />
+                </Border>
+                <Image x:Name="imgLivroA"
+                  Grid.Row="1"
+                  Grid.Column="1"
+                  Source="livros.webp"      
+                  Margin="30"
+                  />
+                <Image x:Name="imgAva"
+                  Grid.Row="1"
+                  Grid.Column="2"
+                  Source="estrela.webp"
+                  Margin="0,45"
+                  HorizontalOptions="Start"
+                  />
+            </Grid>
+        </Border>
+        <!--botão de cadastrar aluno-->
+        <Button x:Name="BtnAddAluno" 
+HorizontalOptions="End"
+                Grid.RowSpan="3"
+                Grid.ColumnSpan="3"
+                VerticalOptions="End"
+                Margin="0,15,5,0"
+                FontSize="25"
+                TranslationY="5"
+Text="+"
+Style="{StaticResource sBtn}"
+BackgroundColor="{StaticResource verdeMedio}"     
+                Command="{Binding AbrirCadastroCommand}"
+
+/>
+
+    </Grid>
+    
+</ContentView>

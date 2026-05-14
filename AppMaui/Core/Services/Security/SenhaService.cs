@@ -2,6 +2,7 @@
 using AppMaui.Core.Models;
 using AppMaui.Core.Services.Local;
 using AppMaui.Services.Interfaces;
+using System.Diagnostics;
 using System.Security.Cryptography;
 
 
@@ -56,6 +57,7 @@ namespace AppMaui.Core.Services.Security
         //gerar codigo de acesso para aluno
         public static string GerarCodigoAluno(int tam)
         {
+            Debug.WriteLine("chegamos no gerar codigoAluno");
             const string chars = "0123456789";
             var codigo = new char[tam];
             using (var rng = RandomNumberGenerator.Create())

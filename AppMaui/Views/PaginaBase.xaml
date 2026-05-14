@@ -4,9 +4,9 @@
              x:Class="AppMaui.Views.PaginaBase"
              xmlns:views="clr-namespace:AppMaui.Views"   
              xmlns:vm="clr-namespace:AppMaui.ViewsModels"
-             x:DataType="vm:LoginViewModel"             
+             x:DataType="vm:PaginaBaseViewModel"             
              BackgroundColor="{StaticResource begeClaro}"
-             Shell.NavBarIsVisible="False"
+              Shell.NavBarIsVisible="False"
              Title="PaginaBase">
 
     <Grid>
@@ -128,23 +128,26 @@
               Source="estrela.webp"
               Style="{StaticResource sImgCabecalho}"
               />
-        <Label x:Name="lbProfessor" 
+        <Label x:Name="lbUsuario" 
+               Text="{Binding User}"
               Grid.Row="1" 
-              Grid.Column="1"
-              Text="Professor Carlos" 
+              Grid.Column="1"              
               Style="{StaticResource sLbUsuario}"/>
 
     </Grid>
-        <Label Grid.Row="1"
+        <!--Label Grid.Row="1"
     Text="{Binding Icones}"
     FontFamily="FontAwesome"
     FontSize="30"
                VerticalOptions="Center"
                HorizontalOptions="Center"
-               TextColor="Black"/>
+               TextColor="Black"/-->
 
     <!--View corpo-->
-    <ContentView x:Name="Corpo" Grid.Row="1"/>
+    <ContentView x:Name="Corpo" 
+                 Grid.Row="1"
+                 Content="{Binding ViewAtiva}"
+                 />
 
     <!--view navegação-->
     <!-- rodapé-->
@@ -171,8 +174,9 @@
                    BackgroundColor="Transparent"
                    Source="home.webp" 
                    Margin="10"
+                     Command="{Binding AbrirHomeCommand}"
                    />
-        <!-- BOTÃO ALUNOS-->
+        <!-- BOTÃO PRIMEIRA VIEW-->
         <Border x:Name="brdBtFundo1" 
               Grid.RowSpan="2"
               Grid.Column="1"
@@ -187,9 +191,10 @@
                    Grid.Column="1" 
                    Margin="5"
                    Source="alunos.webp"
-                   TranslationY="-15"                        
+                   TranslationY="-15"      
+                     Command="{Binding AbrirPrimViewCommand}"
                    />
-        <Border x:Name="brdBtAlunos" 
+        <Border x:Name="brdBtPriView" 
               Grid.RowSpan="2"  
               Grid.Column="1" 
               Margin="5"
@@ -203,7 +208,7 @@
                  HorizontalOptions="Center"/>
         </Border>
 
-        <!-- BOTÃO TURMAS-->
+        <!-- BOTÃO SEGUNDA VIEW-->
         <Border x:Name="brdBtFundo2" 
               Grid.RowSpan="2"
               Grid.Column="2"
@@ -213,12 +218,13 @@
               Stroke="{StaticResource palhaMedio}">
             <Label Padding="5"/>
         </Border>
-        <ImageButton x:Name="BtnTurmas" 
+        <ImageButton x:Name="BtnSegView" 
                    Grid.Column="2" 
                    Grid.RowSpan="2" 
                    Margin="5"
                    Source="turmas.webp" 
                    TranslationY="-10"
+                     Command="{Binding AbrirSegViewCommand}"
                   />
         <Border x:Name="brdBtTurmas" 
               Grid.Column="2" 
@@ -234,7 +240,7 @@
                  HorizontalOptions="Center"/>
         </Border>
 
-        <!-- BOTÃO COMENTÁRIOS-->
+        <!-- BOTÃO TERCEIRA VIEW-->
         <Border x:Name="brdBtFundo3" 
               Grid.Column="3" 
               Grid.RowSpan="2"
@@ -245,12 +251,13 @@
             <Label Padding="5"
      />
         </Border>
-        <ImageButton x:Name="BtnComentarios" 
+        <ImageButton x:Name="BtnTercView" 
                    Grid.Column="3" 
                    Grid.RowSpan="2" 
                    Margin="5"
                    Source="comentarios.webp"  
                    TranslationY="-10"
+                     Command="{Binding AbrirTercViewCommand}"
                    />
         <Border x:Name="brdBtComentarios" 
               Grid.Column="3" 

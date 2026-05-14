@@ -24,5 +24,8 @@ namespace AppMaui.Core.Repositories
 
         //metodo deletar
         public async Task<int> Delete(Professor professor) => await _db.DeleteAsync<Professor>(professor);
+
+        //metodo buscar por usuarioId
+        public async Task<Professor?> GetByUsuarioId(int id) => await _db.Table<Professor>().Where(p => p.UsuarioId == id).FirstOrDefaultAsync();
     }
 }

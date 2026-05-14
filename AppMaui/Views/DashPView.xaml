@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMaui.Views.DashPView"
+             >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{OnIdiom Phone=3*, Desktop=*}"/>
+            <RowDefinition Height="{OnIdiom Phone=1*, Desktop=*}"/>
+            <RowDefinition Height="{OnIdiom Phone=1*, Desktop=*}"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{OnIdiom Phone=*, Desktop=1*}"/>
+            <ColumnDefinition Width="{OnIdiom Phone=*, Desktop=1*}"/>
+        </Grid.ColumnDefinitions>
+        <!--area de conteudo-->
+        <!--borda externa top 5-->
+        <Border x:Name="brdTop5"                
+                     Stroke="{StaticResource palhaMedio}" 
+                     Margin="15"
+                     Grid.RowSpan="{OnIdiom Phone=1, Desktop=3}"
+                     Grid.ColumnSpan="{OnIdiom Phone=3, Desktop=1}"
+                     VerticalOptions="Fill" 
+                     Style="{StaticResource sBrdPrincipal}">
+            <Grid>
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="{OnIdiom Phone=0.2*,Desktop=0.12*}"/>
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Cabeçalho card Mais leituras-->
+
+                <Rectangle x:Name="rtgMaisTitulo" 
+                            Grid.ColumnSpan="2"
+                            Fill="{StaticResource verdeEscuro}" 
+                            Stroke="{StaticResource verdeEscuro}"
+                            />
+
+                <Image x:Name="imgTrofeu" 
+                        Margin="15,5" 
+                        HorizontalOptions="Start"
+                        Source="trofeu.webp"
+                        Style="{StaticResource sImgCabecalho}"
+                        />
+                <Label x:Name="lbMaisTituloSombra1" 
+                        Grid.ColumnSpan="2"
+                        VerticalOptions="Start" 
+                        FontSize="{OnIdiom Phone=17, Desktop=20}"
+                         HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
+                        Text="LEITORES NO TOP 5" 
+                        Style="{StaticResource sLbSombra1}"   
+                        />
+                <Label x:Name="lbMaisTituloSombra2" 
+                        Grid.ColumnSpan="2"
+                        VerticalOptions="Start" 
+                         HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
+                        FontSize="{OnIdiom Phone=17, Desktop=20}"
+                        Text="LEITORES NO TOP 5"
+                        Style="{StaticResource sLbSombra2}"     
+                        />
+                <Label x:Name="lbMaisTituloSombra3" 
+                        Grid.ColumnSpan="2"
+                        Text="LEITORES NO TOP 5" 
+                         HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
+                        Style="{StaticResource sLbSombra3}"  
+                        VerticalOptions="Start" 
+                        FontSize="{OnIdiom Phone=17, Desktop=20}"
+                        />
+                <Label x:Name="lbMaisTituloSombra4" 
+                        Grid.ColumnSpan="2"
+                        VerticalOptions="Start" 
+                        FontSize="{OnIdiom Phone=17, Desktop=20}"
+                         HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
+                        Text="LEITORES NO TOP 5" 
+                        Style="{StaticResource sLbSombra4}"  
+                        />
+                <Label x:Name="lbMaisTitulo" 
+                        Grid.ColumnSpan="2"
+                        VerticalOptions="Start"   
+                        FontSize="{OnIdiom Phone=17, Desktop=20}"
+                        HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
+                        Text="LEITORES NO TOP 5" 
+                        Style="{StaticResource sLbTitulo}"   
+                       />
+                <Label x:Name="lbMaisSub" 
+                        Grid.ColumnSpan="2"
+                        VerticalOptions="End"   
+                        HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
+                        Text="Alunos com mais leituras" 
+                        FontSize="{OnIdiom Phone=12, Desktop=15}"
+                        Style="{StaticResource sLbTitulo}"   
+                       />
+
+                <!--lista-->
+                <Label x:Name="lbNomeAluno" 
+                        Grid.Row="1"
+                        Text="Pedro" 
+                        FontAttributes="Bold"
+                        FontSize="{OnIdiom Phone=16,Desktop=20}"
+                        TranslationX="{OnIdiom Phone=60, Desktop=90}"
+                        TranslationY="{OnIdiom Phone=0, Desktop=30}"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Start"
+                        TextColor="{StaticResource marromEscuro}"/>
+
+                <Border Grid.Row="1"
+                         Stroke="Transparent"
+                         BackgroundColor="{StaticResource azulClaro}"
+                         Margin="20,15"
+                         VerticalOptions="End">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="5"/>
+                    </Border.StrokeShape>
+                    <Label x:Name="lbPatente" 
+                            Grid.Row="1"
+                            Text="DETETIVE" 
+                            FontAttributes="Bold"
+                            HorizontalOptions="Start"
+                            TranslationX="{OnIdiom Phone=40, Desktop=70}"
+                            TextColor="{StaticResource begeClaro}"/>
+                </Border>
+                <Image x:Name="imgAluno" 
+                        Grid.Row="1" 
+                        Margin="5" 
+                        HorizontalOptions="Start" 
+                        Source="menino1.webp" 
+                        Style="{StaticResource sImgGeral}"
+                        />
+                <Label x:Name="lbQtdLivro" 
+                        Grid.Row="1" 
+                        Grid.Column="1"
+                        Text="15 livros" 
+                        FontAttributes="Bold"
+                        FontSize="{OnIdiom Phone = 15, Desktop = 18}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        TextColor="{StaticResource marromEscuro}"/>
+            </Grid>
+        </Border>
+
+        <!--quadro Novas patentes-->
+        <Border x:Name="brdAvancos"                    
+                 Stroke="{StaticResource palhaMedio}"                     
+                 BackgroundColor="{StaticResource verdeEscuro}"
+                 Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+                 Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                 Style="{StaticResource sBrdPrincipal}"    
+                 Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                 Margin="15"
+                 VerticalOptions="Fill">
+            <Image x:Name="imgNovas" 
+                    WidthRequest="50"
+                    HorizontalOptions="Start"
+                    Source="estrela.webp" 
+                    Margin="10"
+                    Style="{StaticResource sImgCabecalho}"
+                    />
+        </Border>
+
+        <Label x:Name="lbPatTituloSombra1" 
+                Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"    
+                Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                FontSize="{OnIdiom Phone=18, Desktop=22}"
+                TranslationX="{OnIdiom Phone=16, Desktop=-3}"
+                TranslationY="{OnIdiom Phone=-14, Desktop= -18}"                   
+                Text="NOVAS PATENTES" 
+                Style="{StaticResource sLbSombra11}"   
+                />
+        <Label x:Name="lbPatTituloSombra2" 
+                Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"   
+                Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                FontSize="{OnIdiom Phone=18, Desktop=22}"
+                TranslationX="{OnIdiom Phone=16, Desktop=-3}"
+                TranslationY="{OnIdiom Phone=-16, Desktop=-15}"                   
+                Text="NOVAS PATENTES" 
+                Style="{StaticResource sLbSombra12}"     
+                />
+        <Label x:Name="lbPatTituloSombra3" 
+                Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                FontSize="{OnIdiom Phone=18, Desktop=22}"
+                TranslationX="{OnIdiom Phone=14, Desktop=-2}"
+                TranslationY="{OnIdiom Phone=-14, Desktop=-16}"
+                Text="NOVAS PATENTES" 
+                Style="{StaticResource sLbSombra13}"                
+                />
+        <Label x:Name="lbPatTituloSombra4" 
+                Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"   
+                Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                FontSize="{OnIdiom Phone=18, Desktop=22}"                   
+                TranslationX="{OnIdiom Phone=16, Desktop= -4}"
+                TranslationY="{OnIdiom Phone=-16, Desktop=-16}"
+                Text="NOVAS PATENTES" 
+                Style="{StaticResource sLbSombra14}"  
+                />
+        <Label x:Name="lbPatTitulo" 
+                Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                TranslationX="{OnIdiom Phone=120, Desktop=150}"
+                FontSize="{OnIdiom Phone=18,Desktop=22}"
+                TranslationY="{OnIdiom Phone=25, Desktop=-17}" 
+                Text="NOVAS PATENTES" 
+                Style="{StaticResource sLbTitulo}"   
+                />
+        <Label x:Name="lbPatSub" 
+                Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                FontSize="{OnIdiom Phone=12, Desktop=14}"  
+                WidthRequest="{OnIdiom Phone=210, Desktop=290}" 
+                TranslationX="{OnIdiom Phone= 90, Desktop=120}" 
+                TranslationY="{OnIdiom Phone=50, Desktop=20}"
+                Text="Quantidade alunos que consquistaram novas patentes essa semana." 
+                Style="{StaticResource sLbTitulo}"   
+                />
+        <Label x:Name="lbQtNovos"
+                Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+                Grid.Column="{OnIdiom Phone=1, Desktop=1}"
+                FontSize="{OnIdiom Phone=20, Desktop= 30}"  
+                HorizontalOptions="End"
+                TranslationX="{OnIdiom Phone=-30, Desktop=-50}"
+                TranslationY="{OnIdiom Phone=35, Desktop=0}"
+                Text="12" 
+                Style="{StaticResource sLbTitulo}"   
+                />
+
+        <!--quantidade de alunos que não respodem-->
+        <Border x:Name="brdParados"                     
+                 Stroke="{StaticResource palhaMedio}"                    
+                 BackgroundColor="{StaticResource marromEscuro}"
+                 Grid.Row="{OnIdiom Phone=2, Desktop=1}"
+                 Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                 Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                 Style="{StaticResource sBrdPrincipal}"  
+                 VerticalOptions="Fill"
+                 Margin="15">
+            <Image x:Name="imgParados" 
+                    WidthRequest="50" 
+                    Margin="10"
+                    HorizontalOptions="Start"
+                    Source="livros.webp" Style="{StaticResource sImgCabecalho}"
+                    />
+        </Border>
+
+        <Label x:Name="lbParTituloSombra1" 
+                Grid.Row="{OnIdiom Phone=2, Desktop=1}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                FontSize="{OnIdiom Phone=14, Desktop=22}"
+                Text="DESAFIOS SEM RESPOSTAS" 
+                TranslationY="{OnIdiom Phone=-20, Desktop=-19}" 
+                TranslationX="{OnIdiom Phone=101, Desktop=8}"
+                Style="{StaticResource sLbSombra11}"   
+                />
+        <Label x:Name="lbParTituloSombra2" 
+                Grid.Row="{OnIdiom Phone=2, Desktop=1}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                FontSize="{OnIdiom Phone=14, Desktop=22}"
+                Text="DESAFIOS SEM RESPOSTAS" 
+                TranslationY="{OnIdiom Phone=-16, Desktop=-15}" 
+                TranslationX="{OnIdiom Phone=100, Desktop=8}"
+                Style="{StaticResource sLbSombra12}"     
+                />
+        <Label x:Name="lbParTituloSombra3" 
+                Grid.Row="{OnIdiom Phone=2, Desktop=1}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                FontSize="{OnIdiom Phone=14, Desktop=22}"
+                Text="DESAFIOS SEM RESPOSTAS" 
+                TranslationX="{OnIdiom Phone=101, Desktop=7}"                   
+                Style="{StaticResource sLbSombra13}"
+                />
+        <Label x:Name="lbParTituloSombra4"
+                Grid.Row="{OnIdiom Phone=2, Desktop=1}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                FontSize="{OnIdiom Phone=14, Desktop=22}"
+                Text="DESAFIOS SEM RESPOSTAS" 
+                TranslationX="{OnIdiom Phone=99, Desktop=12}" 
+                Style="{StaticResource sLbSombra14}" 
+                />
+        <Label x:Name="lbParTitulo" 
+                Grid.Row="{OnIdiom Phone=2, Desktop=1}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"   
+                FontSize="{OnIdiom Phone=14,Desktop=22}"
+                TranslationX="{OnIdiom Phone=100, Desktop=115}"                   
+                TranslationY="{OnIdiom Phone=25, Desktop=-17}" 
+                Text="DESAFIOS SEM RESPOSTAS" 
+                Style="{StaticResource sLbTitulo}"   
+                />
+        <Label x:Name="lbParSub" 
+                Grid.Row="{OnIdiom Phone=2, Desktop=1}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                FontSize="{OnIdiom Phone=12, Desktop=14}"  
+                 WidthRequest="{OnIdiom Phone=210, Desktop=290}" 
+                TranslationX="{OnIdiom Phone= 90, Desktop=120}" 
+                TranslationY="{OnIdiom Phone=50, Desktop=20}"
+                Text="Alunos que não respondem a desafios há mais de 15 dias." 
+                Style="{StaticResource sLbTitulo}"   
+                />
+        <Label x:Name="lbQtParados" 
+                Grid.Row="{OnIdiom Phone=2, Desktop=1}"
+                Grid.Column="{OnIdiom Phone=1, Desktop=1}"
+                FontSize="{OnIdiom Phone=20, Desktop= 30}"  
+                HorizontalOptions="End"
+                TranslationX="{OnIdiom Phone=-30, Desktop=-50}"
+                TranslationY="{OnIdiom Phone=35, Desktop=0}"
+                Text="5"  
+                Style="{StaticResource sLbTitulo}"   
+                />
+    </Grid>
+</ContentView>

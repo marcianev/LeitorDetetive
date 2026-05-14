@@ -51,5 +51,10 @@ namespace AppMaui.Core.DTOs
         "\uf810", // robot
         "\uf433"  // shield
             };
+        public static readonly string[] Alfabeto =
+            {
+                   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
+                   "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Ç"
+            };
         }
 }

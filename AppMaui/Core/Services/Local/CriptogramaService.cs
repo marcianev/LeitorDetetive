@@ -2,6 +2,7 @@
 using AppMaui.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,28 +10,38 @@ using System.Threading.Tasks;
 namespace AppMaui.Core.Services.Local
 {
     public class CriptogramaService
-    {
-        //
-        public List<LetraCriptografada> Gerar (string palavra)
+    {      
+        public List<LetraCriptografada> Gerar (int desafio)
         {
-            var resultado = new List<LetraCriptografada>();
-            Dictionary<char, string> mapa = new();
-            int indice = 0;
+           // var resultado = new List<LetraCriptografada>();
+            List<LetraCriptografada> mapa = new();            
+           
 
-            foreach (char letra in palavra.ToUpper())
+            for (int i = 0; i < CriptogramaSimbolos.Alfabeto.Length; i++)
             {
-                if (!mapa.ContainsKey(letra))
+                if (desafio >= 40)
+                    desafio = 0;
+                else
+                    desafio++;               
+               
+                mapa.Add(new LetraCriptografada
                 {
-                    mapa[letra] = CriptogramaSimbolos.Lista[indice];
-                    indice++;
-                }
-                resultado.Add(new LetraCriptografada
-                {
-                    LetraOriginal = letra.ToString(),
-                    Simbolo = mapa[letra]
+                    LetraOriginal = CriptogramaSimbolos.Alfabeto[i],
+
+                    Simbolo = CriptogramaSimbolos.Lista[desafio]
                 });
             }
-            return resultado;           
+
+            return mapa;      
+        }
+
+        public string Criptografar(string palavra, List<LetraCriptografada>mapa)
+        {
+            var dicionario = mapa.ToDictionary(
+                x => x.LetraOriginal,
+                x => x.Simbolo
+            );
+            return string.Join("", palavra.ToUpper().Select(c => dicionario[c.ToString()]));
         }
     }
 }

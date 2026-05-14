@@ -33,6 +33,7 @@ namespace AppMaui.Core.Services.Application
 
             if (!_criptoService.VerificarHash(senha, usuario.Senha))
                 return null;
+            SessaoService.Login(usuario);
 
             return usuario;
         }

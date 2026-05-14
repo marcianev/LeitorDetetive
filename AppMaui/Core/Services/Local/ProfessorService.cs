@@ -94,6 +94,24 @@ namespace AppMaui.Core.Services.Local
             }
         }//fim deletar
 
+        //buscar professor por usuario
+        public async Task<Professor?> BuscarProfessorPorUsuario(int usuarioId)
+        {
+            try
+            {
+                //validação
+                if (usuarioId <= 0)
+                    return null;
+                var professor = await _repositorio.GetByUsuarioId(usuarioId);
+                if (professor == null)
+                    return null;
+                return professor;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao buscar professor por ID: {ex.Message}");
+            }
+        }//fecha método buscar professor por usuario
 
     }//fim classe
 }

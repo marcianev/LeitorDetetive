@@ -93,6 +93,7 @@ namespace AppMaui.ViewsModels
 
             if(user != null)
             {
+                
                 await _navigationService.NavegarPara("PaginaBase");
             }
             else

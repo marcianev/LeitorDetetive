@@ -22,8 +22,7 @@ namespace AppMaui.Core.Services.Local
                     return false;
 
                 if (turma.TamanhoTrilha <= 0)
-                    turma.TamanhoTrilha = 18;
-                turma.CodigoAcesso = GerarCodigo();
+                    turma.TamanhoTrilha = 18;               
                 turma.Status = true;
                 turma.DataCriacao = DateTime.Now;
                 turma.Ano = turma.DataCriacao.Year.ToString();
@@ -85,7 +84,7 @@ namespace AppMaui.Core.Services.Local
             try
             {
                 //validação
-                if (id <= 0)
+                if (id <=0)
                     return false;
                 var turma = await _repositorio.GetById(id);
                 if (turma == null)
@@ -100,22 +99,24 @@ namespace AppMaui.Core.Services.Local
             }
         }//fim deletar
 
-        //metodo gera codigo da turma que servirá de senha para os alunos
-        private static string GerarCodigo()
+       //METODO BUSCAR POR ID DO PROFESSOR
+       public async Task<int> BuscarPorProfessor(int id)
         {
-            Random rand = new();
-
-            List<char> l = [new()];
-
-            for (int i = 0; i < 4; i++)
+            try
             {
-                l.Add((char)('A' + rand.Next(0, 26)));
+                //validação
+                if (id <= 0)
+                    return 0;
+
+                var turma = await _repositorio.GetOneByProfessor(id);
+                if (turma == null)
+                    return 0;
+                return turma.Id;
             }
-
-            string n = rand.Next(10, 99).ToString();
-
-            return l + n;
-
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao buscar turma: {ex.Message}");
+            }
         }
     }
 }

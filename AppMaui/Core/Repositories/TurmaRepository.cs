@@ -28,5 +28,9 @@ namespace AppMaui.Core.Repositories
 
         //metodo deletar
         public async Task<int> Delete(Turma turma) => await _db.DeleteAsync<Turma>(turma);
+
+        //metodo buscar turma unica de professor, enquanto não há multiplos cadastros
+        public async Task<Turma?> GetOneByProfessor(int id) => 
+            await _db.Table<Turma>().FirstOrDefaultAsync(t => t.ProfessorId == id);
     }
 }

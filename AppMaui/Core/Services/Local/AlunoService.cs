@@ -10,23 +10,21 @@ using System.Threading.Tasks;
 namespace AppMaui.Core.Services.Local
 {
     public class AlunoService(AlunoRepository _repositorio)
-    {        
+    {
         //metodo salvar aluno
-        public async Task<bool> SalvarAluno(Aluno aluno, String professor)
+        public async Task<bool> SalvarAluno(Aluno aluno)
         {
             try
             {
                 //validações
-                if (string.IsNullOrEmpty(aluno.Nome) || 
+                if (string.IsNullOrEmpty(aluno.Nome) ||
                     aluno.Nome.Length > 100)
                     return false;
-
-                aluno.Nickname = await GerarNickname(aluno, professor);
 
                 await _repositorio.Add(aluno);
                 return true;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception($"Erro ao salvar aluno por ID: {ex.Message}");
 
@@ -61,7 +59,7 @@ namespace AppMaui.Core.Services.Local
                 if (string.IsNullOrEmpty(aluno.Nome) ||
                     aluno.Nome.Length > 100 ||
                     aluno.Id <= 0)
-                    return false;                
+                    return false;
 
                 await _repositorio.Update(aluno);
                 return true;
@@ -82,7 +80,7 @@ namespace AppMaui.Core.Services.Local
                 if (aluno == null)
                     return false;
 
-                await _repositorio.Delete(aluno);
+                await _repositorio.Delete(id);
                 return true;
             }
             catch (Exception ex)
@@ -110,36 +108,21 @@ namespace AppMaui.Core.Services.Local
             }
         }//fecha método buscar aluno por usuario
 
-        //metodo para gerar nickname do aluno
-        public async Task<string> GerarNickname(Aluno aluno, string professor)
+        //metodo verifica se nickname existe
+        public async Task<bool> VerificarExistenciaNick(string nick)
         {
-            //validação
-            if (string.IsNullOrWhiteSpace(aluno.Nome))
-                return string.Empty;
-
-            //transforma o nome do aluno e do professor em arrays de caracteres para pegar as iniciais
-            char[] n = aluno.Nome.ToUpper().ToCharArray();
-            char[] p = professor.ToUpper().ToCharArray();
-
-            //variaveis
-            Random rand = new();
-            int numm;
-            int i = 0;
-            string nickname;
-            bool nicknameExists;
-
-            //por enquanto funciona, para até 90 repetições
-            //preciso pensar em algoritmo para ampliar
-            //gerar nickname com as iniciais do nome do aluno, do professor e um número aleatório de 2 dígitos
-            do
+            try
             {
-                numm = rand.Next(10, 99);
-                nickname = $"{n[0]}{p[0]}{numm}";
-                nicknameExists = await _repositorio.NicknameExist(nickname);
-                i++;
-            } while (nicknameExists && i < 90);
-            return nickname;
-        }//fecha método gerar nickname       
+                //validação
+                if (!string.IsNullOrEmpty(nick))
+                    return false;
+                return await _repositorio.NicknameExist(nick);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao buscar NickName: {ex.Message}");
+            }
 
-    }//fecha classe AlunoServico
+        }//fecha classe AlunoServico
+    }
 }

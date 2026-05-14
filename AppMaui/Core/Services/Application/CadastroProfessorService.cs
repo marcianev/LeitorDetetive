@@ -18,6 +18,7 @@ namespace AppMaui.Core.Services.Application
         private readonly DatabaseService _databaseService;
         private readonly ICriptoService _criptoService;
 
+
         public CadastrarProfessorService(UsuarioService usuarioService, ProfessorService professorService, 
             ICriptoService criptoService, DatabaseService databaseService, EmailService es)
         {

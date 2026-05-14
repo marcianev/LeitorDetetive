@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMaui.Views.AlunoPView"
+              xmlns:vm="clr-namespace:AppMaui.ViewsModels"
+            x:DataType="vm:AlunoPViewModel"
+             xmlns:model="clr-namespace:AppMaui.Core.Models"
+             xmlns:views="clr-namespace:AppMaui.Views"
+             >
+    <Grid>
+        <Grid.RowDefinitions >
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+                  
+        </Grid.ColumnDefinitions>
+    
+    <Border x:Name="brdLista"                 
+     Stroke="{StaticResource palhaMedio}" 
+     Margin="15"
+     VerticalOptions="Fill" 
+     Style="{StaticResource sBrdPrincipal}">
+        <Grid>
+            <Grid.RowDefinitions >
+                <RowDefinition Height="{OnIdiom Phone=0.07*, Tablet=1.1*, Desktop=0.1*}"/>
+                    <RowDefinition Height="{OnIdiom Phone=0.07*, Tablet=1.1*, Desktop=0.1*}"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{OnIdiom Phone= 2*, Tablet= 1.5*, Desktop= 0.3*}"/>
+                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.2*}"/>
+                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.3*}"/>
+                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.3*}"/>
+                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.2*}"/>
+                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.3*}"/>                   
+                </Grid.ColumnDefinitions>
+
+            <!--Cabeçalho lista-->
+            <Rectangle x:Name="rtgLista" 
+                Grid.ColumnSpan="6"
+                Fill="{StaticResource marromClaro}" 
+                Stroke="{StaticResource marromClaro}"
+                />
+            <Image x:Name="imgLtAlunos" 
+            TranslationX="10" 
+            HorizontalOptions="Start"
+            Source="alunos.webp" 
+            Style="{StaticResource sImgCabecalho}"
+            />
+            <Label x:Name="lbAlunosTituloSombra1"    
+                   Grid.ColumnSpan="6"
+             TranslationX="-20"
+            FontSize="20"
+            Text="ALUNOS" 
+             HorizontalOptions="Center"
+            Style="{StaticResource sLbSombra1}"   
+            />
+            <Label x:Name="lbAlunosTituloSombra2" 
+                   Grid.ColumnSpan="6"
+             TranslationX="-20"
+            HorizontalOptions="Center"     
+            FontSize="20"
+            Text="ALUNOS" 
+            Style="{StaticResource sLbSombra2}"     
+            />
+            <Label x:Name="lbAlunsoTituloSombra3" 
+                   Grid.ColumnSpan="6"
+             TranslationX="-20"
+             HorizontalOptions="Center"   
+            FontSize="20"
+            Text="ALUNOS" 
+            Style="{StaticResource sLbSombra3}"                      
+            />
+            <Label x:Name="lbAlunosTituloSombra4" 
+                   Grid.ColumnSpan="6"
+             TranslationX="-20"
+             HorizontalOptions="Center"    
+            FontSize="20"
+            Text="ALUNOS" 
+            Style="{StaticResource sLbSombra4}"  
+            />
+            <Label x:Name="lbAlunosTitulo" 
+                   Grid.ColumnSpan="6"
+             TranslationX="-20"
+            FontSize="20"
+            Text="ALUNOS" 
+            HorizontalOptions="Center"
+            Style="{StaticResource sLbTitulo}"   
+            />
+
+                <Label 
+                       Grid.Row="1"
+         Grid.Column="1"
+         Margin="0,5"
+         Text="NickName" 
+         FontAttributes="Bold"    
+         FontSize="15"                                       
+         VerticalOptions="Center"
+         HorizontalOptions="Center"
+         TextColor="{StaticResource marromEscuro}"/>
+                <Label 
+                       Grid.Row="1"
+         Grid.Column="2"
+         Margin="0,5"
+         Text="Nome" 
+         FontAttributes="Bold"    
+         FontSize="15"                                       
+         VerticalOptions="Center"
+         HorizontalOptions="Center"
+         TextColor="{StaticResource marromEscuro}"/>
+                <Label 
+                       Grid.Row="1"
+         Grid.Column="3"
+         Margin="0,5"
+         Text="Cód de Acesso" 
+         FontAttributes="Bold"    
+         FontSize="15"                                       
+         VerticalOptions="Center"
+         HorizontalOptions="Center"
+         TextColor="{StaticResource marromEscuro}"/>
+                <Label 
+                       Grid.Row="1"
+         Grid.Column="4"
+         Margin="0,5"
+         Text="Livro Atual" 
+         FontAttributes="Bold"    
+         FontSize="15"                                       
+         VerticalOptions="Center"
+         HorizontalOptions="Center"
+         TextColor="{StaticResource marromEscuro}"/>
+                <Label 
+                       Grid.Row="1"
+         Grid.Column="5"
+         Margin="0,5"
+         Text="Total de leituras" 
+         FontAttributes="Bold"    
+         FontSize="15"                                       
+         VerticalOptions="Center"
+         HorizontalOptions="Center"
+         TextColor="{StaticResource marromEscuro}"/>
+
+
+                <!--lista-->
+                <CollectionView ItemsSource="{Binding Alunos}"
+                                Grid.Row="2" Grid.ColumnSpan="6">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Aluno">
+                            <Grid>
+                                <Grid.RowDefinitions >
+                                    <RowDefinition Height="0.6*"/>  
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{OnIdiom Phone= 2*, Tablet= 1.5*, Desktop= 0.3*}"/>
+                                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.2*}"/>
+                                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.3*}"/>
+                                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.3*}"/>
+                                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.2*}"/>
+                                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.3*}"/>                                   
+                                </Grid.ColumnDefinitions>
+                                
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AlunoPViewModel}}, Path=AlterarCadastroCommand}"
+                                        CommandParameter="{Binding}"/>                                        
+                                </Grid.GestureRecognizers>
+
+                                <Border Grid.Column="0"
+                                         BackgroundColor="{StaticResource azulClaro}"
+                                         Margin="25,5"                        
+                                         HorizontalOptions="Start"
+                                         TranslationY="10"
+                                         TranslationX="20"
+                                         VerticalOptions="Start"
+                                         Style="{StaticResource sBrdAzul}">
+                                    <Border.Padding>
+                                        <OnIdiom x:TypeArguments="Thickness"
+                                                  Phone="35,0"
+                                                  Desktop="45,0"/>
+                                    </Border.Padding>
+
+                                    <Label x:Name="lbPatente"
+                                            Text="{Binding PatenteId}"
+                                            TextColor="{StaticResource begeClaro}"/>
+                                </Border>
+                                <Image x:Name="imgAluno"                                         
+                                        HeightRequest="40"
+                                        Margin="15,5" 
+                                        HorizontalOptions="Start" 
+                                        VerticalOptions="Start"
+                                        Source="menino1.webp" 
+                                        Style="{StaticResource sImgGeral}"
+                                        />
+
+                                <Label x:Name="lbNick"                                        
+                                        Grid.Column="1"
+                                        Margin="0,5"
+                                        Text="{Binding Nickname}" 
+                                        FontAttributes="Bold"    
+                                        FontSize="15"                                       
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Center"
+                                        TextColor="{StaticResource marromEscuro}"/>
+
+                                <Label x:Name="lbAluno"                                          
+                                        Grid.Column="2"
+                                        Margin="0,5"                                        
+                                        Text="{Binding Nome}" 
+                                        FontAttributes="Bold"                      
+                                        FontSize="15"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Start"
+                                        TextColor="{StaticResource marromEscuro}"
+                                        />
+                                <Label x:Name="lbCodigo"                                          
+                                        Grid.Column="3"
+                                        Margin="0,5"                                        
+                                        Text="{Binding CodigoAcesso}" 
+                                        FontAttributes="Bold"                      
+                                        FontSize="15"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Center"
+                                        TextColor="{StaticResource marromEscuro}"
+                                        />
+                                        <Image x:Name="imgLivro"                                       
+                                        Grid.Column="4"
+                                        Source="livros.webp"
+                                        VerticalOptions="Center"
+                                               HorizontalOptions="Center"
+                                               HeightRequest="30"
+                                        Margin="20"
+                                        />
+                                        <Label x:Name="lbQtdLivros"                                       
+                                        Grid.Column="5"
+                                        Text="15"
+                                        FontAttributes="Bold"   
+                                        FontSize="20"
+                                        VerticalOptions="Center"   
+                                               HorizontalOptions="Center"
+                                        TextColor="{StaticResource marromEscuro}"
+                                        />
+                            </Grid>
+                      
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+    </Border>
+        <!--botão de cadastrar aluno-->
+        <Button x:Name="BtnAddAluno" 
+HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="0,15,5,0"
+                FontSize="25"
+                TranslationY="5"
+Text="+"
+Style="{StaticResource sBtn}"
+BackgroundColor="{StaticResource verdeMedio}"     
+                Command="{Binding AbrirCadastroCommand}"
+
+/>
+        <!--abre a tela de cadastro e alterar senha (overlay) e Primeiro Acesso-->
+        <ContentView            
+ x:Name="cvCadastro" 
+ Grid.ColumnSpan="2"
+ IsVisible="{Binding MostrarCadastro}"
+             InputTransparent="False">
+            <views:CadastroAView
+      BindingContext="{Binding CadastroAVM}"/>
+         
+        </ContentView>
+        
+    </Grid>
+</ContentView>
