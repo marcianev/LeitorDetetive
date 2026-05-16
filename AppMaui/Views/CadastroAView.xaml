@@ -130,17 +130,17 @@
                         Command="{Binding SalvarAlunoCommand}"
             
     />
-                <!--botão de DELETAR-->
+                <!--botão de ARQUIVAR-->
                 <Button Grid.Row="4" 
            Grid.ColumnSpan="2"
            Margin="10"
            HorizontalOptions="Start" 
                         VerticalOptions="Center"
-           Text="DELETAR"
+           Text="ARQUIVAR"
                         IsVisible="{Binding ModoAlterar}"
                Style="{StaticResource sBtn}"
     BackgroundColor="{StaticResource vermelhoMedio}"   
-                         Command="{Binding DeletarAlunoCommand}"
+                         Command="{Binding ArquivarAlunoCommand}"
              
            />
 

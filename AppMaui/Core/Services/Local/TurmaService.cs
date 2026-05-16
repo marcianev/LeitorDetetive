@@ -2,6 +2,7 @@
 using AppMaui.Core.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw new Exception ($"Erro ao salvar turma: {ex.Message}");
             }
         }//fim salvar
@@ -58,22 +60,23 @@ namespace AppMaui.Core.Services.Local
         {
             try
             {
-                if (turma.Id <= 0 ||
-                    string.IsNullOrEmpty(turma.Nome)||
+                if (turma.Id <= 0 || string.IsNullOrEmpty(turma.Nome) ||
                     turma.Nome.Length > 100 ||
                     turma.ProfessorId <= 0 ||
                     turma.TrilhaId <= 0 ||
-                    turma.TamanhoTrilha <= 0 ||
-                    string.IsNullOrEmpty(turma.CodigoAcesso) ||
+                    turma.TamanhoTrilha <= 0 ||                 
                     turma.DataCriacao == DateTime.MinValue ||
                     turma.Status == null)
+                {
+                    Debug.WriteLine("Não validou");
                     return false;
-
+                }     
                 await _repositorio.Update(turma);
                 return true;
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw new Exception ($"Erro ao atualizar turma: {ex.Message}");
             }
         }//fim atualizar

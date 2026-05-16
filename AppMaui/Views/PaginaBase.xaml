@@ -133,8 +133,18 @@
               Grid.Row="1" 
               Grid.Column="1"              
               Style="{StaticResource sLbUsuario}"/>
+            <Button Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding BotaoEdicao}"
+                    TranslationY="-3"
+                    FontSize="20"
+                    TranslationX="60"
+                    Text="&#9999;"
+                    BackgroundColor="Transparent"
+                    Command="{Binding AbrirEdicaoUserCommand}"/>
 
-    </Grid>
+        </Grid>
         <!--Label Grid.Row="1"
     Text="{Binding Icones}"
     FontFamily="FontAwesome"
@@ -148,8 +158,18 @@
                  Grid.Row="1"
                  Content="{Binding ViewAtiva}"
                  />
+        <!--abre a tela de cadastro e alterar senha (overlay) e Primeiro Acesso-->
+        <ContentView            
+x:Name="cvCadastro"
+Grid.Row="1" 
+Grid.ColumnSpan="2"
+IsVisible="{Binding MostrarCadastro}"
+InputTransparent="False">
+            <views:CadastroPView 
+    BindingContext="{Binding CadastroPVM}"/>
+        </ContentView>
 
-    <!--view navegação-->
+        <!--view navegação-->
     <!-- rodapé-->
     <Grid Grid.Row="2">
         <Grid.RowDefinitions>
@@ -278,8 +298,8 @@
                            Tablet="12" />
                 </Label.FontSize>
             </Label>
-        </Border>
-    </Grid>
+        </Border>            
+        </Grid>
 
     <!--view rodapé-->
     <Grid Grid.Row="3"

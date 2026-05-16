@@ -34,55 +34,67 @@ namespace AppMaui.Core.Services.Application
         {         
             try
             {       
-                //validações
-                if (string.IsNullOrWhiteSpace(cadastroProfessorDTO.User))
-                    return "Usuário obrigatório";
+                //validações              
                 if (string.IsNullOrWhiteSpace(cadastroProfessorDTO.Nome))
                     return "Nome obrigatório";
                 if (string.IsNullOrWhiteSpace(cadastroProfessorDTO.Email))
                     return "Email obrigatório";
                 if (string.IsNullOrWhiteSpace(cadastroProfessorDTO.Cpf))
                     return "CPF obrigatório";
-                
-                var db = _databaseService.Conexao;
-
-                //gerar senha provisoria
-                string senhaProvisoria = SenhaService.GerarSenhaProvisoria(8);                
-                cadastroProfessorDTO.Senha = senhaProvisoria;
-                string hash = _criptoService.GerarHash(cadastroProfessorDTO.Senha);
-               
-                //cadastra
-                var usuario = new Usuario
-                {
-                    User = cadastroProfessorDTO.User,
-                    Senha = hash,
-                    StatusSenha = false,
-                    StatusUsuario = true,
-                    Tipo = "Professor"
-                };
-
                 var professor = new Professor
                 {
                     Nome = cadastroProfessorDTO.Nome,
                     Cpf = cadastroProfessorDTO.Cpf,
-                    Email = cadastroProfessorDTO.Email                    
+                    Email = cadastroProfessorDTO.Email
                 };
-
-                //envia email com senha provisoria                
-                string assunto = "Bem-vindo ao Ajolede - Sua senha provisória";
-                string mensagem = $"Olá {cadastroProfessorDTO.User},\n\nSua conta foi criada com sucesso! Sua senha provisória é: " +
-                    $"{senhaProvisoria}\n\nPor favor, acesse em PRIMEIRO ACESSO e altere sua senha.\n\nAtenciosamente,\nEquipe Ajolede";
-                bool resul = await _emailService.EnviarEmail(cadastroProfessorDTO.Email, assunto, mensagem);
-                
-               
-
-                await db.RunInTransactionAsync(tran =>
+                if (cadastroProfessorDTO.User == string.Empty)
                 {
-                    tran.Insert(usuario);
-                    professor.UsuarioId = usuario.Id;
-                    tran.Insert(professor);
-                });
-                return "Cadastro realizado";
+                    professor.Id = cadastroProfessorDTO.Id;
+                    professor.UsuarioId = cadastroProfessorDTO.UsuarioId;
+
+                    var res = _professorService.AtualizarProfessor(professor);
+                    if (res == null)
+                        return "Erro ao atualizar professor.";
+                    else
+                        return "Professor atualizada com sucesso.";
+                }
+                else
+                {
+                    var db = _databaseService.Conexao;
+
+                    //gerar senha provisoria
+                    string senhaProvisoria = SenhaService.GerarSenhaProvisoria(8);
+                    cadastroProfessorDTO.Senha = senhaProvisoria;
+                    string hash = _criptoService.GerarHash(cadastroProfessorDTO.Senha);
+
+                    //cadastra
+                    var usuario = new Usuario
+                    {
+                        User = cadastroProfessorDTO.User,
+                        Senha = hash,
+                        StatusSenha = false,
+                        StatusUsuario = true,
+                        Tipo = "Professor"
+                    };
+
+
+
+                    //envia email com senha provisoria                
+                    string assunto = "Bem-vindo ao Ajolede - Sua senha provisória";
+                    string mensagem = $"Olá {cadastroProfessorDTO.User},\n\nSua conta foi criada com sucesso! Sua senha provisória é: " +
+                        $"{senhaProvisoria}\n\nPor favor, acesse em PRIMEIRO ACESSO e altere sua senha.\n\nAtenciosamente,\nEquipe Ajolede";
+                    bool resul = await _emailService.EnviarEmail(cadastroProfessorDTO.Email, assunto, mensagem);
+
+
+
+                    await db.RunInTransactionAsync(tran =>
+                    {
+                        tran.Insert(usuario);
+                        professor.UsuarioId = usuario.Id;
+                        tran.Insert(professor);
+                    });
+                    return "Cadastro realizado";
+                }     
             }
             catch (Exception ex)
             {

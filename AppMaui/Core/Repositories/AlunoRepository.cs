@@ -32,8 +32,20 @@ namespace AppMaui.Core.Repositories
         public async Task<int> Delete(int id) => await _db.DeleteAsync<Aluno>(id);
 
         //metodo para listar alunos por turma
-        public async Task<List<Aluno>> GetByTurma(int turmaId) =>
-            await _db.Table<Aluno>().Where(a => a.TurmaId == turmaId).ToListAsync();
+        public async Task<List<Aluno>> GetByTurma(int turmaId)
+        {
+            var alunos = await _db.Table<Aluno>()
+                                  .Where(a => a.TurmaId == turmaId)
+                                  .ToListAsync();
+
+            var usuariosAtivos = await _db.Table<Usuario>()
+                                          .Where(u => u.StatusUsuario == true)
+                                          .ToListAsync();
+
+            return alunos
+                .Where(a => usuariosAtivos.Any(u => u.Id == a.UsuarioId))
+                .ToList();
+        }
 
         //metodo pesquisar se nickname já existe
         public async Task<bool> NicknameExist(string nickname) =>

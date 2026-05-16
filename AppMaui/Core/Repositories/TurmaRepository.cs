@@ -19,7 +19,7 @@ namespace AppMaui.Core.Repositories
 
         //metodo listar por usuario
         public async Task<List<Turma>> GetByProfessor(int id) =>
-            await _db.Table<Turma>().Where(t => t.ProfessorId == id).ToListAsync();
+            await _db.Table<Turma>().Where(t => t.ProfessorId == id && t.Status == true).ToListAsync();
         //metodo buscar por id
         public async Task<Turma?> GetById(int id) => await _db.Table<Turma>().FirstOrDefaultAsync(t => t.Id == id);
 
@@ -31,6 +31,6 @@ namespace AppMaui.Core.Repositories
 
         //metodo buscar turma unica de professor, enquanto não há multiplos cadastros
         public async Task<Turma?> GetOneByProfessor(int id) => 
-            await _db.Table<Turma>().FirstOrDefaultAsync(t => t.ProfessorId == id);
+            await _db.Table<Turma>().FirstOrDefaultAsync(t => t.ProfessorId == id && t.Status == true);
     }
 }

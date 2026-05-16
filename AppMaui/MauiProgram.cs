@@ -103,6 +103,7 @@ namespace AppMaui
             builder.Services.AddTransient<PaginaBaseViewModel>();
             builder.Services.AddTransient<AlunoPViewModel>();   
             builder.Services.AddTransient<CadastroAViewModel>();
+            builder.Services.AddTransient<CadastroTViewModel>();
             builder.Services.AddTransient<TurmaPViewModel>();
 
             //registrar as interfaces

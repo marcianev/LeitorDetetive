@@ -85,7 +85,7 @@ namespace AppMaui.ViewsModels
 
         //comando deletar aluno
         [RelayCommand]
-        private async void DeletarAluno()
+        private async Task DeletarAluno()
         {
             if (Aluno.Id != 0)
             {
@@ -104,7 +104,7 @@ namespace AppMaui.ViewsModels
 
         //comando para resetar a senha do aluno 
         [RelayCommand]
-        private async void ResetarSenha()
+        private async Task ResetarSenha()
         {          
             if (Aluno.UsuarioId != 0)
             {
@@ -128,11 +128,37 @@ namespace AppMaui.ViewsModels
             }
         }
 
+        [RelayCommand]
+        private async Task ArquivarAluno()
+        {
+            if (Aluno.Id <= 0)
+            {
+                Mensagem = "Aluno inválido para arquivamento.";
+                await Task.Delay(3000);
+                Mensagem = string.Empty;
+                return;
+            }
+            var usuario = await _usuarioService.BuscarUsuarioPorId(Aluno.UsuarioId);
+            if (usuario != null) 
+                usuario.StatusUsuario = false;
+
+            var res = await _usuarioService.AtualizarUsuario(usuario);
+            if (res)
+                Mensagem = "Aluno arquivado com sucesso!";
+            else
+                Mensagem = "Erro ao arquivar aluno.";
+            await Task.Delay(3000);
+            Mensagem = string.Empty;
+            FecharCadastro();
+        }
+
         //fechar view
         [RelayCommand]
         private void FecharCadastro()
-        {            
-            OnFecharCadastro?.Invoke();
+        {
+            Aluno = new();
+            Nome = string.Empty;
+            OnFecharCadastro?.Invoke();            
         }
         
 

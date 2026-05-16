@@ -18,26 +18,44 @@ namespace AppMaui.ViewsModels
 {
     public partial class PaginaBaseViewModel : ObservableObject
     {
+        
         [ObservableProperty]
         private string? user;
         [ObservableProperty]
         private View? viewAtiva;
-
+        [ObservableProperty]
+        private bool botaoEdicao;
+        [ObservableProperty]
+        private bool modoEdicao;
         public Usuario _usuario;
+        [ObservableProperty]
+        private bool mostrarCadastro;        
+        
+        public CadastroPViewModel CadastroPVM { get; }
 
         DashPView  _dashPView;
         AlunoPView _alunoPView;
         TurmaPView _turmaPView;
+        Professor _professor;
+        ProfessorService _professorService;
 
-        public PaginaBaseViewModel(DashPView dashPView, AlunoPView alunoPView, TurmaPView turmaPView)
+        public PaginaBaseViewModel(DashPView dashPView, 
+            AlunoPView alunoPView, TurmaPView turmaPView,
+            CadastroPViewModel cadastroPVM, ProfessorService professorService)
         {
             _dashPView = dashPView;
             _alunoPView = alunoPView;
             _turmaPView = turmaPView;
-            Usuario usuario = new();   
+            CadastroPVM = cadastroPVM;
+            _professorService = professorService;
             _usuario = new Usuario();
             Logado();
+            CadastroPVM.OnFecharCadastro = () => MostrarCadastro = false;
+            if (_usuario.Tipo == "Professor")
+                BotaoEdicao = true;
+            ModoEdicao = false;
             AbrirHome();
+            _professor = new();
         }
 
         //metodo carrega label com nome do usuario e armazena o id de usuario
@@ -84,8 +102,31 @@ namespace AppMaui.ViewsModels
                 ViewAtiva = _alunoPView;
         }
 
-        //
-            /*
+        //mostrar view de edição de usuário
+        [RelayCommand]
+        private async Task AbrirEdicaoUser()
+        {
+            _professor = await _professorService.BuscarProfessorPorUsuario(_usuario.Id);
+            if (_professor == null)
+                throw new Exception("Professor não encontrado.");
+            else
+            {
+                CadastroPVM.Id = _professor.Id;
+                CadastroPVM.User = _usuario.User;
+                CadastroPVM.UserTemp = _usuario.User;
+                CadastroPVM.Nome = _professor.Nome;
+                CadastroPVM.Email = _professor.Email;
+                CadastroPVM.Cpf = _professor.Cpf;
+                CadastroPVM.UsuarioId = _usuario.Id;
+                CadastroPVM.ModoAlterar = true;
+                MostrarCadastro = true;
+            }
+            
+        }
+
+        
+
+        /*            
         [ObservableProperty]
         private string icones;
         private readonly OpenAIService _openAIService;

@@ -59,7 +59,8 @@ namespace AppMaui.ViewsModels
         //mostra a view de cadastro
         [RelayCommand]
         private void AbrirCadastro()
-        {           
+        {
+            CadastroPVM.ModoAlterar = false;
             MostrarCadastro = true;
         }
 

@@ -37,7 +37,7 @@ namespace AppMaui.ViewsModels
             CarregaAlunos();
         }
 
-        //lisar alunos
+        //listar alunos
         [RelayCommand]
         public async Task CarregaAlunos()
         {            

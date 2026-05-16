@@ -10,6 +10,6 @@ public partial class PaginaBase : ContentPage
 	{
 		InitializeComponent();
 		_vm = viewModel;
-		BindingContext = viewModel;
+		BindingContext = viewModel;		
 	}   
 }

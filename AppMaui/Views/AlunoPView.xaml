@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppMaui.Views.AlunoPView"
               xmlns:vm="clr-namespace:AppMaui.ViewsModels"
-            x:DataType="vm:AlunoPViewModel"
+             x:DataType="vm:AlunoPViewModel"
              xmlns:model="clr-namespace:AppMaui.Core.Models"
              xmlns:views="clr-namespace:AppMaui.Views"
              >

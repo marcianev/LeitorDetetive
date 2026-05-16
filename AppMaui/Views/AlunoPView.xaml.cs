@@ -8,10 +8,5 @@ public partial class AlunoPView : ContentView
 	{
 		InitializeComponent();
 		BindingContext = view;
-	}
-
-    private void SwipeView_SwipeStarted(object sender, SwipeStartedEventArgs e)
-    {
-
-    }
+	}   
 }

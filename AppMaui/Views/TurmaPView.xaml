@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppMaui.Views.TurmaPView">
+             x:Class="AppMaui.Views.TurmaPView" 
+             xmlns:model="clr-namespace:AppMaui.Core.Models"
+             xmlns:views="clr-namespace:AppMaui.Views"
+             xmlns:vm="clr-namespace:AppMaui.ViewsModels"
+            x:DataType="vm:TurmaPViewModel">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="{OnIdiom Phone=1*, Desktop=*}"/>
@@ -25,10 +29,11 @@
             <Grid>
                 <Grid.RowDefinitions >
                     <RowDefinition Height="{OnIdiom Phone= 0.2*, Desktop= 0.1*}"/>
+                    <RowDefinition Height="{OnIdiom Phone= 0.2*, Desktop= 0.1*}"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.7*"/>
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
@@ -82,30 +87,63 @@
                    />
 
                 <!-- lista-->
-                <Border Grid.Row="1"         
-                    BackgroundColor="{StaticResource verdeEscuro}"   
-                    VerticalOptions="Center"  
-                    Margin="5"
-                    Style="{StaticResource sBrdAzul}">
-                    <Label x:Name="lbTurma"
-                       Text="5º ano A"
-                       TextColor="{StaticResource begeClaro}"
-                       />
-                </Border>
-                <Label x:Name="lbQtdAluno"
-                   Grid.Row="1"
-                   Grid.Column="1"
-                   Text="15"
-                   FontAttributes="Bold"  
-                   TextColor="{StaticResource marromEscuro}"
-                   />
-                <Label x:Name="lbTamTrilha"
-                   Grid.Row="1"
-                   Grid.Column="2"
-                   Text="15"
-                   FontAttributes="Bold"                              
-                   TextColor="{StaticResource marromEscuro}"
-                   />
+                <Label Grid.Row="1" 
+                       Grid.Column="1"
+                       FontAttributes="Bold" 
+                       Text="Ano"
+                        TextColor="{StaticResource marromEscuro}"
+                        />
+                <Label Grid.Row="1" 
+                       Grid.Column="2"
+                       FontAttributes="Bold" 
+                       Text="Tam Trilha"
+                        TextColor="{StaticResource marromEscuro}"
+                        />
+                <CollectionView ItemsSource="{Binding Turmas}"
+                                Grid.Row="3"
+                                Grid.ColumnSpan="3">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Turma">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.6*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.7*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TurmaPViewModel}}, Path=AlterarCadastroCommand}"
+                                        CommandParameter="{Binding}"/>
+                                </Grid.GestureRecognizers>
+                                <Border BackgroundColor="{StaticResource verdeEscuro}"   
+                                      VerticalOptions="Center"  
+                                      Margin="5"
+                                      Style="{StaticResource sBrdAzul}">
+                                        <Label x:Name="lbTurma"
+                                         Text="{Binding Nome}"
+                                               HorizontalOptions="Center"
+                                         TextColor="{StaticResource begeClaro}"
+                                         />
+                                </Border>
+                                <Label x:Name="lbQtdAluno"                                   
+                                    Grid.Column="1"
+                                    Text="{Binding Ano}"
+                                    FontAttributes="Bold"  
+                                    TextColor="{StaticResource marromEscuro}"
+                                    />
+                                <Label x:Name="lbTamTrilha"                                   
+                                   Grid.Column="2"
+                                   Text="{Binding TamanhoTrilha}"
+                                   FontAttributes="Bold"                              
+                                   TextColor="{StaticResource marromEscuro}"
+                                   />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>    
             </Grid>
 
         </Border>
@@ -317,6 +355,18 @@ BackgroundColor="{StaticResource verdeMedio}"
 
 />
 
-    </Grid>
-    
-</ContentView>
+        <!--abre a tela de cadastro e alterar senha (overlay) e Primeiro Acesso-->
+        <ContentView            
+x:Name="cvCadastro" 
+Grid.ColumnSpan="3"
+            Grid.RowSpan="3"
+IsVisible="{Binding MostrarCadastro}"
+            InputTransparent="False">
+            <views:CadastroTView
+     BindingContext="{Binding CadastroTVM} "/>
+
+        </ContentView>
+
+    </Grid>  
+
+    </ContentView>
