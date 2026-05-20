@@ -4,6 +4,7 @@ using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -96,9 +97,9 @@ namespace AppMaui.ViewsModels
                                 LetraOriginal = letra.ToString(),
                                 LetraCriptograma = await _criptogramaService.Criptografar(letra.ToString()),
                                 Posicao = posicao,
-                                Destacada = letraDestaque
-                            };
-
+                                Destacada = letraDestaque,
+                                IdDesafio = d.Id
+                            };                          
                             letraDTO.Add(lDTO);
                             posicao++;
                         }
@@ -111,7 +112,8 @@ namespace AppMaui.ViewsModels
                             {
                                 PalavraSecretaLetras.Add(new LetraDTO
                                 {
-                                    LetraOriginal = letra.ToString(),   
+                                    LetraOriginal = letra.ToString(),  
+                                    IdDesafio = d.Id
                                 });                                
                             }
                         }
@@ -141,6 +143,114 @@ namespace AppMaui.ViewsModels
                     }
                 }
             }
-        }//definir livro       
+        }//definir livro
+        
+        //comando salva as respostas que estão corretas
+        [RelayCommand]
+        private async Task ValidarRespostas()
+        {
+            bool livroConcluido = true;
+            string resposta = string.Empty;
+            int aluno = 0;
+            int desafio = 0;
+            var desafioCorreto = true;
+
+            //validar os desafios da esquerda
+            foreach (var livro in DesafiosDTOEsquerda)
+            {
+                resposta = string.Empty;
+                aluno = livro.IdAluno;                
+                desafioCorreto = true;
+
+                foreach (var letra in livro.Letras)
+                {
+                    if (letra.LetraOriginal == letra.LetraDigitada)
+                    {
+                        resposta = $"{resposta}{letra.LetraDigitada}";
+                    }
+                    else
+                    {
+                        livroConcluido = false;
+                        desafioCorreto = false;                        
+                    }                    
+                }
+                if (desafioCorreto)
+                {
+                    await _respostaService.SalvarResposta(new Resposta
+                    {                       
+                        AlunoId = livro.IdAluno,
+                        DesafioId = livro.IdDesafio,
+                        Palavra = resposta
+                    });
+                }               
+            }
+
+            //validar os desafios da direita
+            foreach (var livro in DesafiosDTODireita)
+            {
+                desafioCorreto = true;
+                resposta = string.Empty;                
+
+                foreach (var letra in livro.Letras)
+                {
+                    if (letra.LetraOriginal == letra.LetraDigitada)
+                    {
+                        resposta = $"{resposta}{letra.LetraDigitada}";
+                    }
+                    else
+                    {
+                        livroConcluido = false;
+                        desafioCorreto = false;
+                    }                    
+                }
+                if (desafioCorreto)
+                {
+                    await _respostaService.SalvarResposta(new Resposta
+                    {                        
+                        AlunoId = livro.IdAluno,
+                        DesafioId = livro.IdDesafio,
+                        Palavra = resposta
+                    });
+                }                
+            }
+            resposta = string.Empty;
+            desafioCorreto = true;
+
+            //validar palavra secreta
+            foreach (var letra in PalavraSecretaLetras)
+            {
+                desafio = letra.IdDesafio;
+                Debug.WriteLine(desafio);
+                if (letra.LetraOriginal == letra.LetraDigitada)
+                {
+                    resposta = $"{resposta}{letra.LetraDigitada}";
+                   
+                }
+                else
+                {
+                    desafioCorreto = false;
+                    livroConcluido = false;
+                }                           
+            }
+            if (desafioCorreto)
+            {
+                await _respostaService.SalvarResposta(new Resposta
+                {
+                    AlunoId = aluno,
+                    DesafioId = desafio,
+                    Palavra = resposta
+                });
+            }
+            Debug.WriteLine(resposta);
+            Debug.WriteLine(aluno);
+            Debug.WriteLine(desafio);
+            Debug.WriteLine(desafioCorreto);
+            Debug.WriteLine(livroConcluido);
+
+
+            if (livroConcluido)
+                await _idialogoService.Mensagem("Conclusão", "Livro Concluído", "OK");
+            
+        }//validar respostas
     }
 }
