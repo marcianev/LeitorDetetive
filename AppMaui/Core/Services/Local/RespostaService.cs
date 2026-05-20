@@ -94,23 +94,22 @@ namespace AppMaui.Core.Services.Local
             }
         }//fim deletar
 
-        //metodo transforma char da palavra e transforma em string para salvar
-        private static string TransformarPalavra(List<char> letras)
+        //listar respostas por livro e usuario, para exibir na estante
+        public async Task<List<Resposta>> ListarAlunoDesafio(int livroId, int alunoId)
         {
-            string palavra = "";
-
-            foreach (char c in letras)
+            try
             {
-                palavra += c;
+                if (livroId <= 0 || alunoId <= 0)
+                    throw new Exception("ID do livro ou aluno é inválido.");
+                var respostas = await _repostitorio.GetByAlunoDesafio(alunoId, livroId);
+                if(respostas == null)
+                    return null;
+                return respostas;
             }
-            return palavra;
-        }//fim transformar
-
-        //metodo transformar string em char de palavras
-        private static List<char> TransformarChar(string s)
-        {
-            //coleção de toList simplificado
-            return [.. s];
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao listar respostas por livro e usuário: {ex.Message}");
+            }
         }
     }
 }

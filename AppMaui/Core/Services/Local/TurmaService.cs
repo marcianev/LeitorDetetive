@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace AppMaui.Core.Services.Local
 {
-    public class TurmaService(TurmaRepository _repositorio)
+    public class TurmaService(TurmaRepository _repositorio, 
+        ProfessorService _professorService)
     {
         //metodo salvar
         public async Task<bool> SalvarTurma(Turma turma)
@@ -39,14 +40,18 @@ namespace AppMaui.Core.Services.Local
         }//fim salvar
 
         //metodo listar por usuario
-        public async Task<List<Turma>> ListarTurmaPorUsuario(int id)
+        public async Task<List<Turma>> ListarTurmaPorUsuario(int idUsuario)
         {
             try
             {
                 //validação
-                if (id <= 0)
+                if (idUsuario <= 0)
                     throw new Exception("id invalido");
-                var turmas = await _repositorio.GetByProfessor(id);
+
+                //busca o id do professor
+                var professor = await _professorService.BuscarProfessorPorUsuario(idUsuario);
+
+                var turmas = await _repositorio.GetByProfessor(professor.Id);
                 return turmas;
             }
             catch (Exception ex)

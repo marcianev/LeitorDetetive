@@ -89,7 +89,7 @@ namespace AppMaui.Core.Services.Local
             }
         }//fecha método deletar aluno
 
-        //buscar aluno por usuario
+        //buscar aluno por usuario e retorna o codigo de acesso
         public async Task<string> BuscarAlunoPorUsuario(int usuarioId)
         {
             try
@@ -101,6 +101,25 @@ namespace AppMaui.Core.Services.Local
                 if (aluno == null)
                     return "";
                 return aluno.CodigoAcesso;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao buscar aluno por ID: {ex.Message}");
+            }
+        }//fecha método buscar aluno por usuario
+
+        //buscar aluno por usuario e retorna o aluno
+        public async Task<Aluno> BuscarAlunoUsuario(int usuarioId)
+        {
+            try
+            {
+                //validação
+                if (usuarioId <= 0)
+                    return null;
+                var aluno = await _repositorio.GetByUsuarioId(usuarioId);
+                if (aluno == null)
+                    return null;
+                return aluno;
             }
             catch (Exception ex)
             {

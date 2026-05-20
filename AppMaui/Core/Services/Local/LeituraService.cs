@@ -17,8 +17,7 @@ namespace AppMaui.Core.Services.Local
             try
             {
                 //validações
-                if (leitura.UsuarioId <= 0 ||
-                    leitura.DataInicio == default ||
+                if (leitura.UsuarioId <= 0 ||                   
                     leitura.LivroId <= 0)
                     return false;
 
@@ -97,5 +96,56 @@ namespace AppMaui.Core.Services.Local
                 throw new Exception ($"Erro ao deletar leitura: {ex.Message}");
             }
         }//fim deletar
+
+        //buscar leitura por idlivro e idusuario, para verificar se o usuário já iniciou a leitura de um livro
+        public async Task<Leitura?> GetLeituraPorLivroUsuario(int livroId, int usuarioId)
+        {
+            try
+            {
+                //validações dos ids
+                if (livroId <= 0 || usuarioId <= 0)
+                    throw new Exception("IDs de livro e usuário são inválidos.");
+                var leitura = await _repositorio.GetByLivroUsuario(livroId, usuarioId);
+                return leitura;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao buscar leitura: {ex.Message}");
+            }
+        }//fim método buscar leitura por livro e usuário
+
+        //buscar leitura atual por usuário, para exibir na estante o livro que o usuário está lendo no momento
+        public async Task<Leitura?> GetLeituraAtualPorUsuario(int usuarioId)
+        {
+            try
+            {
+                //validação do id do usuário
+                if (usuarioId <= 0)
+                    throw new Exception("ID do usuário é inválido.");
+                var leitura = await _repositorio.GetLeituraAtualPorUsuario(usuarioId);
+                return leitura;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao buscar leitura atual: {ex.Message}");
+            }
+        }//fim método buscar leitura atual por usuário
+
+        //buscar leitura anterior por usuário, para exibir na estante o livro que o usuário leu por último
+        public async Task<Leitura?> GetLeituraAnteriorPorUsuario(int usuarioId)
+        {
+            try
+            {
+                //validação do id do usuário
+                if (usuarioId <= 0)
+                    throw new Exception("ID do usuário é inválido.");
+                var leitura = await _repositorio.GetLeituraAnteriorPorUsuario(usuarioId);
+                return leitura;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao buscar leitura anterior: {ex.Message}");
+            }
+        }//fim método buscar leitura anterior por usuário
     }
 }

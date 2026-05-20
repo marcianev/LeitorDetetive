@@ -17,6 +17,6 @@ namespace AppMaui.Core.Models
         [NotNull]
         public int UsuarioId { get; set; }
         [NotNull]
-        public int LivroId { get; set; }
+        public int LivroId { get; set; }   
     }
 }

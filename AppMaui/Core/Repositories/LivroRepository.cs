@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace AppMaui.Core.Repositories
@@ -29,5 +30,19 @@ namespace AppMaui.Core.Repositories
 
         //metodo deletar
         public async Task<int> Delete(Livro livro) => await _db.DeleteAsync<Livro>(livro);
-    }
+
+        //metodo injeta a lista de livros no banco de dados, para popular a estante do aluno
+        public async Task PopularLivros()
+        {
+            var existe = await _db.Table<Livro>().CountAsync();
+            if (existe > 0) return;
+
+            using var stream = await FileSystem.OpenAppPackageFileAsync("livros.json");
+            using var reader = new StreamReader(stream);
+            var json = await reader.ReadToEndAsync();
+            var livros = JsonSerializer.Deserialize<List<Livro>>(json);
+            if(livros != null)
+                await _db.InsertAllAsync(livros);
+        }
+    } 
 }

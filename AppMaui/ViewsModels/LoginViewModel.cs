@@ -1,4 +1,5 @@
-﻿using AppMaui.Core.Services.Application;
+﻿using AppMaui.Core.Models;
+using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.Interfaces;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -25,6 +26,7 @@ namespace AppMaui.ViewsModels
 
         [ObservableProperty]
         private bool mostrarPrimeiroAcesso;
+        
 
         public CadastroPViewModel CadastroPVM { get; }
 
@@ -49,8 +51,7 @@ namespace AppMaui.ViewsModels
             NovaSenhaVM = novaSenhaVM;
             PrimeiroAcessoVM = pAcessoVM;
             _auth = auth;
-            _navigationService = nav;
-                      
+            _navigationService = nav;                 
             CadastroPVM.OnFecharCadastro = () => MostrarCadastro = false;
             NovaSenhaVM.OnFecharNovaSenha = () => MostrarNovaSenha = false;
             PrimeiroAcessoVM.OnFecharPAcesso = () => MostrarPrimeiroAcesso = false;
@@ -93,8 +94,9 @@ namespace AppMaui.ViewsModels
             var user = await _auth.Autenticar(Usuario, Senha);
 
             if(user != null)
-            {
-                
+            {               
+                Usuario = string.Empty;
+                Senha = string.Empty;
                 await _navigationService.NavegarPara("PaginaBase");
             }
             else

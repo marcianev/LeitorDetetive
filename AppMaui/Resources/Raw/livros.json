@@ -1,0 +1,38 @@
+﻿[
+  {
+    "Titulo": "A BOLA E O GOLEIRO",
+    "Autor": "JORGE AMANDO",
+    "Ilustrador": "ALDEMIR MARTINS",
+    "Editora": "RECORD",
+    "Capa": "bolaGoleiro.webp"
+  },
+  {
+    "Titulo": "A ESCOLHINHA DO MAR",
+    "Autor": "RUTH ROCHA",
+    "Ilustrador": "ADILSON FARIAS",
+    "Editora": "SALAMANDRA",
+    "Capa": "escolaMar.webp"
+  },
+  {
+    "Titulo": "ARMANDINHO, O JUIZ",
+    "Autor": "RUTH ROCHA",
+    "Ilustrador": "IVAN ZIGG",
+    "Editora": "FTD",
+    "Capa": "armandinho.webp"
+  },
+  {
+    "Titulo": "ATÉ MAIS VERDE",
+    "Autor": "JULIETA DE GODOY LADEIRA",
+    "Ilustrador": "ADRIANO RENZI",
+    "Editora": "SALAMANDRA",
+    "Capa": "maisVerde.webp"
+  },
+  {
+    "Titulo": "CONDOMÍNIO DOS MONSTROS",
+    "Autor": "ALEXANDRE CASTRO GOMES",
+    "Ilustrador": "CRIS ALHADEFF",
+    "Editora": "RHJ",
+    "Capa": "condomioMonstros.webp"
+  }
+]
+    

@@ -54,6 +54,8 @@ namespace AppMaui.ViewsModels
         [RelayCommand]
         public async Task CarregarTurmas()
         {
+            if (_usuario.Tipo != "Professor")
+                return;
             var lista = await _turmaService.ListarTurmaPorUsuario(_usuario.Id);
             if (lista != null)
                 Turmas = new ObservableCollection<Turma>(lista);

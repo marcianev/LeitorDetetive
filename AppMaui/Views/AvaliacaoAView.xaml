@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppMaui.Views.AvaliacaoAView">
+    <Grid VerticalOptions="Start">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{OnIdiom Phone=0.40*, Desktop=0.35*}"/>
+            <RowDefinition Height="{OnIdiom Phone=0.20*, Desktop=0.2*}"/>
+            <RowDefinition Height="{OnIdiom Phone=1*, Desktop=1*}"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!--Dados do livro-->
+        <Border x:Name="brdMsgPat"   
+        Grid.ColumnSpan="2"
+        Stroke="{StaticResource verdeMedio}" 
+        Margin="15,15,15,5"          
+        Style="{StaticResource sBrdPrincipal}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{OnIdiom Phone=2.5*, Desktop=1*}"/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Rectangle x:Name="rtgLivro"  
+                   Grid.RowSpan="{OnIdiom Phone=1, Desktop=4}"
+                   Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                   Fill="{StaticResource verdeEscuro}" 
+                   Stroke="{StaticResource verdeEscuro}"
+                   />
+                <Label x:Name="lbTitLivSombra1" 
+               Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+               VerticalOptions="Start"
+               FontSize="{OnIdiom Phone=17, Desktop=16}"
+               HorizontalOptions="{OnIdiom Phone=Center, Desktop=Center}"
+               TranslationX="1"
+               TranslationY="2"
+               Text="MARCELO, MARMELO, MARTELO"
+               Style="{StaticResource sLbSombra1}"   
+               />
+                <Label x:Name="lbTitLivSombra2" 
+               Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                VerticalOptions="Start" 
+                HorizontalOptions="{OnIdiom Phone=Center, Desktop=Center}"
+                TranslationX="1"
+                FontSize="{OnIdiom Phone=17, Desktop=16}"
+                TranslationY="2"
+                Text="MARCELO, MARMELO, MARTELO"
+                Style="{StaticResource sLbSombra2}"     
+                />
+                <Label x:Name="lbTitLivSombra3" 
+               Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                VerticalOptions="Start" 
+                HorizontalOptions="{OnIdiom Phone=Center, Desktop=Center}"
+                TranslationX="-1"
+                FontSize="{OnIdiom Phone=17, Desktop=16}"
+                TranslationY="4"
+                Text="MARCELO, MARMELO, MARTELO"
+                Style="{StaticResource sLbSombra2}"     
+                />
+                <Label x:Name="lbTitLivSombra4" 
+               Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                VerticalOptions="Start" 
+                HorizontalOptions="{OnIdiom Phone=Center, Desktop=Center}"
+                TranslationX="-1"
+                FontSize="{OnIdiom Phone=17, Desktop=16}"
+                TranslationY="4"
+                Text="MARCELO, MARMELO, MARTELO"
+                Style="{StaticResource sLbSombra2}"     
+                />
+                <Label x:Name="lbLivTitulo"    
+               Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                VerticalOptions="Start" 
+                HorizontalOptions="{OnIdiom Phone=Center, Desktop=Center}"
+                TranslationX="0"
+                FontSize="{OnIdiom Phone=17, Desktop=16}"
+               TranslationY="3"
+                Text="MARCELO, MARMELO, MARTELO"     
+               Style="{StaticResource sLbTitulo}"   
+               />
+                <Image x:Name="imgClass" 
+               Grid.Row="{OnIdiom Phone=0, Desktop=1}"
+               Grid.RowSpan="{OnIdiom Phone=1, Desktop=2}"
+               Margin="35,5"
+               WidthRequest="{OnIdiom Phone=15, Desktop=15}"
+               HorizontalOptions="Center"       
+               VerticalOptions="End"
+               Source="estrela.webp"
+               Style="{StaticResource sImgCabecalho}"
+               TranslationX="0"
+               />
+                <Image x:Name="imgCapa"
+               Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+               Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+               Grid.RowSpan="{OnIdiom Phone=3,Desktop=4}"
+               Margin="15,5"                              
+               HorizontalOptions="Start"                               
+               Source="livros.webp"
+               Style="{StaticResource sImgCabecalho}"
+               />
+                <!--Autor-->
+                <Label x:Name="lbAutorTit"
+               Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+               Grid.Column="{OnIdiom Phone=0,Desktop=1}"
+               Text="AUTOR:"
+               FontAttributes="Bold"
+               FontSize="14"  
+               HorizontalTextAlignment="Justify"                               
+               HorizontalOptions="Start"
+               TextColor="{StaticResource marromEscuro}"
+               TranslationX="90"
+               />
+                <Label x:Name="lbAutor"
+               Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+               Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+               Text="RUTH ROCHA"                               
+               FontSize="14"  
+               HorizontalTextAlignment="Justify"                               
+               HorizontalOptions="Start"
+               TextColor="{StaticResource marromEscuro}"
+               TranslationX="145"/>
+                <!--Ilustrador-->
+                <Label x:Name="lbIlusTit"
+                Grid.Row="{OnIdiom Phone=2, Desktop=1}"
+               Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+               Text="ILUSTRADOR:"
+               FontAttributes="Bold"
+               FontSize="14"  
+               HorizontalTextAlignment="Justify"                               
+               HorizontalOptions="Start"
+               TextColor="{StaticResource marromEscuro}"
+               TranslationX="90"
+               />
+                <Label x:Name="lbIlustrador"
+               Grid.Row="{OnIdiom Phone=2, Desktop=1}"
+               Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+               Text="MARIANA"                               
+               FontSize="14"  
+               HorizontalTextAlignment="Justify"                              
+               HorizontalOptions="Start"
+               TextColor="{StaticResource marromEscuro}"
+               TranslationX="185"
+               />
+                <!--PAGINAS-->
+                <Label x:Name="lbPag"
+                Grid.Row="{OnIdiom Phone=3, Desktop=2}"
+                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+               Text="27"
+               FontAttributes="Bold"
+               FontSize="14"  
+               HorizontalTextAlignment="Justify"                               
+               HorizontalOptions="Start"
+               TextColor="{StaticResource marromEscuro}"
+               TranslationX="90"
+               />
+                <Label x:Name="lbPagTit"
+               Grid.Row="{OnIdiom Phone=3, Desktop=2}"
+               Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+               Text="PÁGINAS"    
+               FontAttributes="Bold"
+               FontSize="14"  
+               HorizontalTextAlignment="Justify"                              
+               HorizontalOptions="Start"
+               TextColor="{StaticResource marromEscuro}"
+               TranslationX="115"
+               />
+            </Grid>
+        </Border>
+        <!--Titulo comentários-->
+        <Border x:Name="brdTitComent"
+        Stroke="{StaticResource verdeMedio}" 
+        Margin="15,5"
+        Grid.Row="1"                         
+        Grid.ColumnSpan="2"
+        VerticalOptions="Fill"
+        Style="{StaticResource sBrdPrincipal}">
+            <Grid>
+
+                <Rectangle x:Name="rtgTitComent"           
+            Fill="{StaticResource verdeEscuro}" 
+            Stroke="{StaticResource verdeEscuro}"                                   
+            />
+
+                <Image x:Name="imgComent" 
+               Margin="15,5" 
+               HorizontalOptions="Start"
+               Source="comentarios.webp"
+               Style="{StaticResource sImgCabecalho}"
+               />
+                <Label x:Name="lbComentSombra1" 
+               VerticalOptions="Center" 
+               FontSize="{OnIdiom Phone=17, Desktop=20}"
+               HorizontalOptions="Center"  
+               TranslationX="{OnIdiom Phone= 0,Desktop=0}"     
+               Text="COMENTÁRIOS" 
+               Style="{StaticResource sLbSombra1}"   
+               />
+                <Label x:Name="lbComentSombra2" 
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" 
+               TranslationX="{OnIdiom Phone= 0,Desktop=0}"    
+               FontSize="{OnIdiom Phone=17, Desktop=20}"
+               Text="COMENTÁRIOS"
+               Style="{StaticResource sLbSombra2}"     
+               />
+                <Label x:Name="lbComentSombra3"
+               Text="COMENTÁRIOS"
+               HorizontalOptions="Center" 
+               TranslationX="0"
+               Style="{StaticResource sLbSombra3}"  
+               VerticalOptions="Center" 
+               FontSize="{OnIdiom Phone=17, Desktop=20}"
+               />
+                <Label x:Name="lbComentSombra4"                                
+               VerticalOptions="Center" 
+               FontSize="{OnIdiom Phone=17, Desktop=20}"
+               HorizontalOptions="Center" 
+               TranslationX="{OnIdiom Phone= 0,Desktop=0}"    
+               Text="COMENTÁRIOS" 
+               Style="{StaticResource sLbSombra4}"  
+               />
+                <Label x:Name="lbComent"
+               VerticalOptions="Center"   
+               FontSize="{OnIdiom Phone=17, Desktop=20}"
+               HorizontalOptions="Center" 
+               TranslationX="{OnIdiom Phone= 0,Desktop=0}"    
+               Text="COMENTÁRIOS"                            
+               Style="{StaticResource sLbTitulo}"   
+               />
+            </Grid>
+        </Border>
+        <!--Lista Comentários-->
+        <Border x:Name="brdComentarios"    
+        Grid.Row="2"
+        Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+        Stroke="{StaticResource verdeMedio}" 
+        Margin="15,5"      
+        Style="{StaticResource sBrdPrincipal}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{OnIdiom Phone=0.5*, Desktop=0.4*}"/>
+                    <RowDefinition Height="{OnIdiom Phone=1*, Desktop=1*}"/>
+                </Grid.RowDefinitions>
+
+                <Rectangle x:Name="rtgComentarios" 
+                   Fill="{StaticResource verdeEscuro}" 
+                   Stroke="{StaticResource verdeEscuro}"
+                   />
+                <!--Nickname-->
+                <Label x:Name="lbNick"       
+               VerticalOptions="Center" 
+               HorizontalOptions="Start"                            
+               FontSize="{OnIdiom Phone=17, Desktop=20}"    
+               TranslationX="{OnIdiom Phone=10, Desktop=20}"
+               Text="CP23"     
+               Style="{StaticResource sLbTitulo}"   
+               />
+                <!--Turma-->
+                <Label x:Name="lbTurma"       
+               VerticalOptions="Center" 
+               HorizontalOptions="Center"
+               TranslationX="{OnIdiom Phone= -5,Desktop=0}"
+               FontSize="{OnIdiom Phone=17, Desktop=20}"  
+               Margin="10"                               
+               Text="5º ano A"     
+               Style="{StaticResource sLbTitulo}"   
+               />
+                <!--Data-->
+                <Label x:Name="lbData"       
+               VerticalOptions="Center" 
+               HorizontalOptions="End"          
+               TranslationX="0"                 
+               FontSize="{OnIdiom Phone=17, Desktop=20}"  
+               Margin="20,0"                               
+               Text="13/03/26"     
+               Style="{StaticResource sLbTitulo}"   
+               />
+                <!--turma-->
+                <Label x:Name="lbTu"
+               Grid.Row="1"
+               Text="Livro engraçado, gostei do cachorrinho e do nome que o menino deu pra casinha dele."
+               FontAttributes="Bold"
+               FontSize="{OnIdiom Phone=14,Desktop=16}"  
+               HorizontalTextAlignment="Justify"           
+               HorizontalOptions="Start"
+               TextColor="{StaticResource marromEscuro}"     
+               Margin="5,2"
+               />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentView>

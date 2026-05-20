@@ -92,5 +92,18 @@ namespace AppMaui.Core.Services.Local
                 throw new Exception ($"Erro ao deletar desafio: {ex.Message}");
             }
         }
+
+        //metodo para popular DESAFIOS
+        public async Task PopularDesafios()
+        {
+            try
+            {
+                await _repository.PopularDesafios();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao popular livros: {ex.Message}");
+            }
+        }
     }
 }

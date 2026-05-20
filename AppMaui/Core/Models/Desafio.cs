@@ -15,5 +15,8 @@ namespace AppMaui.Core.Models
         public string Resposta { get; set; } = string.Empty;
         [NotNull]
         public int LivroId { get; set; }
+        [NotNull]
+        public string TipoDesafio { get; set; } = string.Empty;
+        public int IndicesPalavraSecreta { get; set; } 
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AppMaui.Core.Repositories
 {
-    // classe já recebe injeção de dependecia do contexto]
+    // classe já recebe injeção de dependecia do contexto
     public class LeituraRepository(DatabaseService context)
     {
         //declaração de variavel do contexto recebe conexao
@@ -32,5 +32,17 @@ namespace AppMaui.Core.Repositories
 
         //metodo deletar
         public async Task<int> Delete(Leitura leitura) => await _db.DeleteAsync<Leitura>(leitura);
+
+        //metodo verificar se a leitura já existe para um livro e usuário específico, para evitar duplicidade
+        public async Task<Leitura?> GetByLivroUsuario(int livroId, int usuarioId) =>
+            await _db.Table<Leitura>().Where(l => l.LivroId == livroId && l.UsuarioId == usuarioId).FirstOrDefaultAsync();
+
+        //buscar leitura atual (em andamento) por usuário
+        public async Task<Leitura?> GetLeituraAtualPorUsuario(int usuarioId) =>
+            await _db.Table<Leitura>().Where(l => l.UsuarioId == usuarioId && l.Status == Enums.StatusLeitura.Iniciada).FirstOrDefaultAsync();
+
+        //buscar leitura anterior (concluida) por usuário
+        public async Task<Leitura?> GetLeituraAnteriorPorUsuario(int usuarioId) =>
+            await _db.Table<Leitura>().Where(l => l.UsuarioId == usuarioId && l.Status == Enums.StatusLeitura.Concluida).OrderByDescending(l => l.DataFim).FirstOrDefaultAsync();
     }
 }

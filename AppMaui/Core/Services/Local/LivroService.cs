@@ -91,5 +91,34 @@ namespace AppMaui.Core.Services.Local
                 throw new Exception ($"Erro ao deletar livro: {ex.Message}");
             }
         }//fim deletar
+
+        //buscar um livro pelo id
+        public async Task<Livro?> BuscarLivroPorId(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                    return null;
+                var livro = await _repositorio.GetById(id);
+                return livro;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao buscar livro por id: {ex.Message}");
+            }
+        }
+
+        //metodo para popular livros
+        public async Task PopularLivros()
+        {
+            try
+            {
+                await _repositorio.PopularLivros();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao popular livros: {ex.Message}");
+            }
+        }
     }
 }

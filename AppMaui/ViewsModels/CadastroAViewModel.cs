@@ -4,6 +4,7 @@ using AppMaui.Core.Repositories;
 using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.Interfaces;
 using AppMaui.Core.Services.Local;
+using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -28,15 +29,17 @@ namespace AppMaui.ViewsModels
         private readonly CadastroAlunoService _cas;
         private readonly AlunoService _alunoService;
         private readonly UsuarioService _usuarioService;
-       
+       private readonly IDialogoService _dialogoService;
               
        
 
         public CadastroAViewModel(CadastroAlunoService cadAs, AlunoService alunoService,
-            UsuarioService usuarioService)
+            UsuarioService usuarioService, IDialogoService dialogoService)
         {           
             _alunoService = alunoService;
             _usuarioService = usuarioService;
+            _dialogoService = dialogoService;
+            Aluno = new();
             _dto = new CadastroAlunoDTO();
             _cas = cadAs;    
             ModoAlterar = true;
@@ -65,12 +68,19 @@ namespace AppMaui.ViewsModels
             //alterações para atualizar
             if (Aluno.Id != 0)
             { 
-                Aluno.Nome = Nome;               
-                var resp = await _alunoService.AtualizarAluno(Aluno);
-                if (resp)
-                    Mensagem = "Cadastro atualizado";
-                else
-                    Mensagem = "Erro ao atualizar aluno";                
+                Aluno.Nome = Nome;  
+                bool confirmacao = await _dialogoService.Confirmar(
+                    "Confirmação", "Deseja atualizar o cadastro do aluno"+ Nome + "?", 
+                    "Sim", "Não");
+                if(confirmacao)
+                {
+                    var resp = await _alunoService.AtualizarAluno(Aluno);
+                    if (resp)
+                        Mensagem = "Cadastro atualizado";
+                    else
+                        Mensagem = "Erro ao atualizar aluno";
+                }
+                            
             }
             else
             {

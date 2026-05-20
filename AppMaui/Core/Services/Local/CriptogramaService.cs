@@ -35,8 +35,10 @@ namespace AppMaui.Core.Services.Local
             return mapa;      
         }
 
-        public string Criptografar(string palavra, List<LetraCriptografada>mapa)
+        public async Task<string> Criptografar(string palavra)
         {
+            var mapa = Gerar(40);
+
             var dicionario = mapa.ToDictionary(
                 x => x.LetraOriginal,
                 x => x.Simbolo

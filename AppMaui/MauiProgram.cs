@@ -49,14 +49,15 @@ namespace AppMaui
 
             //registra direto no DI
             builder.Services.AddSingleton(emailSettings!);
-           
 
-            
+
+
 
             //cria os serviços de injeção de dependência para o banco de dados e os repositórios
+            builder.Services.AddSingleton<AlunoRepository>();
             builder.Services.AddSingleton<AppShell>();
-            builder.Services.AddSingleton<DatabaseService>();
             builder.Services.AddSingleton<AvaliacaoRepository>();
+            builder.Services.AddSingleton<DatabaseService>();            
             builder.Services.AddSingleton<DesafioRepository>();
             builder.Services.AddSingleton<LeituraRepository>();
             builder.Services.AddSingleton<LivroRepository>();
@@ -68,62 +69,72 @@ namespace AppMaui
             builder.Services.AddSingleton<RespostaRepository>();
             builder.Services.AddSingleton<TrilhaRepository>();
             builder.Services.AddSingleton<TurmaRepository>();
-            builder.Services.AddSingleton<UsuarioRepository>();
-            builder.Services.AddSingleton<AlunoRepository>();
+            builder.Services.AddSingleton<UsuarioRepository>();            
 
             //cria os serviços de injeção de dependência para os serviços de negócio
             builder.Services.AddSingleton<AlunoService>();
             builder.Services.AddSingleton<AvaliacaoService>();
+            builder.Services.AddSingleton<CadastroAlunoService>();
+            builder.Services.AddSingleton<CadastrarProfessorService>();
+            builder.Services.AddSingleton<CriptogramaService>();
             builder.Services.AddSingleton<DesafioService>();
+            builder.Services.AddSingleton<EmailService>();
             builder.Services.AddSingleton<LeituraService>();
             builder.Services.AddSingleton<LivroService>();
             builder.Services.AddSingleton<LogService>();
             builder.Services.AddSingleton<MensagemService>();
             builder.Services.AddSingleton<NotificacaoService>();
+            builder.Services.AddSingleton<OpenAIService>();
             builder.Services.AddSingleton<PatenteService>();
             builder.Services.AddSingleton<ProfessorService>();
             builder.Services.AddSingleton<RespostaService>();
+            builder.Services.AddSingleton<SenhaService>();
+            builder.Services.AddSingleton<SessaoService>();
             builder.Services.AddSingleton<TrilhaService>();
             builder.Services.AddSingleton<TurmaService>();
-            builder.Services.AddSingleton<UsuarioService>();            
-            builder.Services.AddSingleton<CadastrarProfessorService>();
-            builder.Services.AddSingleton<CadastroAlunoService>();
-            builder.Services.AddSingleton<EmailService>();   
-            builder.Services.AddSingleton<SenhaService>();
-            builder.Services.AddSingleton<OpenAIService>();
-            builder.Services.AddSingleton<CriptogramaService>();
-            builder.Services.AddSingleton<SessaoService>();
-           
+            builder.Services.AddSingleton<UsuarioService>();
 
             //registrar viewmodels
-            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<AlunoPViewModel>();
+            builder.Services.AddTransient<CadastroAViewModel>();
             builder.Services.AddTransient<CadastroPViewModel>();
+            builder.Services.AddTransient<CadastroTViewModel>();
+            builder.Services.AddTransient<DesafioViewModel>();
+            builder.Services.AddTransient<EstanteViewModel>();
+            builder.Services.AddTransient<LoginViewModel>();            
             builder.Services.AddTransient<NovaSenhaViewModel>();
             builder.Services.AddTransient<PAcessoViewModel>();
-            builder.Services.AddTransient<PaginaBaseViewModel>();
-            builder.Services.AddTransient<AlunoPViewModel>();   
-            builder.Services.AddTransient<CadastroAViewModel>();
-            builder.Services.AddTransient<CadastroTViewModel>();
+            builder.Services.AddTransient<PaginaBaseViewModel>();                
             builder.Services.AddTransient<TurmaPViewModel>();
+            
 
             //registrar as interfaces
             builder.Services.AddSingleton<IAutenticacaoService, AutenticacaoService>();            
             builder.Services.AddSingleton<ICriptoService, CriptoService>();
+            builder.Services.AddSingleton<IDialogoService, DialogoService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
             builder.Services.AddSingleton<IValidationService, ValidationService>();
+            
 
             //registrar paginas
             builder.Services.AddTransient<Login>();
             builder.Services.AddTransient<PaginaBase>();
 
             //registrar as views
-            builder.Services.AddTransient<CadastroPView>();
-            builder.Services.AddTransient<PrimeiroAcessoView>();
-            builder.Services.AddTransient<DashPView>();
             builder.Services.AddTransient<AlunoPView>();
+            builder.Services.AddTransient<AvaliacaoAView>();
             builder.Services.AddTransient<CadastroAView>();
+            builder.Services.AddTransient<CadastroPView>();
+            builder.Services.AddTransient<CadastroTView>();
+            builder.Services.AddTransient<DashAView>();
+            builder.Services.AddTransient<DashPView>();
+            builder.Services.AddTransient<DesafioView>();
+            builder.Services.AddTransient<EstanteAView>();
             builder.Services.AddTransient<NovaSenhaView>();
+            builder.Services.AddTransient<PrimeiroAcessoView>();   
             builder.Services.AddTransient<TurmaPView>();
+            
+            
 
 #if DEBUG
             builder.Logging.AddDebug();

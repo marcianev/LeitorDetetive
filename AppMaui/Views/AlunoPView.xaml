@@ -140,7 +140,27 @@
          HorizontalOptions="Center"
          TextColor="{StaticResource marromEscuro}"/>
 
-
+        <!--Seletor de turma-->
+                <Label Grid.Column="5" 
+                       VerticalOptions="Center" 
+                       TextColor="{StaticResource begeMedio}" 
+                       FontAttributes="Bold" 
+                       Text="TURMA:"/>
+                <Border Margin="10,5"    
+                        TranslationY="0"
+                         Grid.Column="5"    
+                         HorizontalOptions="End"
+                         Style="{StaticResource sBrdEntry}">
+                    <Picker ItemsSource="{Binding Turmas}" 
+                            SelectedItem="{Binding TurmaSelecionada}"
+                            ItemDisplayBinding="{Binding Nome}"
+                          FontSize="12"
+                          WidthRequest="100"/>
+                </Border>
+                <Label Grid.Row="1"
+                       Margin="10"
+                       TextColor="{StaticResource palhaEscuro}" 
+                       Text="{Binding Mensagem}"/>
                 <!--lista-->
                 <CollectionView ItemsSource="{Binding Alunos}"
                                 Grid.Row="2" Grid.ColumnSpan="6">

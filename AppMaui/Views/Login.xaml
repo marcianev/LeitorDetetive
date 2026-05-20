@@ -199,7 +199,9 @@ VerticalOptions="Center"
                      Style="{StaticResource sBrdEntry}">
                     <Entry x:Name="etrSenha"
                         Text="{Binding Senha}"
-                        TextColor="{StaticResource marromEscuro}"/>
+                        TextColor="{StaticResource marromEscuro}"
+                           Placeholder="Senha"
+                           IsPassword="True"/>
                 </Border>
                 <!--label para mensagem-->
                 <Label x:Name="lbMsm"

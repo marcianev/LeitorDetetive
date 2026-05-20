@@ -1,6 +1,7 @@
 ﻿using AppMaui.Core.Data;
 using AppMaui.Core.Models;
 using SQLite;
+using System.Text.Json;
 
 namespace AppMaui.Core.Repositories
 {
@@ -29,5 +30,18 @@ namespace AppMaui.Core.Repositories
         //metodo deletar DesafioRepository
         public async Task<int> Delete(Desafio desafio) => await _db.DeleteAsync<Desafio>(desafio);
 
+        //metodo injeta a lista de DESAFIOS no banco de dados, para popular a estante do aluno
+        public async Task PopularDesafios()
+        {
+            var existe = await _db.Table<Desafio>().CountAsync();
+            if (existe > 0) return;
+
+            using var stream = await FileSystem.OpenAppPackageFileAsync("desafios.json");
+            using var reader = new StreamReader(stream);
+            var json = await reader.ReadToEndAsync();
+            var desafios = JsonSerializer.Deserialize<List<Desafio>>(json);
+            if (desafios != null)
+                await _db.InsertAllAsync(desafios);
+        }
     }
 }

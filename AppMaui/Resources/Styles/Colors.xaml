@@ -35,6 +35,7 @@
     <Color x:Key="begeEscuro">#f3d1aa</Color>
     <Color x:Key="verdeEscuro">#20553b</Color>
     <Color x:Key="verdeMedio">#628d69</Color>
+    <Color x:Key="verdeSuave">#CFE3D2</Color>
     <Color x:Key="palhaMedio">#e2a455</Color>
     <Color x:Key="palhaEscuro">#d97520</Color>
     <Color x:Key="azulMedio">#0f4e70</Color>

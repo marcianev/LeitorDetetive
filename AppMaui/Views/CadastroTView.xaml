@@ -111,27 +111,30 @@ x:DataType="vm:CadastroTViewModel">
        Margin="10,15,10,0" Style="{StaticResource sBrdAzul}">
                     <Label TextColor="{StaticResource begeClaro}"
           FontAttributes="Bold" 
+                           Padding="5,0"
           Text="Tamanho Trilha"  
                    HorizontalOptions="End"
                    VerticalOptions="Center"
           />
-                </Border>               
-                    <Picker x:Name="tamanho" 
-                            Title="Selecione um tamanho &#9660;"
-                            SelectedItem="{Binding TamanhoTrilha}"
-                            FontSize="12"
-                            Margin="5"
-                            Grid.Row="2" 
-       Grid.Column="1"    
+                </Border>
+                <Border Margin="10"
+                        Grid.Row="2" 
+                        Grid.Column="1"    
                         HorizontalOptions="End"
-       Style="{StaticResource sBrdEntry}"
-                            TextColor="Black">
+                        Style="{StaticResource sBrdEntry}">
+                    <Picker x:Name="tamanho"                            
+                     SelectedItem="{Binding TamanhoTrilha}"
+                     FontSize="12"
+                     WidthRequest="140"                     
+                     TextColor="Black">
                         <Picker.ItemsSource>
                             <x:Array Type="{x:Type x:String}">
-                                <x:String>18 livros</x:String>                               
-                            </x:Array>                           
+                                <x:String>18 livros</x:String>
+                            </x:Array>
                         </Picker.ItemsSource>
                     </Picker>
+                </Border>
+                    
 
                 <!--botão de ARQUIVAR-->
                 <Button Grid.Row="4" 

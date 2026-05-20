@@ -1,6 +1,5 @@
 using AppMaui.Core.Services;
 using AppMaui.ViewsModels;
-
 namespace AppMaui.Views;
 
 public partial class PaginaBase : ContentPage
@@ -11,5 +10,11 @@ public partial class PaginaBase : ContentPage
 		InitializeComponent();
 		_vm = viewModel;
 		BindingContext = viewModel;		
-	}   
+	}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+		_vm.Inicializar();
+    }
 }

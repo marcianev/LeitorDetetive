@@ -32,5 +32,9 @@ namespace AppMaui.Core.Repositories
 
         //metodo deletar
         public async Task<int> Delete(Resposta resposta) => await _db.DeleteAsync<Resposta>(resposta);
+        
+        //buscar resposta por aluno e por desafio 
+        public async Task<List<Resposta>> GetByAlunoDesafio(int alunoId, int desafioId) =>
+            await _db.Table<Resposta>().Where(r => r.AlunoId == alunoId && r.DesafioId == desafioId).ToListAsync();
     }
 }

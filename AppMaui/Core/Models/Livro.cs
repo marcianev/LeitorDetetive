@@ -17,5 +17,7 @@ namespace AppMaui.Core.Models
         public string Ilustrador { get; set; } = string.Empty;
         [MaxLength(50)]
         public string Editora { get; set; } = string.Empty;
+        [MaxLength(20)]
+        public string Capa { get; set; } = string.Empty;
     }
 }
