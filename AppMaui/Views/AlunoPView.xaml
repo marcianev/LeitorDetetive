@@ -23,7 +23,7 @@
      Style="{StaticResource sBrdPrincipal}">
         <Grid>
             <Grid.RowDefinitions >
-                <RowDefinition Height="{OnIdiom Phone=0.07*, Tablet=1.1*, Desktop=0.1*}"/>
+                <RowDefinition Height="{OnIdiom Phone=0.13*, Tablet=1.1*, Desktop=0.1*}"/>
                     <RowDefinition Height="{OnIdiom Phone=0.07*, Tablet=1.1*, Desktop=0.1*}"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
@@ -53,11 +53,13 @@
              TranslationX="-20"
             FontSize="20"
             Text="ALUNOS" 
+                   VerticalOptions="Center"
              HorizontalOptions="Center"
             Style="{StaticResource sLbSombra1}"   
             />
             <Label x:Name="lbAlunosTituloSombra2" 
                    Grid.ColumnSpan="6"
+                   VerticalOptions="Center"
              TranslationX="-20"
             HorizontalOptions="Center"     
             FontSize="20"
@@ -66,6 +68,7 @@
             />
             <Label x:Name="lbAlunsoTituloSombra3" 
                    Grid.ColumnSpan="6"
+                   VerticalOptions="Center"
              TranslationX="-20"
              HorizontalOptions="Center"   
             FontSize="20"
@@ -74,6 +77,7 @@
             />
             <Label x:Name="lbAlunosTituloSombra4" 
                    Grid.ColumnSpan="6"
+                   VerticalOptions="Center"
              TranslationX="-20"
              HorizontalOptions="Center"    
             FontSize="20"
@@ -82,6 +86,7 @@
             />
             <Label x:Name="lbAlunosTitulo" 
                    Grid.ColumnSpan="6"
+                   VerticalOptions="Center"
              TranslationX="-20"
             FontSize="20"
             Text="ALUNOS" 
@@ -95,7 +100,8 @@
          Margin="0,5"
          Text="NickName" 
          FontAttributes="Bold"    
-         FontSize="15"                                       
+         FontSize="{OnIdiom Phone=12, Desktop=15}"   
+                    TranslationX="{OnIdiom Phone=-25, Desktop=0}"
          VerticalOptions="Center"
          HorizontalOptions="Center"
          TextColor="{StaticResource marromEscuro}"/>
@@ -105,7 +111,8 @@
          Margin="0,5"
          Text="Nome" 
          FontAttributes="Bold"    
-         FontSize="15"                                       
+         FontSize="{OnIdiom Phone=12, Desktop=15}"   
+                     TranslationX="{OnIdiom Phone=-20, Desktop=0}"
          VerticalOptions="Center"
          HorizontalOptions="Center"
          TextColor="{StaticResource marromEscuro}"/>
@@ -115,7 +122,8 @@
          Margin="0,5"
          Text="Cód de Acesso" 
          FontAttributes="Bold"    
-         FontSize="15"                                       
+         FontSize="{OnIdiom Phone=12, Desktop=15}"   
+             TranslationX="{OnIdiom Phone=-15, Desktop=0}"                                   
          VerticalOptions="Center"
          HorizontalOptions="Center"
          TextColor="{StaticResource marromEscuro}"/>
@@ -125,7 +133,8 @@
          Margin="0,5"
          Text="Livro Atual" 
          FontAttributes="Bold"    
-         FontSize="15"                                       
+         FontSize="{OnIdiom Phone=12, Desktop=15}"   
+             TranslationX="{OnIdiom Phone=-5, Desktop=0}"                                   
          VerticalOptions="Center"
          HorizontalOptions="Center"
          TextColor="{StaticResource marromEscuro}"/>
@@ -135,30 +144,38 @@
          Margin="0,5"
          Text="Total de leituras" 
          FontAttributes="Bold"    
-         FontSize="15"                                       
+          FontSize="{OnIdiom Phone=12, Desktop=15}"   
+             TranslationX="{OnIdiom Phone=-5, Desktop=0}"                                  
          VerticalOptions="Center"
          HorizontalOptions="Center"
          TextColor="{StaticResource marromEscuro}"/>
 
         <!--Seletor de turma-->
-                <Label Grid.Column="5" 
-                       VerticalOptions="Center" 
-                       TextColor="{StaticResource begeMedio}" 
-                       FontAttributes="Bold" 
-                       Text="TURMA:"/>
-                <Border Margin="10,5"    
+               
+                <Border Margin="10,1"    
                         TranslationY="0"
                          Grid.Column="5"    
+                         HeightRequest="{OnIdiom Phone=35}"
                          HorizontalOptions="End"
+                        VerticalOptions="End"
                          Style="{StaticResource sBrdEntry}">
                     <Picker ItemsSource="{Binding Turmas}" 
                             SelectedItem="{Binding TurmaSelecionada}"
                             ItemDisplayBinding="{Binding Nome}"
-                          FontSize="12"
-                          WidthRequest="100"/>
+                            TextColor="{StaticResource marromMedio}"
+                           FontSize="{OnIdiom Phone=10, Desktop=12}"  
+                          WidthRequest="100"
+                           />
                 </Border>
-                <Label Grid.Row="1"
+                <Label Grid.Column="4" 
+                       Grid.ColumnSpan="2"
+        VerticalOptions="Start"                       
+        TextColor="{StaticResource begeMedio}" 
+        FontAttributes="Bold" 
+        Text="TURMA:"/>
+                <Label Grid.Row="2"                       
                        Margin="10"
+                       FontSize="{OnIdiom Phone=12}"
                        TextColor="{StaticResource palhaEscuro}" 
                        Text="{Binding Mensagem}"/>
                 <!--lista-->
@@ -168,7 +185,7 @@
                         <DataTemplate x:DataType="model:Aluno">
                             <Grid>
                                 <Grid.RowDefinitions >
-                                    <RowDefinition Height="0.6*"/>  
+                                    <RowDefinition Height="{OnIdiom Phone=1*, Desktop=0.6}"/>  
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="{OnIdiom Phone= 2*, Tablet= 1.5*, Desktop= 0.3*}"/>
@@ -190,7 +207,7 @@
                                          Margin="25,5"                        
                                          HorizontalOptions="Start"
                                          TranslationY="10"
-                                         TranslationX="20"
+                                         TranslationX="{OnIdiom Phone=15, Desktop=20}"
                                          VerticalOptions="Start"
                                          Style="{StaticResource sBrdAzul}">
                                     <Border.Padding>
@@ -201,11 +218,12 @@
 
                                     <Label x:Name="lbPatente"
                                             Text="{Binding PatenteId}"
+                                           
                                             TextColor="{StaticResource begeClaro}"/>
                                 </Border>
                                 <Image x:Name="imgAluno"                                         
-                                        HeightRequest="40"
-                                        Margin="15,5" 
+                                        HeightRequest="{OnIdiom Phone=30, Desktop=40}"                                       
+                                        Margin="5" 
                                         HorizontalOptions="Start" 
                                         VerticalOptions="Start"
                                         Source="menino1.webp" 
@@ -217,7 +235,8 @@
                                         Margin="0,5"
                                         Text="{Binding Nickname}" 
                                         FontAttributes="Bold"    
-                                        FontSize="15"                                       
+                                        FontSize="{OnIdiom Phone=12, Desktop=15}"   
+                                       TranslationX="{OnIdiom Phone=-25, Desktop=0}"
                                         VerticalOptions="Center"
                                         HorizontalOptions="Center"
                                         TextColor="{StaticResource marromEscuro}"/>
@@ -227,7 +246,8 @@
                                         Margin="0,5"                                        
                                         Text="{Binding Nome}" 
                                         FontAttributes="Bold"                      
-                                        FontSize="15"
+                                        FontSize="{OnIdiom Phone=12, Desktop=15}" 
+                                        TranslationX="{OnIdiom Phone=-15, Desktop=0}"
                                         VerticalOptions="Center"
                                         HorizontalOptions="Start"
                                         TextColor="{StaticResource marromEscuro}"
@@ -237,24 +257,27 @@
                                         Margin="0,5"                                        
                                         Text="{Binding CodigoAcesso}" 
                                         FontAttributes="Bold"                      
-                                        FontSize="15"
+                                         FontSize="{OnIdiom Phone=12, Desktop=15}" 
+                                       TranslationX="{OnIdiom Phone=-15, Desktop=0}"
                                         VerticalOptions="Center"
                                         HorizontalOptions="Center"
                                         TextColor="{StaticResource marromEscuro}"
                                         />
                                         <Image x:Name="imgLivro"                                       
                                         Grid.Column="4"
-                                        Source="livros.webp"
+                                        Source="bolagoleiro.webp"
                                         VerticalOptions="Center"
+                                               TranslationX="{OnIdiom Phone=-10, Desktop=0}"
                                                HorizontalOptions="Center"
                                                HeightRequest="30"
-                                        Margin="20"
+                                        Margin="{OnIdiom Phone=5, Desktop=20}"
                                         />
                                         <Label x:Name="lbQtdLivros"                                       
                                         Grid.Column="5"
                                         Text="15"
                                         FontAttributes="Bold"   
-                                        FontSize="20"
+                                         FontSize="{OnIdiom Phone=12, Desktop=15}"   
+                                        TranslationX="{OnIdiom Phone=-10, Desktop=0}"
                                         VerticalOptions="Center"   
                                                HorizontalOptions="Center"
                                         TextColor="{StaticResource marromEscuro}"
@@ -271,8 +294,8 @@
 HorizontalOptions="End"
                 VerticalOptions="End"
                 Margin="0,15,5,0"
-                FontSize="25"
-                TranslationY="5"
+                FontSize="{OnIdiom Phone=15, Desktop=25}"
+                TranslationY="{OnIdiom Phone=-10, Desktop=5}"
 Text="+"
 Style="{StaticResource sBtn}"
 BackgroundColor="{StaticResource verdeMedio}"     

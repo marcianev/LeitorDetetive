@@ -96,6 +96,7 @@ namespace AppMaui
 
             //registrar viewmodels
             builder.Services.AddTransient<AlunoPViewModel>();
+            builder.Services.AddTransient<AvaliacaoAViewModel>();
             builder.Services.AddTransient<CadastroAViewModel>();
             builder.Services.AddTransient<CadastroPViewModel>();
             builder.Services.AddTransient<CadastroTViewModel>();

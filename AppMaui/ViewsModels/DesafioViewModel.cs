@@ -1,4 +1,5 @@
 ﻿using AppMaui.Core.DTOs;
+using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
@@ -22,7 +23,9 @@ namespace AppMaui.ViewsModels
         [ObservableProperty]
         private string? titulo;
         [ObservableProperty]
-        private string? palavraSecreta;     
+        private string? palavraSecreta;
+        [ObservableProperty]
+        private bool botaoVisivel;
         [ObservableProperty]
         private ObservableCollection<DesafiosDTO>? desafiosDTOEsquerda = [];
         [ObservableProperty]
@@ -56,13 +59,16 @@ namespace AppMaui.ViewsModels
         }
 
         public async Task DefinirLivro()
-        {
+        {            
             //buscar leitura atual
-            if (_usuario != null)
-            {
-                var leitura = await _leituraService.GetLeituraAtualPorUsuario(_usuario.Id);
-                if (leitura == null)
-                    await _idialogoService.Mensagem("Sem Leitura Iniciada", "Inicie uma leitura para ver o desafio", "OK");
+            if (_usuario != null && _usuario.Tipo == "Aluno")
+            {              
+                var leitura = await _leituraService.GetLeituraAtualPorUsuario(_usuario.Id);               
+                if (leitura == null || leitura.Status != StatusLeitura.Iniciada)
+                {
+                    BotaoVisivel = false;
+                    Titulo = "Inicie uma leitura para ver os desafios.";
+                }  
                 else
                 {
                     //busca dados do livro, do aluno e dos desafios e respostas para o livro
@@ -72,7 +78,8 @@ namespace AppMaui.ViewsModels
                     var respostas = await _respostaService.ListarAlunoDesafio(livro.Id, aluno.Id);
                                         
                     Capa = livro.Capa;
-                    Titulo = livro.Titulo;    
+                    Titulo = livro.Titulo;
+                    BotaoVisivel = true;
 
                     DesafiosDTOEsquerda.Clear();
                     DesafiosDTODireita.Clear();     
@@ -83,6 +90,8 @@ namespace AppMaui.ViewsModels
                     foreach (var d in desafios)
                     {
                         int posicao = 0;
+                        var resposta = respostas?.FirstOrDefault(r => r.DesafioId == d.Id);
+                        var palavraSalva = resposta?.Palavra ?? string.Empty;                       
 
                         var letraDTO = new ObservableCollection<LetraDTO>();
 
@@ -97,15 +106,18 @@ namespace AppMaui.ViewsModels
                                 LetraOriginal = letra.ToString(),
                                 LetraCriptograma = await _criptogramaService.Criptografar(letra.ToString()),
                                 Posicao = posicao,
+                                LetraDigitada = palavraSalva.Length > posicao ? palavraSalva[posicao].ToString() : string.Empty,
                                 Destacada = letraDestaque,
                                 IdDesafio = d.Id
                             };                          
                             letraDTO.Add(lDTO);
                             posicao++;
                         }
-
+                        
                         if (d.TipoDesafio == "PALAVRA")
                         {
+                            var posSecreta = 0;
+                            
                             PalavraSecreta = d.Resposta;
                             PalavraSecretaLetras.Clear();
                             foreach (var letra in d.Resposta)
@@ -113,13 +125,15 @@ namespace AppMaui.ViewsModels
                                 PalavraSecretaLetras.Add(new LetraDTO
                                 {
                                     LetraOriginal = letra.ToString(),  
+                                    LetraDigitada = palavraSalva.Length > posSecreta ? palavraSalva[posSecreta].ToString() : string.Empty,
                                     IdDesafio = d.Id
-                                });                                
+                                });
+                                posSecreta++;
                             }
+                           
                         }
                         else                       
-                        {                          
-                            var resposta = respostas?.FirstOrDefault(r => r.DesafioId == d.Id);
+                        {   
                             var respId = resposta?.Id ?? 0;
                             var respAluno = resposta?.Palavra ?? string.Empty; 
 
@@ -130,8 +144,7 @@ namespace AppMaui.ViewsModels
                                 IdAluno = aluno.Id,
                                 IdResposta = respId,
                                 RespostaCorreta = d.Resposta,
-                                Pergunta = d.Pergunta,                               
-                                RespostaAluno = respAluno,
+                                Pergunta = d.Pergunta,   
                                 Letras = letraDTO
                             };    
                             if (indice < 5)
@@ -219,8 +232,7 @@ namespace AppMaui.ViewsModels
             //validar palavra secreta
             foreach (var letra in PalavraSecretaLetras)
             {
-                desafio = letra.IdDesafio;
-                Debug.WriteLine(desafio);
+                desafio = letra.IdDesafio;                
                 if (letra.LetraOriginal == letra.LetraDigitada)
                 {
                     resposta = $"{resposta}{letra.LetraDigitada}";
@@ -241,15 +253,25 @@ namespace AppMaui.ViewsModels
                     Palavra = resposta
                 });
             }
-            Debug.WriteLine(resposta);
-            Debug.WriteLine(aluno);
-            Debug.WriteLine(desafio);
-            Debug.WriteLine(desafioCorreto);
-            Debug.WriteLine(livroConcluido);
-
 
             if (livroConcluido)
-                await _idialogoService.Mensagem("Conclusão", "Livro Concluído", "OK");
+            {
+                var concluir = await _leituraService.ConcluirLeitura(_usuario.Id);
+                if (concluir)
+                {
+                    DesafiosDTODireita.Clear();
+                    DesafiosDTOEsquerda.Clear();
+                    PalavraSecretaLetras.Clear();
+                    Titulo = "Inicie nova Leitura.";
+                    Capa = string.Empty;
+                    BotaoVisivel = false;
+                }
+                else
+                    await _idialogoService.Mensagem("Erro", "Erro ao concluir leitura, tente mais tarde.", "OK");
+
+            }
+            else
+                await _idialogoService.Mensagem("ATENÇÃO", "Apenas respostas que estão completas foram salvas.", "OK");
             
         }//validar respostas
     }

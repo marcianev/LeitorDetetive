@@ -15,7 +15,7 @@ namespace AppMaui.Core.DTOs
         private bool correta;
         public int IdDesafio;
         public string LetraOriginal { get; set; } = string.Empty;
-        public string LetraCriptograma { get; set; } = string.Empty;
+        public string LetraCriptograma { get; set; } = string.Empty;       
         public int Posicao { get; set; }
         public bool Destacada { get; set; }
 

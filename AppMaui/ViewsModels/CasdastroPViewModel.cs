@@ -72,7 +72,8 @@ namespace AppMaui.ViewsModels
             //carrega o DTO
             _dto = new CadastroProfessorDTO
             {
-                Nome = Nome,               
+                Nome = Nome,   
+                User = User,
                 Email = Email,
                 Cpf = Cpf                
             };

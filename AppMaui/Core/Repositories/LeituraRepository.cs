@@ -44,5 +44,9 @@ namespace AppMaui.Core.Repositories
         //buscar leitura anterior (concluida) por usuário
         public async Task<Leitura?> GetLeituraAnteriorPorUsuario(int usuarioId) =>
             await _db.Table<Leitura>().Where(l => l.UsuarioId == usuarioId && l.Status == Enums.StatusLeitura.Concluida).OrderByDescending(l => l.DataFim).FirstOrDefaultAsync();
+
+        //contar quantas leituras um usuário já concluiu
+        public async Task<int> ContarLeiturasConcluidas(int usuarioId) =>
+            await _db.Table<Leitura>().Where(l => l.UsuarioId == usuarioId && l.Status == Enums.StatusLeitura.Concluida).CountAsync();
     }
 }

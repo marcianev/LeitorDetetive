@@ -1,4 +1,5 @@
 ﻿using AppMaui.Core.Data;
+using AppMaui.Core.DTOs;
 using AppMaui.Core.Models;
 using SQLite;
 
@@ -28,7 +29,7 @@ namespace AppMaui.Core.Repositories
 
             return await _db.QueryAsync<Avaliacao>(query, turmaId);
         }
-
+        
         //metodo buscar por id
         public async Task<Avaliacao?> GetById(int id) => await _db.Table<Avaliacao>().Where(a => a.Id == id).FirstOrDefaultAsync();
 
@@ -38,5 +39,41 @@ namespace AppMaui.Core.Repositories
         //metodo deletar
         public async Task<int> Delete(Avaliacao avaliacao) => await _db.DeleteAsync<Avaliacao>(avaliacao);
 
+        public async Task<List<AvaliacaoDTO>> GetByLivro(int idLivro)
+        {
+            string sql = @"
+            SELECT
+                a.Id as IdAvaliacao,
+                a.nota,
+                a.comentario,
+                a.status,
+                a.dataCadastro,
+
+                al.nickname AS Nickname,
+
+                t.nome AS Turma,
+
+                l.titulo AS NomeLivro,
+                l.autor AS Autor,
+                l.ilustrador AS Ilustrados,
+                l.capa AS Capa
+
+            FROM avaliacao a
+            INNER JOIN aluno al
+                ON a.usuarioId = al.usuarioId
+
+            INNER JOIN turma t
+                ON al.turmaId = t.id
+
+            INNER JOIN livro l
+                ON a.livroId = l.id
+
+            WHERE a.livroID = @idLivro
+            ";
+
+            var resultado = await _db.QueryAsync<AvaliacaoDTO>(sql,idLivro);
+            return resultado.ToList();
+
+        }
     }
 }

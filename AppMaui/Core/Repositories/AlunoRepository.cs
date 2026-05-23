@@ -59,5 +59,21 @@ namespace AppMaui.Core.Repositories
         public async Task<Aluno?> GetByUsuarioId(int usuarioId) =>
             await _db.Table<Aluno>().Where(a => a.UsuarioId == usuarioId).FirstOrDefaultAsync();
 
+        //metodo para listar alunos por turma
+        public async Task<int> GetIdPatente(int nivelAtual, int patenteId)
+        {
+           var patente= await _db.Table<Patente>().
+                Where(p=> p.Id == patenteId)
+                .FirstOrDefaultAsync();
+            if (patente == null)
+                return 0;
+            int trilhaId = patente.TrilhaId;
+
+            var patenteNivel = await _db.Table<Patente>()
+                                  .Where(p => p.TrilhaId == trilhaId && p.Nivel == nivelAtual)
+                                  .FirstOrDefaultAsync();     
+            return patenteNivel.Id;
+        }
+
     }
 }

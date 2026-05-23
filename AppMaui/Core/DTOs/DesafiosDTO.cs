@@ -15,8 +15,7 @@ namespace AppMaui.Core.DTOs
         public int IdAluno { get; set; }
         public int IdResposta { get; set; }     
         public string Pergunta { get; set; } = string.Empty;
-        public string RespostaCorreta { get; set; } = string.Empty;
-        public string RespostaAluno { get; set; } = string.Empty;        
+        public string RespostaCorreta { get; set; } = string.Empty;           
         public string Palavra { get; set; } = string.Empty;
         public ObservableCollection<LetraDTO> Letras { get; set; } = [];
     }

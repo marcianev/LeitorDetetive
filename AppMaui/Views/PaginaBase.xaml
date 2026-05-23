@@ -18,7 +18,7 @@
         <!--linha de navegação-->
         <RowDefinition Height="{OnIdiom Phone=0.1*, Desktop=0.3*}"/>
         <!--linha de rodapé-->
-        <RowDefinition Height="0.05*"/>
+        <RowDefinition Height="{OnIdiom Phone=0.03*, Desktop=0.05*}"/>
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
         <ColumnDefinition/>
@@ -30,7 +30,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="{OnIdiom Phone=0.5*, Desktop=0.1*}"/>
+            <ColumnDefinition Width="{OnIdiom Phone=0.3*, Desktop=0.1*}"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <!-- cabeçalho-->
@@ -51,61 +51,72 @@
         <Image x:Name="imgCabecalho" 
               Grid.RowSpan="2"    
               Source="professor.webp" 
+               WidthRequest="{OnIdiom Phone=60, Desktop=60}"
               Style="{StaticResource sImgCabecalho}"
           />
 
         <!-- titulo-->
         <Label x:Name="lbTitulo1Sombra1" 
-              Grid.Column="1"   
+              Grid.Column="1"  
+               TranslationX="50"
               Text="AGÊNCIA DOS JOVENS" 
               Style="{StaticResource sLbSombra1}"          
               />
         <Label x:Name="lbTitulo1Sombra2" 
               Grid.Column="1"  
+               TranslationX="50"
               Text="AGÊNCIA DOS JOVENS" 
               Style="{StaticResource sLbSombra2}"           
               />
         <Label x:Name="lbTitulo1Sombra3" 
-              Grid.Column="1"  
+              Grid.Column="1" 
+               TranslationX="50"
               Text="AGÊNCIA DOS JOVENS" 
               Style="{StaticResource sLbSombra3}"            
               />
         <Label x:Name="lbTitulo1Sombra4" 
               Grid.Column="1"     
+               TranslationX="50"
               Text="AGÊNCIA DOS JOVENS" 
               Style="{StaticResource sLbSombra4}"             
               />
         <Label x:Name="lbTitulo1" 
               Grid.Column="1"        
               Text="AGÊNCIA DOS JOVENS" 
+               TranslationX="50"
               Style="{StaticResource sLbTitulo}"           
               />
         <Label x:Name="lbTitulo2Sombra1" 
               Grid.Column="1"
               Text="LEITORES DETETIVES" 
+               TranslationX="50"
               Style="{StaticResource sLbSombra5}"
               VerticalOptions="End"
               />
         <Label x:Name="lbTitulo2Sombra2" 
               Grid.Column="1"
               Text="LEITORES DETETIVES" 
+               TranslationX="50"
               Style="{StaticResource sLbSombra6}"
               VerticalOptions="End"
               />
         <Label x:Name="lbTitulo2Sombra3" 
               Grid.Column="1"
               Text="LEITORES DETETIVES" 
+               TranslationX="50"
               Style="{StaticResource sLbSombra7}"
               VerticalOptions="End"
               />
         <Label x:Name="lbTitulo2Sombra4" 
               Grid.Column="1"
+               TranslationX="50"
               Text="LEITORES DETETIVES" 
               Style="{StaticResource sLbSombra8}"
               VerticalOptions="End"
               />
         <Label x:Name="lbTitulo2" 
               Grid.Column="1"
+               TranslationX="50"
               Text="LEITORES DETETIVES" 
               Style="{StaticResource sLbTitulo1}"
               VerticalOptions="End"
@@ -114,22 +125,25 @@
             <Button Grid.Row="1" 
                     Grid.Column="1"
                     HorizontalOptions="End"
+                    TranslationX="{OnIdiom Phone= -2}"
                     TranslationY="-10"
+                    HeightRequest="{OnIdiom Phone= 40}"
                     Text="&#9099;"
                     BackgroundColor="Transparent"
-                    FontSize="25"
+                    FontSize="{OnIdiom Phone= 22, Desktop=25}"
                     TextColor="{StaticResource palhaClaro}"
                     Command="{Binding SairCommand}"/>
             <Label Grid.Row="1"
                    Grid.Column="1"
                    Text="SAIR"
+                   TextColor="{StaticResource begeClaro}"
                    HorizontalOptions="End"
                    VerticalOptions="End"
                    Margin="16,0"
                    FontSize="8"/>
 
             <!-- Sino Notificação-->
-        <Image Grid.Row="1" 
+        <Image 
               Grid.Column="1"  
               Margin="5" 
               HorizontalOptions="Start"
@@ -145,21 +159,13 @@
                     Grid.Column="1"
                     HorizontalOptions="Start"
                     IsVisible="{Binding BotaoEdicao}"
-                    TranslationY="-3"
-                    FontSize="20"
-                    TranslationX="60"
+                    TranslationY="-3"                    
+                    FontSize="20"          
                     Text="&#9999;"
                     BackgroundColor="Transparent"
                     Command="{Binding AbrirEdicaoUserCommand}"/>
 
-        </Grid>
-        <!--Label Grid.Row="1"
-    Text="{Binding Icones}"
-    FontFamily="FontAwesome"
-    FontSize="30"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               TextColor="Black"/-->
+        </Grid>    
 
     <!--View corpo-->
     <ContentView x:Name="Corpo" 
@@ -325,7 +331,7 @@ InputTransparent="False">
              TextColor="{StaticResource begeClaro}"
              FontSize="8"
                HorizontalTextAlignment="Center"
-               TranslationY="-5"/>
+               TranslationY="{OnIdiom Phone=0, Desktop=-5}"/>
     </Grid>
     </Grid>
 </ContentPage>

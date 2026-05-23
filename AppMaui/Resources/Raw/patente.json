@@ -1,0 +1,37 @@
+﻿[
+  {
+    "Nome": "RECRUTA",
+    "Nivel": 1,
+    "TrilhaId": 1
+  },
+  {
+    "Nome": "OPERADOR",
+    "Nivel": 2,
+    "TrilhaId": 1
+  },
+  {
+    "Nome": "OFICIAL DE CAMPO",
+    "Nivel": 3,
+    "TrilhaId": 1
+  },
+  {
+    "Nome": "AGENTE TÁTICO",
+    "Nivel": 4,
+    "TrilhaId": 1
+  },
+  {
+    "Nome": "INSPETOR CHEFE",
+    "Nivel": 5,
+    "TrilhaId": 1
+  },
+  {
+    "Nome": "INSPETOR SÊNIOR",
+    "Nivel": 6,
+    "TrilhaId": 1
+  },
+  {
+    "Nome": "DETETIVE",
+    "Nivel": 7,
+    "TrilhaId": 1
+  }
+]

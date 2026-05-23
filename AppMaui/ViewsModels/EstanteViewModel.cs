@@ -7,6 +7,7 @@ using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 
 namespace AppMaui.ViewsModels
@@ -83,26 +84,30 @@ namespace AppMaui.ViewsModels
 
         //comando para escolher o livro e carregar a capa
         [RelayCommand]
-        private async Task EscolherLivro(Livro livro)
+        private async Task EscolherLivro(EstanteDTO livro)
         {
-            if (livro == null)
+            
+            if (livro.IdLivro <=0)
             {
                 await _dialogoService.Mensagem("Escolher um livro.", "Selecione um livro antes de iniciar leitura.", "OK");
                 return;
             }
-            _livroSelecionado = livro;
-            Capa = livro.Capa;
+            else
+            {
+                _livroSelecionado = await _livroService.BuscarLivroPorId(livro.IdLivro);
+                Capa = livro.Capa;
+            }            
         }
 
         //comando para iniciar a leitura do livro selecionado, verificando se já existe uma leitura registrada para o livro e usuário, se sim, verificar se a leitura está concluída, se estiver, exibir mensagem informando que a leitura já foi realizada, caso contrário, iniciar a leitura e salvar no banco de dados.
         [RelayCommand]
         private async Task IniciarLeitura()
         {
-            if (_livroSelecionado == null)
+            if (_livroSelecionado.Id <= 0)
             {
                 await _dialogoService.Mensagem("Escolhar um livro.", "Selecione um livro antes de iniciar leitura.", "OK");
                 return;
-            }
+            }            
             var primeiraLeitura = await _leituraService.GetLeituraPorLivroUsuario(_livroSelecionado.Id, _usuario.Id);
             if (primeiraLeitura != null && primeiraLeitura.Status == StatusLeitura.Concluida)
             {

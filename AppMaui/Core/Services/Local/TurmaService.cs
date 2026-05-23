@@ -126,5 +126,15 @@ namespace AppMaui.Core.Services.Local
                 throw new Exception($"Erro ao buscar turma: {ex.Message}");
             }
         }
+
+        //buscar por id
+        public async Task<Turma> BuscarPorId(int id)
+        {
+            //validar id
+            if (id <= 0)
+                return null;
+
+            return await _repositorio.GetById(id); ;
+        }
     }
 }

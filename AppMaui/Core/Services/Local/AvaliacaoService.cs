@@ -1,4 +1,5 @@
-﻿using AppMaui.Core.Models;
+﻿using AppMaui.Core.DTOs;
+using AppMaui.Core.Models;
 using AppMaui.Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -100,5 +101,24 @@ namespace AppMaui.Core.Services.Local
             }
         }//fecha método deletar avaliação      
 
+        //listar avaliações por livros
+        public async Task<List<AvaliacaoDTO>> ListarPorLivro(int livroId)
+        {
+            try
+            {
+                //validar id
+                if (livroId <= 0)
+                    return null;
+
+                return await _repositorio.GetByLivro(livroId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro listar comentários: {ex.Message}");
+            }
+            
+            
+
+        }
     }
 }

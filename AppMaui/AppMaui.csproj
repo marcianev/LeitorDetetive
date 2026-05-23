@@ -40,11 +40,14 @@
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 		<UserSecretsId>6b8f505d-ad0d-4c60-9573-69aa721caec1</UserSecretsId>
+
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
+	
+	
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
 
@@ -94,6 +97,9 @@
 	  <MauiXaml Update="Views\CadastroAView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\CadastroCView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\CadastroPView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -130,6 +136,10 @@
 	</ItemGroup>
 	<ItemGroup>
 		<MauiAsset Include="appsettings.json" />
+	</ItemGroup>
+	<ItemGroup>
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#fbe1c0" BaseSize=" 128, 128" />
 	</ItemGroup>
 
 </Project>

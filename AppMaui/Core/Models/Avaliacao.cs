@@ -17,7 +17,7 @@ namespace AppMaui.Core.Models
         [NotNull, MaxLength(20)]
         public StatusAvaliacao Status { get; set; }
         [NotNull]
-        public int AlunoId { get; set; }
+        public int UsuarioId { get; set; }
         [NotNull]
         public int LivroId { get; set; }
         [NotNull]

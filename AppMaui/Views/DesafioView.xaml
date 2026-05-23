@@ -9,7 +9,9 @@
              xmlns:views="clr-namespace:AppMaui.Views">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="{OnIdiom Phone=0.4*, Desktop=0.2*}"/>
+            <RowDefinition Height="{OnIdiom Phone=0.13*, Desktop=0.4*}"/>
+            <RowDefinition Height="{OnIdiom Phone=0.2*, Desktop=0.2*}"/>
+            <RowDefinition Height="{OnIdiom Phone=0.6*, Desktop=1*}"/>           
             <RowDefinition Height="{OnIdiom Phone=0.6*, Desktop=1*}"/>           
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -31,7 +33,7 @@
                     />
 
                 <Image 
-                  Margin="15,5" 
+                  Margin="15,5"                    
                   HorizontalOptions="Start"
                   Source="{Binding Capa}"
                   Style="{StaticResource sImgCabecalho}"
@@ -41,7 +43,8 @@
                   FontSize="{OnIdiom Phone=16, Desktop=20}"
                   HorizontalOptions="Start"  
                   TranslationX="{OnIdiom Phone= 59,Desktop=69}"                         
-                  Text="{Binding Titulo}" 
+                  Text="{Binding Titulo}"
+                    TextColor="{StaticResource begeClaro}"
                   Style="{StaticResource sLbSombra1}"   
                   />
                 <Label 
@@ -83,7 +86,9 @@
         <!--palavra secreta-->
         <Border 
             Stroke="{StaticResource verdeMedio}"        
-            Grid.Column="1"                      
+            Grid.Column="{OnIdiom Phone=0, Desktop=1}"    
+              Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+            Grid.Row="{OnIdiom Phone=1, Desktop=0}"
             Margin="15,5"                                            
             VerticalOptions="Fill" 
             Style="{StaticResource sBrdPrincipal}">
@@ -157,11 +162,11 @@
                                 <Border
                     Stroke="{StaticResource marromClaro}"
                     Style="{StaticResource sBrdEntry}"
-                    Margin="2"
+                    Margin="{OnIdiom Phone=2, Desktop=0}"
                                    Padding="0"
                                TranslationY="-1"    
                     WidthRequest="35"
-                    HeightRequest="30">
+                    HeightRequest="{OnIdiom Phone=50, Desktop=30}">
 
                                     <Border.Triggers>
 
@@ -182,13 +187,13 @@
 
                                     <Entry
                         Text="{Binding LetraDigitada}"
-                                        
-                                        TranslationX="-8"
-                                        TranslationY="-7"
+                                        HeightRequest="{OnIdiom Phone=50,Desktop=20}"
+                                        TranslationX="{OnIdiom Phone=0, Desktop=-8}"
+                                        TranslationY="{OnIdiom Phone=3, Desktop=-8}"                                        
                         TextTransform="Uppercase"
-                        HorizontalTextAlignment="Center"
+                        HorizontalTextAlignment="Center"                                       
                         TextColor="{StaticResource marromEscuro}"
-                        FontSize="18"
+                        FontSize="14"
                                         />
 
                                 </Border>
@@ -200,12 +205,14 @@
                 </HorizontalStackLayout>
             </Grid>
         </Border>
-        <CollectionView Grid.Row="1"                         
+        <CollectionView Grid.Row="{OnIdiom Phone=2, Desktop=1}"
+                        Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                        Grid.RowSpan="{OnIdiom Phone=1, Desktop=3}"
                         ItemsSource="{Binding DesafiosDTOEsquerda}"
                          Margin="15,5"   >
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="DTO:DesafiosDTO">
-                    <!--lista de desafio-->
+                    <!--lista de desafio esquerda-->
                     <Border x:Name="brdDesafio"  
            Stroke="{StaticResource azulClaro}"            
                 HeightRequest="75"                       
@@ -225,8 +232,8 @@
                       />
                             <Label 
                   Grid.ColumnSpan="20"
-                  TranslationY="-2"
-                  FontSize="{OnIdiom Phone=15, Desktop=15}"
+                  TranslationY="-1"
+                  FontSize="12"
                        TranslationX="15"
                   HorizontalOptions="{OnIdiom Phone=Start, Desktop=Start}"
                   Text="{Binding Pergunta}"
@@ -246,10 +253,11 @@
                     Stroke="{StaticResource marromClaro}"
                     Style="{StaticResource sBrdEntry}"
                     Margin="2"
+                                                Padding="0"
                                                 TranslationY="0"
                                                
                     WidthRequest="35"
-                    HeightRequest="35">
+                    HeightRequest="{OnIdiom Phone=35, Desktop=35}">
                                                 <Border.Triggers>
                                                    
 
@@ -273,12 +281,14 @@ Value="True">
 
                                                 </Border.Triggers>
                                                 <Entry
-                       
+                        HeightRequest="{OnIdiom Phone=50, Desktop=30}"
+                                                    TranslationX="{OnIdiom Phone=4, Desktop=-4}"
+TranslationY="{OnIdiom Phone=5, Desktop=0}"
                         TextTransform="Uppercase"
                                                     Text="{Binding LetraDigitada}"
                         HorizontalTextAlignment="Center"
                         TextColor="{StaticResource marromEscuro}"
-                        FontSize="18"/>
+                        FontSize="14"/>
 
                                             </Border>
 
@@ -302,13 +312,15 @@ TranslationX="5"
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <CollectionView Grid.Row="1" 
-                        Grid.Column="1"
+        <CollectionView Grid.Row="{OnIdiom Phone=3, Desktop=1}"
+                        Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                        Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                        Grid.RowSpan="{OnIdiom Phone=1, Desktop=3}"
                         ItemsSource="{Binding DesafiosDTODireita}"
                          Margin="15,5"   >
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="DTO:DesafiosDTO">
-                    <!--lista de desafio-->
+                    <!--lista de desafio direita-->
                     <Border x:Name="brdDesafio"  
            Stroke="{StaticResource azulClaro}"            
                 HeightRequest="75"                       
@@ -328,8 +340,8 @@ TranslationX="5"
                       />
                             <Label 
                   Grid.ColumnSpan="20"
-                  TranslationY="-2"
-                  FontSize="{OnIdiom Phone=15, Desktop=15}"
+                  TranslationY="-1"
+                  FontSize="12"
                        TranslationX="15"
                   HorizontalOptions="{OnIdiom Phone=Start, Desktop=Start}"
                   Text="{Binding Pergunta}"
@@ -376,12 +388,15 @@ TranslationX="5"
 
                                                 </Border.Triggers>
 
-                                                <Entry                        
+                                                <Entry    
+                                                                                                    HeightRequest="{OnIdiom Phone=50, Desktop=30}"
+                                                    TranslationX="{OnIdiom Phone=4, Desktop=-2}"
+TranslationY="{OnIdiom Phone=5, Desktop=-2}"
                         TextTransform="Uppercase"
                         HorizontalTextAlignment="Center"
                                                     Text="{Binding LetraDigitada}"
                         TextColor="{StaticResource marromMedio}"
-                        FontSize="18"/>
+                        FontSize="14"/>
 
                                             </Border>
 
@@ -408,10 +423,11 @@ TranslationX="5"/>
         <!--botões-->
         <!--botão de SALVAR-->
         <Button 
-           Grid.Row="1"    
-                Grid.Column="1"
+           Grid.Row="3"    
+                Grid.Column="{OnIdiom Phone=1, Desktop=1}"
                 VerticalOptions="End"
            HorizontalOptions="End" 
+            IsVisible="{Binding BotaoVisivel}"
            Text="SALVAR"
            Style="{StaticResource sBtn}"
            BackgroundColor="{StaticResource verdeMedio}" 

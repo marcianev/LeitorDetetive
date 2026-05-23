@@ -3,21 +3,22 @@ using AppMaui.Core.Models;
 using AppMaui.Core.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AppMaui.Core.Services.Local
 {
-    public class LeituraService(LeituraRepository _repositorio)
-    {
+    public class LeituraService(LeituraRepository _repositorio, AlunoService _aluno)
+    {      
         //recebe o modelo e salva um aluno no banco de dados
         public async Task<bool> SalvarLeitura(Leitura leitura)
         {
             try
             {
                 //validações
-                if (leitura.UsuarioId <= 0 ||                   
+                if (leitura.UsuarioId <= 0 ||
                     leitura.LivroId <= 0)
                     return false;
 
@@ -30,7 +31,7 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao salvar leitura: {ex.Message}");
+                throw new Exception($"Erro ao salvar leitura: {ex.Message}");
             }
         }//fecha método salvar leitura
 
@@ -72,7 +73,7 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao atualizar leitura: {ex.Message}");
+                throw new Exception($"Erro ao atualizar leitura: {ex.Message}");
             }
         }//fim atualizar
 
@@ -93,7 +94,7 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao deletar leitura: {ex.Message}");
+                throw new Exception($"Erro ao deletar leitura: {ex.Message}");
             }
         }//fim deletar
 
@@ -147,5 +148,30 @@ namespace AppMaui.Core.Services.Local
                 throw new Exception($"Erro ao buscar leitura anterior: {ex.Message}");
             }
         }//fim método buscar leitura anterior por usuário
+
+        //concluir leitura, para marcar a leitura como concluída e atribuir a data de término
+        public async Task<bool> ConcluirLeitura(int usuarioId)
+        {
+            try
+            {
+                //validação do id do usuário
+                if (usuarioId <= 0)
+                    return false;
+                var leitura = await _repositorio.GetLeituraAtualPorUsuario(usuarioId);
+                if (leitura == null)
+                    return false;
+                leitura.DataFim = DateTime.Now;
+                leitura.Status = StatusLeitura.Concluida;
+                await _repositorio.Update(leitura);
+                int leituras = await _repositorio.ContarLeiturasConcluidas(usuarioId);
+                Debug.WriteLine($"Leituras concluídas: {leituras}");
+                bool atualizarNivel = await _aluno.AtualizarPatente(usuarioId, leituras);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao concluir leitura: {ex.Message}");
+            }
+        }
     }
 }

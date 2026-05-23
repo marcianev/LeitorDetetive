@@ -9,6 +9,8 @@
              xmlns:views="clr-namespace:AppMaui.Views">
     <Grid>
         <Grid.RowDefinitions >
+            <RowDefinition/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
@@ -16,6 +18,9 @@
         </Grid.ColumnDefinitions>
         <Border x:Name="brdListaLivros"      
 Stroke="{StaticResource verdeMedio}" 
+                Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+                  Grid.RowSpan="{OnIdiom Phone=1, Desktop=2}"
+                Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
 Margin="15"
 VerticalOptions="Fill" 
 Style="{StaticResource sBrdPrincipal}">
@@ -116,10 +121,10 @@ Style="{StaticResource sBrdPrincipal}">
             </Grid>
         </Border>
         <!--recebe a leitura anterior-->
-        <Border Grid.Column="1" 
-                HorizontalOptions="Center"
+        <Border Grid.Column="{OnIdiom Phone=0, Desktop=1}" 
+                HorizontalOptions="{OnIdiom Phone= Start, Desktop= Center}"
      VerticalOptions="Start"                
-                TranslationY="25"
+                TranslationY="{OnIdiom Phone=-25, Desktop=25}"
      Style="{StaticResource sBrdEntry}"
      Stroke="Transparent"
      BackgroundColor="{StaticResource begeUltra}">
@@ -129,19 +134,21 @@ Style="{StaticResource sBrdPrincipal}">
         WidthRequest="100" />
         </Border>
 
-        <Label Grid.Column="1" Text="ÚLTIMA LEITURA" 
+        <Label Grid.Column="{OnIdiom Phone=0, Desktop=1}"  Text="ÚLTIMA LEITURA" 
     FontSize="10" 
-               TranslationY="20"
-    HorizontalOptions="Center" 
+               TranslationY="{OnIdiom Phone=120, Desktop=20}"
+               TranslationX="{OnIdiom Phone=25, Desktop=0}"
+    HorizontalOptions="{OnIdiom Phone= Start, Desktop= Center}"
     LineBreakMode="TailTruncation"
     MaxLines="2"
     TextColor="{StaticResource marromMedio}"
     FontAttributes="Bold"/>
         
         <!--recebe a leitura atual-->
-        <Border Grid.Column="1" HorizontalOptions="Center"
-     VerticalOptions="Center"
-                TranslationY="-20"
+        <Border Grid.Column="{OnIdiom Phone=0, Desktop=1}"  HorizontalOptions="Center"
+     VerticalOptions="{OnIdiom Phone= Start, Desktop=Center}"
+                TranslationY="{OnIdiom Phone=20, Desktop=180}"
+                TranslationX="{OnIdiom Phone=30, Desktop=0}"
                 IsVisible="{Binding LivroAtual}"
      Style="{StaticResource sBrdEntry}"
      Stroke="Transparent"
@@ -152,9 +159,11 @@ Style="{StaticResource sBrdPrincipal}">
         WidthRequest="100" />
         </Border>
 
-        <Label Grid.Column="1" Text="LEITURA EM ANDAMENTO" 
+        <Label Grid.Column="{OnIdiom Phone=0, Desktop=1}" Text="LEITURA ATUAL" 
     FontSize="10" 
-               TranslationY="-80"
+               TranslationY="{OnIdiom Phone=60, Desktop=120}"
+ TranslationX="{OnIdiom Phone=30, Desktop=0}"
+               IsVisible="{Binding LivroAtual}"
                VerticalOptions="Center"
     HorizontalOptions="Center" 
     LineBreakMode="TailTruncation"
@@ -162,9 +171,10 @@ Style="{StaticResource sBrdPrincipal}">
     TextColor="{StaticResource marromMedio}"
     FontAttributes="Bold"/>
         <!--recebe INICIAR LEITURA-->
-        <Border Grid.Column="1" HorizontalOptions="Center"
+        <Border Grid.Column="{OnIdiom Phone=0, Desktop=1}"  HorizontalOptions="{OnIdiom Phone= End, Desktop= Center}"
      VerticalOptions="End"
-                TranslationY="-70"
+                TranslationY="{OnIdiom Phone=55, Desktop=290}"
+                TranslationX="{OnIdiom Phone=60, Desktop=0}"
                 IsVisible="{Binding ProximoLivro}"
      Style="{StaticResource sBrdEntry}"
      Stroke="Transparent"
@@ -175,13 +185,14 @@ Style="{StaticResource sBrdPrincipal}">
         WidthRequest="100" />
         </Border>
 
-        <Button Grid.Column="1" Text="INICIAR LEITURA" 
+        <Button Grid.Column="{OnIdiom Phone=0, Desktop=1}" Text="INICIAR LEITURA" 
     FontSize="10" 
                 IsVisible="{Binding ProximoLivro}"
-                TranslationY="-20"
-                BackgroundColor="{StaticResource verdeMedio}"               
+                TranslationY="{OnIdiom Phone=35 ,Desktop=340}"
+                BackgroundColor="{StaticResource verdeMedio}"   
+                TranslationX="{OnIdiom Phone=60, Desktop=0}"
                VerticalOptions="End"
-    HorizontalOptions="Center"   
+   HorizontalOptions="{OnIdiom Phone= End, Desktop= Center}"  
     TextColor="{StaticResource begeClaro}"
                 Style="{StaticResource sBtn}"
     FontAttributes="Bold"

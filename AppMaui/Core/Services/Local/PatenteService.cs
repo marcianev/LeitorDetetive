@@ -85,6 +85,18 @@ namespace AppMaui.Core.Services.Local
                 throw new Exception ($"Erro ao deletar patente: {e.Message}");
             }
         }//fim deletar
-
+         
+        //metodo para popular livros
+        public async Task PopularPatentes()
+        {
+            try
+            {
+                await _repositorio.PopularPatentes();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao popular livros: {ex.Message}");
+            }
+        }
     }
 }

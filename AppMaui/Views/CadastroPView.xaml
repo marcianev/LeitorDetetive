@@ -41,7 +41,7 @@
               VerticalOptions="Center"
               TranslationX="5"         
                TranslationY="1"
-              Text="NOVO PROFESSOR"
+              Text="CADASTRO"
               Style="{StaticResource sLbSombra1}"   
               />
                 <Label x:Name="lbCadTituloSombra2" 
@@ -51,7 +51,7 @@
               VerticalOptions="Center"
               TranslationX="4"   
                TranslationY="1"
-              Text="NOVO PROFESSOR" 
+               Text="CADASTRO"
               Style="{StaticResource sLbSombra2}"   
               />
                 <Label x:Name="lbCadTituloSombra3" 
@@ -61,7 +61,7 @@
               VerticalOptions="Center"
               TranslationX="5"   
               TranslationY="-1"
-              Text="NOVO PROFESSOR" 
+              Text="CADASTRO"
               Style="{StaticResource sLbSombra3}"   
               />
                 <Label x:Name="lbCadTituloSombra4" 
@@ -71,7 +71,7 @@
               VerticalOptions="Center"
               TranslationX="6"   
               TranslationY="-1"
-              Text="NOVO PROFESSOR" 
+            Text="CADASTRO" 
               Style="{StaticResource sLbSombra4}"   
               />
                 <Label x:Name="lbCadTitulo"
@@ -80,7 +80,7 @@
               HorizontalOptions="Center"
               VerticalOptions="Center"
               TranslationX="5"   
-              Text="NOVO PROFESSOR" 
+               Text="CADASTRO"
               Style="{StaticResource sLbTitulo}"   
               />
 

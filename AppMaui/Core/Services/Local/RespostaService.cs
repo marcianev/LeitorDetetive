@@ -20,11 +20,10 @@ namespace AppMaui.Core.Services.Local
                 if (resposta.AlunoId <= 0 ||
                     resposta.DesafioId <= 0)
                     return false;
-
-                Debug.WriteLine($"{resposta.AlunoId}//{resposta.DesafioId}");
+              
                 //procurar resposta já existente para o mesmo aluno e desafio
                 var respostaExistente = await _repostitorio.GetByAlunoDesafio(resposta.AlunoId, resposta.DesafioId);
-                if(!respostaExistente.Any())
+                if (!respostaExistente.Any())
                 {
                     resposta.UltimoRegistro = DateTime.Now;
 
@@ -32,11 +31,11 @@ namespace AppMaui.Core.Services.Local
                     return true;
                 }
                 else
-                    return false;               
+                    return false;
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao salvar resposta: {ex.Message}");
+                throw new Exception($"Erro ao salvar resposta: {ex.Message}");
             }
 
         }//fim salvar
@@ -74,7 +73,7 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao atualizar resposta: {ex.Message}");
+                throw new Exception($"Erro ao atualizar resposta: {ex.Message}");
             }
         }//fim listar
 
@@ -89,7 +88,7 @@ namespace AppMaui.Core.Services.Local
                 if (id <= 0)
                     return false;
                 var resposta = await _repostitorio.GetById(id);
-                if(resposta == null)
+                if (resposta == null)
                     return false;
 
                 await _repostitorio.Delete(resposta);
@@ -97,7 +96,7 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao deletar resposta: {ex.Message}");
+                throw new Exception($"Erro ao deletar resposta: {ex.Message}");
             }
         }//fim deletar
 
@@ -108,8 +107,8 @@ namespace AppMaui.Core.Services.Local
             {
                 if (livroId <= 0 || alunoId <= 0)
                     throw new Exception("ID do livro ou aluno é inválido.");
-                var respostas = await _repostitorio.GetByAlunoDesafio(alunoId, livroId);
-                if(respostas == null)
+                var respostas = await _repostitorio.BuscarRespostasLivro(alunoId, livroId);
+                if (respostas == null)
                     return null;
                 return respostas;
             }

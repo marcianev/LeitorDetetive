@@ -3,6 +3,7 @@ using AppMaui.Core.Models;
 using AppMaui.Core.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -142,6 +143,36 @@ namespace AppMaui.Core.Services.Local
                 throw new Exception($"Erro ao buscar NickName: {ex.Message}");
             }
 
-        }//fecha classe AlunoServico
+        }//fecha verificarExistenciaNick
+
+        //verifica a quantidade de leitura e atualiza patente se necessário
+        public async Task<bool> AtualizarPatente(int usuarioId, int quantidadeLeituras)
+        {
+            try
+            {
+                //validação
+                if (usuarioId <= 0)
+                    return false;
+                var aluno = await _repositorio.GetByUsuarioId(usuarioId);
+                if (aluno == null)
+                    return false;
+                //verifica a quantidade de leituras e atualiza a patente
+                int patente = quantidadeLeituras / 3;
+                Debug.WriteLine($"Patente: {patente}");
+                //pesquisa a id da possivel nova patente
+                if (quantidadeLeituras % 3 == 0)
+                {
+                    aluno.PatenteId = await _repositorio.GetIdPatente(patente + 1, aluno.PatenteId);
+                    Debug.WriteLine($"NovaPatente: {aluno.PatenteId}");
+                    //await _repositorio.Update(aluno);
+                    return true;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao verificar patente: {ex.Message}");
+            }
+        }//atualizar patente
     }
 }

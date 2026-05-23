@@ -36,5 +36,18 @@ namespace AppMaui.Core.Repositories
         //buscar resposta por aluno e por desafio 
         public async Task<List<Resposta>> GetByAlunoDesafio(int alunoId, int desafioId) =>
             await _db.Table<Resposta>().Where(r => r.AlunoId == alunoId && r.DesafioId == desafioId).ToListAsync();
+
+        //buscar resposta por aluno para determinado livro
+        public async Task<List<Resposta>> BuscarRespostasLivro(int alunoId, int livroId)
+        {
+            string sql = @"
+        SELECT r.*
+        FROM resposta r
+        INNER JOIN desafio d ON d.id = r.desafioId
+        WHERE r.alunoId = ?
+        AND d.livroId = ?";
+
+            return await _db.QueryAsync<Resposta>(sql, alunoId, livroId);
+        }
     }
 }
