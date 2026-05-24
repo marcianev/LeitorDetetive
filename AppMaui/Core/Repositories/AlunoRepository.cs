@@ -1,4 +1,5 @@
 ﻿using AppMaui.Core.Data;
+using AppMaui.Core.DTOs;
 using AppMaui.Core.Models;
 using SQLite;
 using System;
@@ -73,6 +74,66 @@ namespace AppMaui.Core.Repositories
                                   .Where(p => p.TrilhaId == trilhaId && p.Nivel == nivelAtual)
                                   .FirstOrDefaultAsync();     
             return patenteNivel.Id;
+        }
+        //construir dto da dashboradAluno 
+        public async Task<DashBoardADTO> GerarDashBoard(int usuarioId)
+        {
+            string sql = @"
+        SELECT 
+    p.Nome AS Patente,
+
+    a.Nickname,
+
+    m.Conteudo AS MensagemPatente,
+
+    (
+        SELECT COUNT(*)
+        FROM Leitura lt
+        WHERE lt.UsuarioId = a.UsuarioId
+    ) AS QuantidadeLeitura,
+
+    (
+        SELECT l.Titulo
+        FROM Leitura lu
+        INNER JOIN Livro l
+            ON l.Id = lu.LivroId
+        WHERE lu.UsuarioId = a.UsuarioId
+          AND lu.Status = '2'
+        ORDER BY lu.DataFim DESC
+        LIMIT 1
+    ) AS Titulo,
+
+    (
+        SELECT l.Capa
+        FROM Leitura lu
+        INNER JOIN Livro l
+            ON l.Id = lu.LivroId
+        WHERE lu.UsuarioId = a.UsuarioId
+          AND lu.Status = '2'
+        ORDER BY lu.DataFim DESC
+        LIMIT 1
+    ) AS Capa,
+
+    (
+        SELECT av.Comentario
+        FROM Avaliacao av
+        WHERE av.UsuarioId = a.UsuarioId
+        ORDER BY av.DataCadastro DESC
+        LIMIT 1
+    ) AS Comentario
+
+FROM Aluno a
+
+LEFT JOIN Patente p
+    ON p.Id = a.PatenteId
+
+LEFT JOIN Mensagem m
+    ON m.Titulo = Patente
+
+WHERE a.UsuarioId = ?";
+
+            var resultado = await _db.QueryAsync<DashBoardADTO>(sql, usuarioId);
+            return resultado.FirstOrDefault();
         }
 
     }

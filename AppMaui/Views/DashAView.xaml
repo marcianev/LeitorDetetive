@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppMaui.Views.DashAView">
+             x:Class="AppMaui.Views.DashAView"
+             xmlns:vm="clr-namespace:AppMaui.ViewsModels"
+x:DataType="vm:DashAViewModel"
+xmlns:DTO="clr-namespace:AppMaui.Core.DTOs">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="{OnIdiom Phone=1*, Desktop=1.2*}"/>
-            <RowDefinition Height="{OnIdiom Phone=0.5*, Desktop=1*}"/>
-            <RowDefinition Height="{OnIdiom Phone=0.5*, Desktop=1*}"/>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -16,6 +19,7 @@
         </Grid.ColumnDefinitions>
         <Border x:Name="brdMsgPat"      
            Grid.ColumnSpan="2"
+                Grid.RowSpan="2"
            Stroke="{StaticResource verdeMedio}" 
            Margin="15,15,15,5"                                            
            VerticalOptions="Fill" 
@@ -23,7 +27,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="{OnIdiom Phone=0.5*, Desktop=1*}"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="{OnIdiom Phone=0.5*, Desktop=1.5*}"/>
                 </Grid.RowDefinitions>
 
                 <Rectangle x:Name="rtgMsgPat"                                    
@@ -41,45 +45,84 @@
                   VerticalOptions="Center" 
                   FontSize="{OnIdiom Phone=17, Desktop=20}"
                   HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
-                  TranslationX="{OnIdiom Phone= 0,Desktop=50}"
-                  Text="OLÁ, DETETIVE CP23" 
-                  Style="{StaticResource sLbSombra1}"   
-                  />
+                  TranslationX="{OnIdiom Phone= 0,Desktop=89}"
+                  Style="{StaticResource sLbSombra1}"  >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Olá, "/>
+                            <Span Text="{Binding Dash.Patente}"/>
+                            <Span Text="  "/>
+                            <Span Text="{Binding Dash.Nickname}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
                 <Label x:Name="lbMsgPatTituloSombra2" 
                   VerticalOptions="Center" 
                   HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
-                  TranslationX="{OnIdiom Phone= 0,Desktop=50}"
+                  TranslationX="{OnIdiom Phone= 0,Desktop=91}"
                   FontSize="{OnIdiom Phone=17, Desktop=20}"
-                  Text="OLÁ, DETETIVE CP23"
-                  Style="{StaticResource sLbSombra2}"     
-                  />
+                  Style="{StaticResource sLbSombra2}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Olá, "/>
+                            <Span Text="{Binding Dash.Patente}"/>
+                            <Span Text="  "/>
+                            <Span Text="{Binding Dash.Nickname}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
                 <Label x:Name="lbMsgPatTituloSombra3" 
-                  Text="OLÁ, DETETIVE CP23"
                   HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"  
-                  TranslationX="{OnIdiom Phone= 0,Desktop=50}"
+                  TranslationX="{OnIdiom Phone= 0,Desktop=90}"
                   Style="{StaticResource sLbSombra3}"  
                   VerticalOptions="Center" 
-                  FontSize="{OnIdiom Phone=17, Desktop=20}"
-                  />
+                  FontSize="{OnIdiom Phone=17, Desktop=20}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Olá, "/>
+                            <Span Text="{Binding Dash.Patente}"/>
+                            <Span Text="  "/>
+                            <Span Text="{Binding Dash.Nickname}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
                 <Label x:Name="lbMsgPatTituloSombra4"                                
                   VerticalOptions="Center" 
                   FontSize="{OnIdiom Phone=17, Desktop=20}"
                   HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"  
-                  TranslationX="{OnIdiom Phone= 0,Desktop=50}"
-                  Text="OLÁ, DETETIVE CP23"
-                  Style="{StaticResource sLbSombra4}"  
-                  />
+                  TranslationX="{OnIdiom Phone= 0,Desktop=90}"                  
+                  Style="{StaticResource sLbSombra4}"  >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Olá, "/>
+                            <Span Text="{Binding Dash.Patente}"/>
+                            <Span Text="  "/>
+                            <Span Text="{Binding Dash.Nickname}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
                 <Label x:Name="lbMsgPatTitulo" 
                   VerticalOptions="Center"   
                   FontSize="{OnIdiom Phone=17, Desktop=20}"
                   HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"  
-                  TranslationX="{OnIdiom Phone= 0,Desktop=50}"
-                  Text="OLÁ, DETETIVE CP23"
-                  Style="{StaticResource sLbTitulo}"   
-                  />
+                  TranslationX="{OnIdiom Phone= 0,Desktop=90}"                  
+                  Style="{StaticResource sLbTitulo}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Olá, "/>
+                            <Span Text="{Binding Dash.Patente}"/>
+                            <Span Text="  "/>
+                            <Span Text="{Binding Dash.Nickname}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label> 
+                  
                 <Label x:Name="lbMsg" 
                   Grid.Row="1"
-                  Text="Parabéns, você concluiu sua trilha. Fique ligado! Logo mais teremos outras trilhas e missões para você." 
+                  Text="{Binding Dash.MensagemPatente}" 
                   FontAttributes="Bold"
                   FontSize="{OnIdiom Phone=14,Desktop=16}"  
                   HorizontalTextAlignment="Justify"
@@ -94,7 +137,8 @@
         <Border x:Name="brdLivLidos"   
            Stroke="{StaticResource verdeMedio}" 
            Margin="15,5"
-           Grid.Row="1"                         
+           Grid.Row="2"
+                Grid.Column="1"
            Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
            VerticalOptions="Fill"
            Style="{StaticResource sBrdPrincipal}">
@@ -155,22 +199,15 @@
                   VerticalOptions="Center"   
                   FontSize="{OnIdiom Phone=17, Desktop=20}"
                   HorizontalOptions="End"
-                  Text="18 /" 
-                  TranslationX="{OnIdiom Phone=-30, Desktop=-50}"
+                  Text="{Binding Dash.QuantidadeLeitura, StringFormat='{0} / 18 '}" 
+                  TranslationX="{OnIdiom Phone=-30, Desktop=-40}"
                   Style="{StaticResource sLbTitulo}"   
                   />
-                <Label x:Name="lbQtdAluno"
-                  VerticalOptions="Center"   
-                  FontSize="{OnIdiom Phone=17, Desktop=20}"
-                  HorizontalOptions="End"
-                  Text="18"               
-                  TranslationX="{OnIdiom Phone=-10, Desktop=-20}"
-                  Style="{StaticResource sLbTitulo}"   
-                  />
+               
             </Grid>
         </Border>
 
-        <!--Quantidade de livro atual-->
+        <!-- de livro atual-->
         <Border x:Name="brdLivAtual"   
            Stroke="{StaticResource verdeMedio}" 
            Margin="15,5"
@@ -189,50 +226,58 @@
                 <Image x:Name="imgLivA" 
                   Margin="15,5" 
                   HorizontalOptions="Start"
-                  Source="livros.webp"
+                  Source="{Binding Dash.Capa}"
                   Style="{StaticResource sImgCabecalho}"
                   />
                 <Label x:Name="lbLivAtualSombra1" 
-                  VerticalOptions="Center" 
+                  VerticalOptions="Start" 
                   FontSize="{OnIdiom Phone=17, Desktop=20}"
                   HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
                   Text="LIVRO ATUAL"
+                        TranslationX="80"
                   Style="{StaticResource sLbSombra1}"   
                   />
                 <Label x:Name="lbLivAtualSombra2" 
-                  VerticalOptions="Center"
+                  VerticalOptions="Start" 
                   HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
                   FontSize="{OnIdiom Phone=17, Desktop=20}"
                   Text="LIVRO ATUAL"
+                        TranslationX="80"
                   Style="{StaticResource sLbSombra2}"     
                   />
                 <Label x:Name="lbLivAtualSombra3" 
                   Text="LIVRO ATUAL" 
+                        TranslationX="80"
                   HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
                   Style="{StaticResource sLbSombra3}"  
-                  VerticalOptions="Center" 
+                  VerticalOptions="Start"  
                   FontSize="{OnIdiom Phone=17, Desktop=20}"
                   />
                 <Label x:Name="lbLivAtualSombra4"                                
-                  VerticalOptions="Center" 
+                  VerticalOptions="Start" 
+                        TranslationX="80"
                   FontSize="{OnIdiom Phone=17, Desktop=20}"
                   HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
                   Text="LIVRO ATUAL"
                   Style="{StaticResource sLbSombra4}"  
                   />
                 <Label x:Name="lbLivAtual"
-                  VerticalOptions="Center"   
+                  VerticalOptions="Start"    
+                        TranslationX="80"
                   FontSize="{OnIdiom Phone=17, Desktop=20}"
                   HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
                   Text="LIVRO ATUAL"
                   Style="{StaticResource sLbTitulo}"   
                   />
-
-                <Image x:Name="imglivAtual" 
-                  Margin="15,5" 
-                  HorizontalOptions="End"
-                  Source="livros.webp"
-                  Style="{StaticResource sImgCabecalho}"
+                <Label
+                  VerticalOptions="End"    
+                    TranslationY="{OnIdiom Phone=50, Desktop=-10}"
+                  FontSize="{OnIdiom Phone=17, Desktop=16}"
+                  HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
+                    TranslationX="80"
+                  Text="{Binding Dash.Titulo}"
+                  Style="{StaticResource sLbTitulo}"   
+                    TextColor="{StaticResource palhaClaro}"
                   />
             </Grid>
         </Border>
@@ -300,7 +345,7 @@
                   />
                 <Label x:Name="lbUltComent"
                   Grid.Row="1"
-                  Text="Livro engraçado, gostei do cachorrinho e o nome que o menino deu pra casinha dele." 
+                  Text="{Binding Dash.Comentario}" 
                   FontAttributes="Bold"
                   FontSize="{OnIdiom Phone=14,Desktop=16}"  
                   HorizontalTextAlignment="Justify"
@@ -314,8 +359,8 @@
         <!--dicas de leitura-->
         <Border x:Name="brdDicas" 
            Stroke="{StaticResource verdeMedio}" 
-           Grid.Row="{OnIdiom Phone=4, Desktop=1}"
-           Grid.RowSpan="{OnIdiom Phone=1, Desktop=4}"
+           Grid.Row="{OnIdiom Phone=4, Desktop=3}"
+           Grid.RowSpan="{OnIdiom Phone=1, Desktop=2}"
            Grid.Column="{OnIdiom Phone=0, Desktop=1}"
            Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
            Margin="15,5"                                            
@@ -372,21 +417,14 @@
                   HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
                   Text="DICAS DE LEITURA"
                   Style="{StaticResource sLbTitulo}"   
-                  />
-                <Image x:Name="imgLivDicas"
-                  Grid.Row="1"
-                  Margin="15,5" 
-                  HorizontalOptions="Start"
-                  Source="livros.webp"
-                  Style="{StaticResource sImgCabecalho}"
-                  />
-                <Image x:Name="imgClass"
+                  />               
+                <Label 
                   Grid.Row="1"
                   Margin="15" 
                   HorizontalOptions="Start"
                   TranslationX="70"
-                  Source="estrela.webp"
-                  Style="{StaticResource sImgCabecalho}"
+                    Text="Em breve, dicas para novas leituras."
+                    TextColor="{StaticResource marromEscuro}"                 
                   />
             </Grid>
         </Border>

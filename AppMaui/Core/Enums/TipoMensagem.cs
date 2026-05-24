@@ -12,6 +12,7 @@ namespace AppMaui.Core.Enums
         Sucesso,
         Alerta,
         Informacao,
-        Motivacao
+        Motivacao,
+        Patente
     }
 }

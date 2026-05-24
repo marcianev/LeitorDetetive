@@ -90,5 +90,18 @@ namespace AppMaui.Core.Services.Local
                 throw new Exception ($"Erro ao deletar mensagem: {ex.Message}");
             }
         }//fim método deletar mensagem
+
+        //metodo para popular mensagens
+        public async Task PopularMensagens()
+        {
+            try
+            {
+                await _repository.PopularMensagens();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao popular mensagens: {ex.Message}");
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+using AppMaui.Core.DTOs;
 using AppMaui.Core.Models;
 using AppMaui.Core.Repositories;
 using System;
@@ -174,5 +175,23 @@ namespace AppMaui.Core.Services.Local
                 throw new Exception($"Erro ao verificar patente: {ex.Message}");
             }
         }//atualizar patente
+
+        //chama a query de dashboard
+        public async Task<DashBoardADTO> GerarDashBoard(int usuarioId)
+        {
+            try
+            {
+                //validação
+                if (usuarioId <= 0)
+                    return null;
+
+                return await _repositorio.GerarDashBoard(usuarioId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao gerar DTO: {ex.Message}");
+            }
+           
+        }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace AppMaui.Core.Repositories
@@ -29,5 +30,19 @@ namespace AppMaui.Core.Repositories
 
         //metodo deletar
         public async Task<int> Delete(int id) => await _db.DeleteAsync<Mensagem>(id);
+
+        //metodo injeta a lista de mensagens
+        public async Task PopularMensagens()
+        {
+            var existe = await _db.Table<Mensagem>().CountAsync();
+            if (existe > 0) return;
+
+            using var stream = await FileSystem.OpenAppPackageFileAsync("mensagens.json");
+            using var reader = new StreamReader(stream);
+            var json = await reader.ReadToEndAsync();
+            var mensagens = JsonSerializer.Deserialize<List<Mensagem>>(json);
+            if (mensagens != null)
+                await _db.InsertAllAsync(mensagens);
+        }
     }
 }

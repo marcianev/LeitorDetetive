@@ -1,0 +1,37 @@
+﻿[
+  {
+    "Tipo": 4,
+    "Conteudo": "Bem-vindo à equipe de investigação, recruta. Toda grande descoberta começa com a primeira leitura. Continue explorando pistas, aprendendo novas histórias e desenvolvendo seu olhar de detetive.",
+    "Titulo": "RECRUTA"
+  },
+  {
+    "Tipo": 4,
+    "Conteudo": "Você já deu os primeiros passos na investigação.Cada livro concluído fortalece suas habilidades e mostra que sua dedicação está crescendo. Continue avançando para desbloquear novos desafios.",
+    "Titulo": "OPERADOR"
+  },
+  {
+    "Tipo": 4,
+    "Conteudo": "Suas missões estão ficando mais importantes. Você demonstra atenção, persistência e evolução em cada leitura. Os melhores investigadores aprendem observando cada detalhe.",
+    "Titulo": "OFICIAL DE CAMPO"
+  },
+  {
+    "Tipo": 4,
+    "Conteudo": "Sua experiência já chama atenção dentro da equipe. Você está se tornando um leitor estratégico, capaz de interpretar pistas, conectar ideias e enfrentar desafios.",
+    "Titulo": "AGENTE TÁTICO"
+  },
+  {
+    "Tipo": 4,
+    "Conteudo": "Sua trajetória inspira outros investigadores. O conhecimento acumulado em suas leituras mostra liderança, responsabilidade e grande capacidade de análise.",
+    "Titulo": "INSPETOR CHEFE"
+  },
+  {
+    "Tipo": 4,
+    "Conteudo": "Poucos chegam tão longe na trilha investigativa. Sua dedicação revela disciplina e excelência. Cada nova leitura amplia ainda mais sua visão e sua capacidade investigativa.",
+    "Titulo": "INSPETOR SÊNIOR"
+  },
+  {
+    "Tipo": 4,
+    "Conteudo": "Parabéns, Detetive. Você concluiu a trilha principal e provou sua habilidade como grande investigador da leitura. Sua jornada deixa marcas, conhecimento e inspiração para toda a equipe.",
+    "Titulo": "DETETIVE"
+  }
+]
