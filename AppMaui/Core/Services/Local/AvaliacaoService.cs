@@ -1,34 +1,58 @@
-﻿using AppMaui.Core.DTOs;
+﻿
+using AppMaui.Core.DTOs;
+using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using AppMaui.Core.Repositories;
+using AppMaui.Core.Services.External;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AppMaui.Core.Services.Local
 {
-    public class AvaliacaoService(AvaliacaoRepository _repositorio)
-    {
-        //receve o modelo de avaliação, salva uma avaliação no banco de dados
+    public class AvaliacaoService(AvaliacaoRepository _repositorio, 
+        OpenAIService openAIService)   
+    {          
+        //recebe o modelo de avaliação, salva uma avaliação no banco de dados
 
-        public async Task<bool> SalvarAvaliacao(Avaliacao avaliacao)
+        public async Task<bool> SalvarAvaliacao(AvaliacaoDTO dto)
         {
             try
             {
                 //validações
-                if (avaliacao.Nota < 1 
-                    || avaliacao.Nota > 5 ||
-                    string.IsNullOrEmpty(avaliacao.Comentario) ||
-                    avaliacao.Comentario.Length > 100)
-                    return false;
-                string s = avaliacao.Status.ToString();
-                if (s.Length > 20)
-                    return false;
+                if (dto.Nota < 1 
+                    || dto.Nota > 5 ||
+                    string.IsNullOrEmpty(dto.Comentario) ||
+                    dto.Comentario.Length > 300)
+                    return false;               
+                   
 
-                await _repositorio.Add(avaliacao);
-                return true;
+                var status = await openAIService.ValidarComentario(dto.Comentario);
+               
+                var avaliacao = new Avaliacao()
+                {
+                    Nota = dto.Nota,
+                    Comentario = dto.Comentario,
+                    Status = status,
+                    UsuarioId = dto.UsuarioId,
+                    LivroId = dto.LivroId,
+                    DataCadastro = DateTime.Now
+                };
+                Debug.WriteLine($"Cheguei aqui {status}");
+
+                await Task.Delay(2000);
+                var salvo = await _repositorio.Add(avaliacao);
+                if (salvo <= 0)
+                {
+
+                    return false;
+                }
+                else
+                    return true;
             }
             catch (Exception ex)
             {

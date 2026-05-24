@@ -1,5 +1,8 @@
-﻿using System;
+﻿using AppMaui.Core.Enums;
+using AppMaui.Core.Settings;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
@@ -11,17 +14,18 @@ namespace AppMaui.Core.Services.External
     public class OpenAIService
     {
         private readonly HttpClient _httpClient;       
-        private const string API_KEY = "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";
+        private readonly OpenAISettings _openAISettings;
 
-        public OpenAIService()
+        public OpenAIService(OpenAISettings openAISettings)
         {
             _httpClient = new HttpClient();
+            _openAISettings = openAISettings;
 
             _httpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", API_KEY);
+                new AuthenticationHeaderValue("Bearer", _openAISettings.ApiKey);
         }
 
-        public async Task<string> ValidarComentario(string comentario)
+        public async Task<StatusAvaliacao> ValidarComentario(string comentario)
         {
             var corpo = new
             {
@@ -31,9 +35,15 @@ namespace AppMaui.Core.Services.External
                     new
                     {
                         role = "user",
-                        content = $"Analise o comentário de um aluno:\n\n\"{comentario}\"\n\n" +
-                                    "Responda apenas com APROVADO ou REPROVADO. " +
-                                    "Considere linguagem imprópria e relevância educacional."
+                        content = $"Você é um moderador de comentários de leitura infantil." +
+                        $"Analise o comentário abaixo: {comentario}. Aprove comentários normais " +
+                        $"de opinião, mesmo que simples, curtos ou com pequenos erros de português." +
+                        $"Reprove apenas comentários que contenham:\r\n- palavrões\r\n- ofensas\r" +
+                        $"\n- discurso de ódio\r\n- conteúdo sexual\r\n- spam\r\n- texto sem sentido\r" +
+                        $"\n- conteúdo totalmente fora do contexto do livro\r\n\r" +
+                        $"\nResponda APENAS com:\r" +
+                        $"\n\r\nAPROVADO\r" +
+                        $"\nou\r\nREPROVADO"                         
                     }
                 }
             };
@@ -50,10 +60,10 @@ namespace AppMaui.Core.Services.External
                 "https://api.openai.com/v1/chat/completions",
                 content
             );
-
+           
             if (!resposta.IsSuccessStatusCode)
             {
-                return $"Erro: {resposta.StatusCode}";
+                throw new Exception("Erro ao conectar a api.");            
             }
 
             var respostaJson = await resposta.Content.ReadAsStringAsync();
@@ -66,8 +76,13 @@ namespace AppMaui.Core.Services.External
                    .GetProperty("message")
                    .GetProperty("content")
                    .GetString();
-
-            return texto ?? "Sem resposta";
+           
+            return texto switch
+            {                
+                "APROVADO" => StatusAvaliacao.Aprovada,
+                "REPROVADO" => StatusAvaliacao.AnaliseManual,
+                _ => StatusAvaliacao.AnaliseAutomatica
+            };
         }
     }
 }

@@ -42,13 +42,17 @@ namespace AppMaui
                 .AddUserSecrets<EmailSettings>()
                 .Build();
 
-            // pega os dados diretamente
+            // gerar as configs
             var emailSettings = config
                 .GetSection("EmailSettings")
                 .Get<EmailSettings>();
+            var openAISettings = config
+                .GetSection("OpenAI")
+                .Get<OpenAISettings>();
 
             //registra direto no DI
             builder.Services.AddSingleton(emailSettings!);
+            builder.Services.AddSingleton(openAISettings!);
 
 
 
@@ -56,7 +60,7 @@ namespace AppMaui
             //cria os serviços de injeção de dependência para o banco de dados e os repositórios
             builder.Services.AddSingleton<AlunoRepository>();
             builder.Services.AddSingleton<AppShell>();
-            builder.Services.AddSingleton<AvaliacaoRepository>();
+            builder.Services.AddTransient<AvaliacaoRepository>();
             builder.Services.AddSingleton<DatabaseService>();            
             builder.Services.AddSingleton<DesafioRepository>();
             builder.Services.AddSingleton<LeituraRepository>();
@@ -73,7 +77,7 @@ namespace AppMaui
 
             //cria os serviços de injeção de dependência para os serviços de negócio
             builder.Services.AddSingleton<AlunoService>();
-            builder.Services.AddSingleton<AvaliacaoService>();
+            builder.Services.AddTransient<AvaliacaoService>();
             builder.Services.AddSingleton<CadastroAlunoService>();
             builder.Services.AddSingleton<CadastrarProfessorService>();
             builder.Services.AddSingleton<CriptogramaService>();
@@ -98,6 +102,7 @@ namespace AppMaui
             builder.Services.AddTransient<AlunoPViewModel>();
             builder.Services.AddTransient<AvaliacaoAViewModel>();
             builder.Services.AddTransient<CadastroAViewModel>();
+            builder.Services.AddTransient<CadastroCViewModel>();
             builder.Services.AddTransient<CadastroPViewModel>();
             builder.Services.AddTransient<CadastroTViewModel>();
             builder.Services.AddTransient<DesafioViewModel>();
@@ -125,6 +130,7 @@ namespace AppMaui
             builder.Services.AddTransient<AlunoPView>();
             builder.Services.AddTransient<AvaliacaoAView>();
             builder.Services.AddTransient<CadastroAView>();
+            builder.Services.AddTransient<CadastroCView>();
             builder.Services.AddTransient<CadastroPView>();
             builder.Services.AddTransient<CadastroTView>();
             builder.Services.AddTransient<DashAView>();

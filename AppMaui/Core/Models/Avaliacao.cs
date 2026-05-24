@@ -12,9 +12,9 @@ namespace AppMaui.Core.Models
         public int Id { get; set; }
         [NotNull]
         public int Nota { get; set; }
-        [MaxLength(100)]
+        [MaxLength(300)]
         public string Comentario { get; set; } = string.Empty;
-        [NotNull, MaxLength(20)]
+        [NotNull]
         public StatusAvaliacao Status { get; set; }
         [NotNull]
         public int UsuarioId { get; set; }

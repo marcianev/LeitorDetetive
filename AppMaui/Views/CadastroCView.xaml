@@ -1,11 +1,191 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppMaui.Views.CadastroCView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:Class="AppMaui.Views.CadastroCView"
+                            xmlns:vm="clr-namespace:AppMaui.ViewsModels"
+            x:DataType="vm:CadastroCViewModel"
+              BackgroundColor="#A4000000"              
+ HorizontalOptions="Fill"
+ VerticalOptions="Fill">
+    <Grid HorizontalOptions="Center" VerticalOptions="Center">
+        <Border x:Name="brdCadProf"   
+           Stroke="{StaticResource azulMedio}" 
+           WidthRequest="300"   
+           Style="{StaticResource sBrdPrincipal}"
+           Margin="10">
+            <Grid>
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="0.7*"/>
+                    <RowDefinition Height="0.7*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition/>     
+                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.2*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Cabeçalho formulário cadastro-->
+                <Rectangle x:Name="rtgCadTitulo" 
+                  Grid.ColumnSpan="2"
+                  Fill="{StaticResource verdeEscuro}" 
+                  Stroke="{StaticResource verdeEscuro}"
+                  />
+                <Label x:Name="lbCadTituloSombra1" 
+              FontSize="{OnIdiom Desktop=20}"
+              Grid.ColumnSpan="2"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              TranslationX="5"         
+               TranslationY="1"
+              Text="NOVO COMENTÁRIO"
+              Style="{StaticResource sLbSombra1}"   
+              />
+                <Label x:Name="lbCadTituloSombra2" 
+              FontSize="{OnIdiom Desktop=20}"
+              Grid.ColumnSpan="2"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              TranslationX="4"   
+               TranslationY="1"
+              Text="NOVO COMENTÁRIO"
+              Style="{StaticResource sLbSombra2}"   
+              />
+                <Label x:Name="lbCadTituloSombra3" 
+              FontSize="{OnIdiom Desktop=20}"
+              Grid.ColumnSpan="2"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              TranslationX="5"   
+              TranslationY="-1"
+             Text="NOVO COMENTÁRIO"
+              Style="{StaticResource sLbSombra3}"   
+              />
+                <Label x:Name="lbCadTituloSombra4" 
+              FontSize="{OnIdiom Desktop=20}"
+              Grid.ColumnSpan="2"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              TranslationX="6"   
+              TranslationY="-1"
+            Text="NOVO COMENTÁRIO"
+              Style="{StaticResource sLbSombra4}"   
+              />
+                <Label x:Name="lbCadTitulo"
+              FontSize="{OnIdiom Desktop=20}"
+              Grid.ColumnSpan="2"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              TranslationX="5"   
+              Text="NOVO COMENTÁRIO"
+              Style="{StaticResource sLbTitulo}"   
+              />
+
+                <!--label e entry COMENTÁRIO-->
+                <Border 
+               Grid.Row="1"   
+                        Grid.ColumnSpan="2"
+               Margin="5" Style="{StaticResource sBrdAzul}">
+                    <Label TextColor="{StaticResource begeClaro}"
+                  FontAttributes="Bold" 
+                  Text="{Binding Titulo}"  
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                  />
+                </Border>                   
+                <Border Grid.Row="2" 
+                        
+               Grid.ColumnSpan="2"    
+               Style="{StaticResource sBrdEntry}">
+                    <Editor 
+                        Placeholder="Digite seu comentário..."
+                        AutoSize="TextChanges"
+                  TextColor="{StaticResource marromEscuro}"
+                        VerticalOptions="Fill"
+                        HorizontalOptions="Fill"
+                    Text="{Binding ViewComentario}"/>
+                </Border>               
+
+                <!--label e entry NOTA-->
+                <Border x:Name="brdCpf" 
+               Grid.Row="3" 
+               Margin="10,15,0,0" 
+               Style="{StaticResource sBrdAzul}">
+                    <Label TextColor="{StaticResource begeClaro}"
+                  FontAttributes="Bold" 
+                  Text="NOTA"
+                            HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                  />
+                    
+                </Border>
+                <Border Grid.Row="3" 
+        Grid.Column="1"
+        HeightRequest="{OnIdiom Phone=40, Desktop=30}"
+        HorizontalOptions="Start"
+        VerticalOptions="Center"
+        Style="{StaticResource sBrdEntry}">
+
+                    <Picker
+                        SelectedItem="{Binding ViewNota}"
+         SelectedIndex="0"
+                        
+        WidthRequest="60"
+        HeightRequest="25"
+        FontSize="14"
+        TextColor="Black"
+        TitleColor="Black"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+
+                        <Picker.Items>
+                            <x:String>1</x:String>
+                            <x:String>2</x:String>
+                            <x:String>3</x:String>
+                            <x:String>4</x:String>
+                            <x:String>5</x:String>
+                        </Picker.Items>
+
+                    </Picker>
+                </Border>
+                <!--botão de CANCELAR-->
+                <Button x:Name="BtnCancelar"
+               Grid.Row="5" 
+               Grid.ColumnSpan="2"
+               Margin="3"
+               HorizontalOptions="Start" 
+                        VerticalOptions="Center"
+               Text="CANCELAR"
+               Style="{StaticResource sBtn}"
+               BackgroundColor="{StaticResource palhaEscuro}"      
+                 Command="{Binding FecharCadastroCommand}"
+               />
+               
+                <!--botão de salvar-->
+                <Button x:Name="BtnCad" 
+               Grid.Row="5" 
+               Grid.Column="1"
+                Margin="5"
+               HorizontalOptions="End" 
+                        VerticalOptions="Center"
+               Text="SALVAR"
+               Style="{StaticResource sBtn}"
+               BackgroundColor="{x:StaticResource verdeMedio}"
+                Command="{Binding SalvarComentarioCommand}"
+        />
+                <!--label para mensagem-->
+                <Label x:Name="lbMsm"
+                    Grid.Row="4"
+                    Grid.ColumnSpan="2"
+                    Text="{Binding Mensagem}"   
+                    TextColor="{StaticResource marromEscuro}"
+                        HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                    />
+            </Grid>
+        </Border>
+    </Grid>
 </ContentView>

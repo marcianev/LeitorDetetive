@@ -25,6 +25,7 @@ namespace AppMaui.Core.DTOs
         public string Capa { get; set; } = string.Empty;
        
         public string Nickname { get; set; } = string.Empty;
+        public int UsuarioId { get; set; }
        
     }
 }

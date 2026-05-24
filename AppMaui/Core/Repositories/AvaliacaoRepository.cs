@@ -68,11 +68,11 @@ namespace AppMaui.Core.Repositories
             INNER JOIN livro l
                 ON a.livroId = l.id
 
-            WHERE a.livroID = @idLivro
+            WHERE a.livroID = ?
             ";
 
             var resultado = await _db.QueryAsync<AvaliacaoDTO>(sql,idLivro);
-            return resultado.ToList();
+            return resultado;
 
         }
     }
