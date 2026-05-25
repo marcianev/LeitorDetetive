@@ -1,4 +1,5 @@
-﻿using AppMaui.Core.Models;
+﻿using AppMaui.Core.Enums;
+using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.External;
 using AppMaui.Core.Services.Local;
@@ -52,7 +53,7 @@ namespace AppMaui.ViewsModels
         private readonly EstanteAView _estanteAView;
         private readonly TurmaPView _turmaPView;
         private readonly DesafioView _desafio;
-        private readonly AvaliacaoAView _avaliacaoAView;
+        private readonly AvaliacaoAView _avaliacaoAView;       
         private Professor? _professor;
         private readonly ProfessorService _professorService;
         private readonly INavigationService _navigationService;
@@ -71,7 +72,7 @@ namespace AppMaui.ViewsModels
             _estanteAView = estanteAView;
             _turmaPView = turmaPView;
             _desafio = desafio;
-            _avaliacaoAView = avaliacaoAView;
+            _avaliacaoAView = avaliacaoAView;           
             CadastroPVM = cadastroPVM;
             _professorService = professorService;
             _navigationService = navigationService;
@@ -179,10 +180,7 @@ namespace AppMaui.ViewsModels
                 await _dialogoService.Confirmar("Erro", "Usuário não encontrado. Faça login novamente.", "OK", "SAIR");
                 await _navigationService.NavegarPara("///Login");
                 return;
-            }
-            if (_usuario.Tipo == "Professor")
-                ViewAtiva = _alunoPView;
-            if (_usuario.Tipo == "Aluno")
+            }            
                 ViewAtiva = _avaliacaoAView;
         }
 
@@ -220,53 +218,6 @@ namespace AppMaui.ViewsModels
                 SessaoService.Logout();
             }
             await _navigationService.NavegarPara("///Login");
-        }
-                
-
-        /*            
-        [ObservableProperty]
-        private string icones;
-        private readonly OpenAIService _openAIService;
-        private readonly CriptogramaService _criptogramaService;
-        public ObservableCollection<LetraCriptografada> Letras { get; set; }
-
-        public PaginaBaseViewModel(OpenAIService openAIService, CriptogramaService criptogramaService)
-        {
-            _openAIService = openAIService;
-            _criptogramaService = criptogramaService;           
-        }
-
-        public void TestarCriptografia()
-        {
-           
-            Letras = new ObservableCollection<LetraCriptografada>(lista);
-            string mensagem = _criptogramaService.Criptografar("TESTE", lista);            
-            string mensagem2 = _criptogramaService.Criptografar("ESPERANÇA", lista);            
-            string mensagem3 = _criptogramaService.Criptografar("METODO", lista);            
-            string mensagem4 = _criptogramaService.Criptografar("ALIANÇA", lista);            
-            string mensagem5 = _criptogramaService.Criptografar("CASA", lista);            
-            
-
-
-            Icones = mensagem + "\n" + mensagem2 +"\n"+mensagem3 + "\n" + mensagem4 + "\n" + mensagem5;
-        }
-
-        [RelayCommand]
-        private async Task ValidacaoAutomatica()
-        {
-           
-                string comentario = "Oi Marta, vc é muita burra, não fale mais comigo.";
-                string resposta = await _openAIService.ValidarComentario(comentario);
-
-                if (string.IsNullOrWhiteSpace(resposta))
-                    resposta = "Sem resposta";
-
-                await Shell.Current.DisplayAlert("Validação do comentário: ", resposta, "OK");
-                TestarCriptografia();
-
-                    
-        }*/
-
-
+        }       
     }
 }

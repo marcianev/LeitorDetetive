@@ -32,7 +32,7 @@ namespace AppMaui.ViewsModels
             
             _usuario = SessaoService.UsuarioLogado;
             
-            if (_usuario != null)
+            if (_usuario != null && _usuario.Tipo == "Aluno")
             {                
                 Dash = await _alunoService.GerarDashBoard(_usuario.Id);
                 Debug.WriteLine($"{Dash.Capa}");

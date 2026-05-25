@@ -16,8 +16,7 @@ namespace AppMaui.Core.DTOs
         public int Nota { get; set; }
         public string Comentario { get; set; } = string.Empty;        
         public StatusAvaliacao Status { get; set; }   
-        public DateTime DataCadastro { get; set; }
-       
+        public DateTime DataCadastro { get; set; }        
         public int LivroId { get; set; }
         public string Titulo { get; set; } = string.Empty;
         public string Autor { get; set; } = string.Empty;       
@@ -26,6 +25,20 @@ namespace AppMaui.Core.DTOs
        
         public string Nickname { get; set; } = string.Empty;
         public int UsuarioId { get; set; }
-       
+
+        public Color BordaComentario
+        {
+            get
+            {
+                return Status switch
+                {
+                    StatusAvaliacao.AnaliseAutomatica => (Color)Application.Current!.Resources["vermelhoMedio"],
+                    StatusAvaliacao.AnaliseManual => (Color)Application.Current!.Resources["vermelho"],
+                    StatusAvaliacao.Aprovada => (Color)Application.Current!.Resources["verdeMedio"],
+                    _ => (Color)Application.Current!.Resources["begeUltra"]
+                };
+            }
+        }
+
     }
 }

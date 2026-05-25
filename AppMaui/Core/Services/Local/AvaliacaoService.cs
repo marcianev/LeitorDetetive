@@ -79,22 +79,30 @@ namespace AppMaui.Core.Services.Local
         }//fim listar
 
         //metodo para atualizar avaliação
-        public async Task<bool> AtualizarAvaliacao(Avaliacao avaliaca)
+        public async Task<bool> AtualizarAvaliacao(AvaliacaoDTO dto)
         {
             try
             {
                 //validações
-                if (avaliaca.Id <= 0 ||
-                    avaliaca.Nota < 1 || 
-                    avaliaca.Nota > 5 ||
-                    string.IsNullOrEmpty(avaliaca.Comentario) ||
-                    avaliaca.Comentario.Length > 100)
-                    return false;
-                string s = avaliaca.Status.ToString();
-                if (s.Length > 20)
+                if (dto.IdAvaliacao <= 0 ||
+                    dto.Nota < 1 || 
+                    dto.Nota > 5 ||
+                    string.IsNullOrEmpty(dto.Comentario) ||
+                    dto.Comentario.Length > 100)
                     return false;
 
-                await _repositorio.Update(avaliaca);
+                var avaliacao = new Avaliacao
+                {
+                    Id = dto.IdAvaliacao,
+                    Nota = dto.Nota,
+                    Comentario = dto.Comentario,
+                    DataCadastro = dto.DataCadastro,
+                    LivroId = dto.LivroId,
+                    Status = dto.Status,
+                    UsuarioId = dto.UsuarioId
+                };
+
+                await _repositorio.Update(avaliacao);
                 return true;
                 //chamar o metodo de validação automática aqui
             }

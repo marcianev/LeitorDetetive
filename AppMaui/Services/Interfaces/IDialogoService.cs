@@ -10,5 +10,6 @@ namespace AppMaui.Services.Interfaces
     {
         Task<bool> Confirmar(string titulo, string mensagem, string aceitar, string cancelar);
         Task Mensagem(string titulo, string mensagem, string aceitar);
+        Task<string> Consulta3(string titulo, string cancelar, string recusar, string aceitar);
     }
 }

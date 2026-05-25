@@ -18,5 +18,10 @@ namespace AppMaui.Services
         {
             await Shell.Current.CurrentPage.DisplayAlert(titulo, mensagem, aceitar);
         }
+
+        public async Task<string> Consulta3(string titulo,string cancelar, string recusar, string aceitar)
+        {
+            return await Shell.Current.CurrentPage.DisplayActionSheet(titulo, cancelar, recusar, aceitar);
+        }
     }
 }

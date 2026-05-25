@@ -37,7 +37,7 @@ namespace AppMaui.Core.Repositories
         public async Task<int> Update(Avaliacao avaliacao) => await _db.UpdateAsync(avaliacao);
 
         //metodo deletar
-        public async Task<int> Delete(Avaliacao avaliacao) => await _db.DeleteAsync<Avaliacao>(avaliacao);
+        public async Task<int> Delete(Avaliacao avaliacao) => await _db.DeleteAsync(avaliacao);
 
         public async Task<List<AvaliacaoDTO>> GetByLivro(int idLivro)
         {

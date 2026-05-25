@@ -3,12 +3,15 @@ using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
+using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,22 +31,26 @@ namespace AppMaui.ViewsModels
         private bool mostrarCadastro;
         [ObservableProperty]
         private bool comentar;
+        [ObservableProperty]
+        private Color corBorda;
 
-        private int usuario;
+        private Usuario usuario;
 
         public CadastroCViewModel CadastroCVM{ get; set; }
        
         private readonly LivroService _livroService;
         private readonly AvaliacaoService _avaliacaoService;    
         private readonly LeituraService _leituraService;
+        private readonly IDialogoService _dialogoService;
 
         public AvaliacaoAViewModel(LivroService livroService, 
             AvaliacaoService avaliacaoService, CadastroCViewModel cadastroCViewModel,
-            LeituraService leituraService)
+            LeituraService leituraService, IDialogoService dialogoService)
         {
             _livroService = livroService;
             _avaliacaoService = avaliacaoService;
             _leituraService = leituraService;
+            _dialogoService = dialogoService;
             CadastroCVM = cadastroCViewModel;
             CadastroCVM.OnFecharCadastro = () => MostrarCadastro = false;
 
@@ -53,7 +60,12 @@ namespace AppMaui.ViewsModels
         //carregar os dados iniciais
         public async Task Inicializar()
         {
-            usuario = SessaoService.UsuarioLogado.Id;
+            usuario = SessaoService.UsuarioLogado;
+            if(usuario.Tipo == "Professor")            
+                corBorda = (Color)Application.Current!.Resources["palhaMedio"];
+            else if (usuario.Tipo == "Aluno")
+                corBorda = (Color)Application.Current!.Resources["verdeMedio"];
+
             Comentar = false;
             var lista = await _livroService.ListarLivros();
             if (lista != null)
@@ -69,18 +81,20 @@ namespace AppMaui.ViewsModels
            
 
         }
-
+                
         //carregar avaliações dto
         public async Task CarregarComentarios(int idLivro)
         {
-           
-            var concluido = await _leituraService.GetLeituraPorLivroUsuario(idLivro, usuario);
-            if (concluido == null)
-                Comentar = false;
-            else if (concluido.Status != StatusLeitura.Concluida)
-                Comentar = false;
-            else
-                Comentar = true;
+           if(usuario.Tipo == "Aluno")
+            {
+                var concluido = await _leituraService.GetLeituraPorLivroUsuario(idLivro, usuario.Id);
+                if (concluido == null)
+                    Comentar = false;
+                else if (concluido.Status != StatusLeitura.Concluida)
+                    Comentar = false;
+                else
+                    Comentar = true;
+            }           
 
             ComentariosE.Clear();
             ComentariosD.Clear();
@@ -91,7 +105,7 @@ namespace AppMaui.ViewsModels
 
             foreach(var avaliacao in avaliacoes)
             {
-                if (avaliacao.Status == StatusAvaliacao.Aprovada)
+                if (avaliacao.Status == StatusAvaliacao.Aprovada || usuario.Tipo == "Professor")
                     if (avaliacao.IdAvaliacao % 2 == 0)
                         ComentariosE.Add(avaliacao);
                     else
@@ -107,6 +121,33 @@ namespace AppMaui.ViewsModels
             CadastroCVM.Titulo = LivroSelecionado.Titulo;
             CadastroCVM.ViewLivroId = LivroSelecionado.Id;
             CadastroCVM.ViewUsuarioId = SessaoService.UsuarioLogado.Id;   
+        }
+
+        //abrir moderação
+        [RelayCommand]
+        private async Task ModerarComentario(AvaliacaoDTO comentario)
+        {          
+            if (usuario.Tipo != "Professor" || comentario == null || comentario.Status == StatusAvaliacao.Aprovada)
+                return;
+
+            var resposta = await _dialogoService.Consulta3(
+                "Deseja aprovar este comentário?",
+                "Cancelar",
+                "Excluir",
+                "Aprovar");
+
+            switch (resposta)
+            {
+                case "Aprovar":
+                    comentario.Status = StatusAvaliacao.Aprovada;
+                    await _avaliacaoService.AtualizarAvaliacao(comentario);
+                    break;
+                case "Excluir":
+                    await _avaliacaoService.DeletarAvaliacao(comentario.IdAvaliacao);
+                    break;
+                case "Cancelar":
+                    break;
+            }
         }
 
 }

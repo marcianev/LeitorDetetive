@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppMaui.Views.AvaliacaoAView"
+             x:Class="AppMaui.Views.AvaliacaoAView"            
              xmlns:vm="clr-namespace:AppMaui.ViewsModels"
             x:DataType="vm:AvaliacaoAViewModel"
             xmlns:model="clr-namespace:AppMaui.Core.Models"
@@ -238,9 +238,14 @@ VerticalOptions="Center"
                     <Border x:Name="brdComentarios"    
  Grid.Row="2"
  Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
- Stroke="{StaticResource verdeMedio}" 
+ Stroke="{Binding BordaComentario}" 
  Margin="15,5"      
  Style="{StaticResource sBrdPrincipal}">
+                           <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.ModerarComentarioCommand}"
+            CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="{OnIdiom Phone=0.5*, Desktop=0.7*}"/>
@@ -250,6 +255,7 @@ VerticalOptions="Center"
                             <Rectangle x:Name="rtgComentarios" 
             Fill="{StaticResource verdeEscuro}" 
             Stroke="{StaticResource verdeEscuro}"
+                                       InputTransparent="True"
             />
                             <!--Nickname-->
                             <Label x:Name="lbNick"       
@@ -258,6 +264,15 @@ VerticalOptions="Center"
         FontSize="{OnIdiom Phone=17, Desktop=14}"    
         TranslationX="{OnIdiom Phone=10, Desktop=20}"
         Text="{Binding Nickname}"     
+        Style="{StaticResource sLbTitulo}"   
+        />
+                            <!--Status-->
+                            <Label       
+        VerticalOptions="Center" 
+        HorizontalOptions="Center"                            
+        FontSize="{OnIdiom Phone=17, Desktop=14}"    
+        TranslationX="{OnIdiom Phone=10, Desktop=20}"
+        Text="{Binding Status}"     
         Style="{StaticResource sLbTitulo}"   
         />
                             <!--Data-->
@@ -270,7 +285,7 @@ VerticalOptions="Center"
         Text="{Binding DataCadastro, StringFormat='{0:dd/MM/yy}'}"     
         Style="{StaticResource sLbTitulo}"   
         />
-                            <!--turma-->
+                            <!--comentario-->
                             <Label x:Name="lbTu"
         Grid.Row="1"
         Text="{Binding Comentario}"
@@ -295,9 +310,15 @@ VerticalOptions="Center"
                     <Border x:Name="brdComentarios"    
 Grid.Row="2"
 Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
-Stroke="{StaticResource verdeMedio}" 
+Stroke="{Binding BordaComentario}" 
 Margin="15,5"      
 Style="{StaticResource sBrdPrincipal}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+Command="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, Path=BindingContext.ModerarComentarioCommand}"
+CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="{OnIdiom Phone=0.5*, Desktop=0.7*}"/>
@@ -327,7 +348,16 @@ Style="{StaticResource sBrdPrincipal}">
        Text="{Binding DataCadastro, StringFormat='{0:dd/MM/yy}'}"     
        Style="{StaticResource sLbTitulo}"   
        />
-                            <!--turma-->
+                            <!--Status-->
+                            <Label       
+VerticalOptions="Center" 
+HorizontalOptions="Center"                            
+FontSize="{OnIdiom Phone=17, Desktop=14}"    
+TranslationX="{OnIdiom Phone=10, Desktop=20}"
+Text="{Binding Status}"     
+Style="{StaticResource sLbTitulo}"   
+/>
+                            <!--comentario-->
                             <Label x:Name="lbTu"
        Grid.Row="1"
        Text="{Binding Comentario}"
