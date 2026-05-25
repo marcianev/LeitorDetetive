@@ -1,33 +1,28 @@
 ﻿using AppMaui.Core.Models;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppMaui.Core.Data
 {
     public class DatabaseService
     {
-        //declara a variável de conexão com o banco de dados SQLite
-        private SQLiteAsyncConnection _conexao;
+        
+        private readonly SQLiteAsyncConnection _conexao;
 
-        //estabelece a conexão com o banco de dados SQLite chamando o método GetDatabasePath()
-        //da classe DbContextcs para obter o caminho do banco de dados
-        //e criar uma nova instância de SQLiteAsyncConnection
+        /// <summary>
+        /// Responsável por estabelecer a conexão com o banco de dados SQLite 
+        /// e criar as tabelas necessárias para as entidades do aplicativo.
+        /// </summary>      
         public DatabaseService()
-        {           
+        {          
+            //Evitar recriar a conexão 
             if (_conexao != null)
                 return;
 
+            //inicializa componentes nativos do SQLite
             SQLitePCL.Batteries_V2.Init();
 
-            string caminho = Path.Combine(FileSystem.AppDataDirectory, "leitorDetetive.db3");
-            
-
-            _conexao = new SQLiteAsyncConnection(caminho);            
-            
+            string caminho = Path.Combine(FileSystem.AppDataDirectory, "leitorDetetive.db3");   
+            _conexao = new SQLiteAsyncConnection(caminho);        
         }
 
         public SQLiteAsyncConnection Conexao => _conexao;

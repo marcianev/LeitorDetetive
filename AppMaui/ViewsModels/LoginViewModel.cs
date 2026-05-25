@@ -26,7 +26,9 @@ namespace AppMaui.ViewsModels
 
         [ObservableProperty]
         private bool mostrarPrimeiroAcesso;
-        
+        [ObservableProperty]
+        private bool carregando;
+
 
         public CadastroPViewModel CadastroPVM { get; }
 
@@ -53,6 +55,7 @@ namespace AppMaui.ViewsModels
             _auth = auth;
             _navigationService = nav;                 
             CadastroPVM.OnFecharCadastro = () => MostrarCadastro = false;
+            CadastroPVM.OnCarregando = (valor) => Carregando = valor;
             NovaSenhaVM.OnFecharNovaSenha = () => MostrarNovaSenha = false;
             PrimeiroAcessoVM.OnFecharPAcesso = () => MostrarPrimeiroAcesso = false;
         }
@@ -82,29 +85,37 @@ namespace AppMaui.ViewsModels
         //chama o processo de login
         [RelayCommand]
         private async Task Entrar()
-        {           
-            if(string.IsNullOrWhiteSpace(Usuario)||
-                string.IsNullOrWhiteSpace(Senha))
+        {
+            try
             {
-                Mensagem = "Informe usuário e senha.";
-                await Task.Delay(3000);
-                Mensagem = "";
-                return;
-            }
-            var user = await _auth.Autenticar(Usuario, Senha);
+                Carregando = true;
+                if (string.IsNullOrWhiteSpace(Usuario) ||
+               string.IsNullOrWhiteSpace(Senha))
+                {
+                    Mensagem = "Informe usuário e senha.";
+                    await Task.Delay(3000);
+                    Mensagem = "";
+                    return;
+                }
+                var user = await _auth.Autenticar(Usuario, Senha);
 
-            if(user != null)
-            {               
-                Usuario = string.Empty;
-                Senha = string.Empty;
-                await _navigationService.NavegarPara("PaginaBase");
+                if (user != null)
+                {
+                    Usuario = string.Empty;
+                    Senha = string.Empty;
+                    await _navigationService.NavegarPara("PaginaBase");
+                }
+                else
+                {
+                    Mensagem = "Usuário ou senha inválido.";
+                    await Task.Delay(3000);
+                    Mensagem = "";
+                    return;
+                }
             }
-            else
+            finally
             {
-                Mensagem = "Usuário ou senha inválido.";
-                await Task.Delay(3000);
-                Mensagem = "";
-                return;
+                Carregando = false;
             }
 
            

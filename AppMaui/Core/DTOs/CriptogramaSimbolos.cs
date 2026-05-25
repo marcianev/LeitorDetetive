@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace AppMaui.Core.DTOs
 {
-    public class CriptogramaSimbolos
+    /// <summary>
+    /// Disponibiliza os símbolos e caracteres utilizados
+    /// na geração dos criptogramas da aplicação.
+    /// </summary>
+    public static class CriptogramaSimbolos
     {
+        /// <summary>
+        /// Lista de símbolos utilizados na substituição
+        /// das letras dos criptogramas.
+        /// Os códigos representam ícones FontAwesome.
+        /// </summary>
         public static readonly string[] Lista =
             {
                     "\uf005", // star
@@ -51,6 +55,9 @@ namespace AppMaui.Core.DTOs
                 "\uf810", // robot
                 "\uf433"  // shield
             };
+        /// <summary>
+        /// Caracteres suportados na geração dos criptogramas.
+        /// </summary>
         public static readonly string[] Alfabeto =
             {
                    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", 

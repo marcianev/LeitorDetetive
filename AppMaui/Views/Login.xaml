@@ -305,5 +305,40 @@ VerticalOptions="Center"
             <views:PrimeiroAcessoView 
                  BindingContext="{Binding PrimeiroAcessoVM}"/>
         </ContentView>
+        <!-- LOADING -->
+        <Grid
+Grid.RowSpan="4"
+Grid.ColumnSpan="2"
+ZIndex="999"
+IsVisible="{Binding Carregando}"
+BackgroundColor="#99f8ca7b"
+InputTransparent="False">
+
+            <Border
+    BackgroundColor="Transparent"
+    Padding="25"
+    StrokeThickness="0"
+    HorizontalOptions="Center"
+    VerticalOptions="Center">
+
+                <VerticalStackLayout Spacing="10">
+
+                    <ActivityIndicator
+            IsRunning="True"
+            Color="White"
+            WidthRequest="60"
+            HeightRequest="60"/>
+
+                    <Label
+            Text="Aguarde enquanto trabalhamos..."
+            TextColor="Black"
+            HorizontalOptions="Center"
+                        Background="{StaticResource palhaClaro}"/>
+
+                </VerticalStackLayout>
+
+            </Border>
+
+        </Grid>
     </Grid>
 </ContentPage>

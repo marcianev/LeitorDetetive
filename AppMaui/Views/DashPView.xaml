@@ -103,7 +103,7 @@ xmlns:DTO="clr-namespace:AppMaui.Core.DTOs"
                                 Grid.Row="1"
                                 Grid.RowSpan="4"
                                 Grid.ColumnSpan="2"
-                                BackgroundColor="AliceBlue">
+                                >
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="DTO:DashBoardPDTO">
                             <Grid>

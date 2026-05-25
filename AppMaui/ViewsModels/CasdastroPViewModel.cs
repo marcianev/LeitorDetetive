@@ -37,6 +37,7 @@ namespace AppMaui.ViewsModels
         private bool modoAlterar;
 
         public Action? OnFecharCadastro { get; set; }
+        public Action<bool>? OnCarregando;
 
         //injeta o serviço de professor 
         private CadastroProfessorDTO _dto;
@@ -57,62 +58,71 @@ namespace AppMaui.ViewsModels
         //comando para salvar professor
         [RelayCommand]
         private async Task SalvarProfessor()
-        {        
-            //valida exitência
-            if (string.IsNullOrWhiteSpace(Nome) ||
-                string.IsNullOrWhiteSpace(Email) ||
-                string.IsNullOrWhiteSpace(Cpf) ||
-                string.IsNullOrWhiteSpace(User))
+        {
+            try
             {
-                Mensagem = "Todos os campos são obrigatórios";
+                OnCarregando?.Invoke(true);
+                //valida exitência
+                if (string.IsNullOrWhiteSpace(Nome) ||
+                    string.IsNullOrWhiteSpace(Email) ||
+                    string.IsNullOrWhiteSpace(Cpf) ||
+                    string.IsNullOrWhiteSpace(User))
+                {
+                    Mensagem = "Todos os campos são obrigatórios";
+                    await Task.Delay(3000);
+                    Mensagem = string.Empty;
+                    return;
+                }
+                //carrega o DTO
+                _dto = new CadastroProfessorDTO
+                {
+                    Nome = Nome,
+                    User = User,
+                    Email = Email,
+                    Cpf = Cpf
+                };
+                if (Id != 0)
+                {
+                    if (UserTemp != User)
+                    {
+                        _dto.User = User;
+                    }
+                    Debug.WriteLine($"dto.Id: {_dto.User}");
+                    _dto.Id = Id;
+                    _dto.UsuarioId = UsuarioId;
+                }
+                else
+                {
+                    //chama o validar cpf
+                    bool valCpf = _validationService.ValidarCPF(Cpf);
+                    if (!valCpf)
+                    {
+                        Mensagem = "CPF inválido, digite um valor válido.";
+                        await Task.Delay(3000);
+                        Mensagem = string.Empty;
+                        return;
+                    }
+
+                    //Chama o validar email
+                    bool valEmail = _validationService.ValidarEmail(Email);
+                    if (!valEmail)
+                    {
+                        Mensagem = "Email inválido, digite um valor válido.";
+                        await Task.Delay(3000);
+                        Mensagem = string.Empty;
+                        return;
+                    }
+                }
+
+                Mensagem = await _cps.CadastrarProfessor(_dto);
                 await Task.Delay(3000);
                 Mensagem = string.Empty;
-                return;
+               
             }
-            //carrega o DTO
-            _dto = new CadastroProfessorDTO
+            finally
             {
-                Nome = Nome,   
-                User = User,
-                Email = Email,
-                Cpf = Cpf                
-            };
-            if (Id != 0)
-            {
-                if(UserTemp != User)
-                {
-                    _dto.User = User;
-                }
-                Debug.WriteLine($"dto.Id: {_dto.User}");
-                _dto.Id = Id;
-                _dto.UsuarioId = UsuarioId;
+                OnCarregando?.Invoke(false);
             }
-            else
-            {
-                //chama o validar cpf
-                bool valCpf = _validationService.ValidarCPF(Cpf);
-                if (!valCpf)
-                {
-                    Mensagem = "CPF inválido, digite um valor válido.";
-                    await Task.Delay(3000);
-                    Mensagem = string.Empty;
-                    return;
-                }
-
-                //Chama o validar email
-                bool valEmail = _validationService.ValidarEmail(Email);
-                if (!valEmail)
-                {
-                    Mensagem = "Email inválido, digite um valor válido.";
-                    await Task.Delay(3000);
-                    Mensagem = string.Empty;
-                    return;
-                }
-            }
-
-            Mensagem = await _cps.CadastrarProfessor(_dto);
-            await Task.Delay(3000);
-            Mensagem = string.Empty;
             FecharCadastro();
         }
         

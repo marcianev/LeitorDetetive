@@ -44,6 +44,9 @@ namespace AppMaui.ViewsModels
         private string lbBotao2 = string.Empty;
         [ObservableProperty]
         private string lbBotao3 = string.Empty;
+        [ObservableProperty]
+        private bool carregando;
+        
 
         public CadastroPViewModel CadastroPVM { get; }
 
@@ -83,32 +86,41 @@ namespace AppMaui.ViewsModels
 
         public async void Inicializar()
         {
-            await Logado();
-            CadastroPVM.OnFecharCadastro = () => MostrarCadastro = false;
-            if (_usuario.Tipo == "Professor")
-            {
-                ImgBotao1 = "alunos.webp";
-                LbBotao1 = "Alunos";
-                ImgBotao2 = "turmas.webp";
-                LbBotao2 = "Turmas";
-                ImgBotao3 = "comentarios.webp";
-                LbBotao3 = "Comentários";
-                BotaoEdicao = true;
-            }
-            if (_usuario.Tipo == "Aluno")
-            {
-                ImgBotao1 = "livros.webp";
-                LbBotao1 = "Estante";
-                ImgBotao2 = "trofeu.webp";
-                LbBotao2 = "Desafios";
-                ImgBotao3 = "comentarios.webp";
-                LbBotao3 = "Comentários";
-                BotaoEdicao = false;
-            }
+            try
+            {                
+                Carregando = true;
+                await Task.Delay(3000);
+                await Logado();
+                CadastroPVM.OnFecharCadastro = () => MostrarCadastro = false;
+                if (_usuario.Tipo == "Professor")
+                {
+                    ImgBotao1 = "alunos.webp";
+                    LbBotao1 = "Alunos";
+                    ImgBotao2 = "turmas.webp";
+                    LbBotao2 = "Turmas";
+                    ImgBotao3 = "comentarios.webp";
+                    LbBotao3 = "Comentários";
+                    BotaoEdicao = true;
+                }
+                if (_usuario.Tipo == "Aluno")
+                {
+                    ImgBotao1 = "livros.webp";
+                    LbBotao1 = "Estante";
+                    ImgBotao2 = "trofeu.webp";
+                    LbBotao2 = "Desafios";
+                    ImgBotao3 = "comentarios.webp";
+                    LbBotao3 = "Comentários";
+                    BotaoEdicao = false;
+                }
 
-            ModoEdicao = false;
+                ModoEdicao = false;
 
-            await AbrirHome();
+                    await AbrirHome();
+            }
+            finally
+            {
+                Carregando = false;
+            }
         }
 
         //metodo carrega label com nome do usuario e armazena o id de usuario

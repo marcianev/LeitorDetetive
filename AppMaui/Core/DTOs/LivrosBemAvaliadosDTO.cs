@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace AppMaui.Core.DTOs
 {
+    /// <summary>
+    /// DTO utilizado para consolidar e transportar os dados
+    /// exibidos na área de bem avaliados da pagina de turma
+    /// para o perfil professor
+    /// </summary>
     public class LivrosBemAvaliadosDTO
     {
         public string Turma { get; set; } = string.Empty;

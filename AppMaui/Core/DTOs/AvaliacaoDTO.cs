@@ -1,21 +1,20 @@
 ﻿using AppMaui.Core.Enums;
-using AppMaui.Core.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppMaui.Core.DTOs
 {
+    /// <summary>
+    /// DTO utilizado para exibição de avaliações
+    /// juntamente com dados do livro e do aluno.
+    /// </summary>
     public class AvaliacaoDTO
     {     
+        //dados da avaliação
         public int IdAvaliacao { get; set; }
         public int Nota { get; set; }
         public string Comentario { get; set; } = string.Empty;        
         public StatusAvaliacao Status { get; set; }   
+
+        //dados do livro avaliado
         public DateTime DataCadastro { get; set; }        
         public int LivroId { get; set; }
         public string Titulo { get; set; } = string.Empty;
@@ -23,9 +22,11 @@ namespace AppMaui.Core.DTOs
         public string Ilustrador { get; set; } = string.Empty;   
         public string Capa { get; set; } = string.Empty;       
 
+        //dados do aluno responsável pela avaliação
         public string Nickname { get; set; } = string.Empty;
         public int UsuarioId { get; set; }
 
+        //define a cor da borda para indicar status da moderação
         public Color BordaComentario
         {
             get
