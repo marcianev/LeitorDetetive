@@ -21,8 +21,8 @@ namespace AppMaui.Core.DTOs
         public string Titulo { get; set; } = string.Empty;
         public string Autor { get; set; } = string.Empty;       
         public string Ilustrador { get; set; } = string.Empty;   
-        public string Capa { get; set; } = string.Empty;
-       
+        public string Capa { get; set; } = string.Empty;       
+
         public string Nickname { get; set; } = string.Empty;
         public int UsuarioId { get; set; }
 
@@ -38,7 +38,6 @@ namespace AppMaui.Core.DTOs
                     _ => (Color)Application.Current!.Resources["begeUltra"]
                 };
             }
-        }
-
+        } 
     }
 }

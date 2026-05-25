@@ -136,5 +136,30 @@ WHERE a.UsuarioId = ?";
             return resultado.FirstOrDefault();
         }
 
+        //listar alunos, patentes e total de leitura
+        public async Task<List<DashBoardPDTO>> GerarDashBoardP(int professorId)
+        {
+            string sql = @"
+            Select 
+a.Nome AS Aluno,
+p.Nome AS Patente,
+count(l.id) AS QuantidadeLeituras
+from Aluno A
+INNER JOIN leitura l ON l.UsuarioId = a.UsuarioId
+INNER JOIN Patente p ON p.id = a.PatenteId
+INner JOIN turma t ON t.id = a.TurmaId
+WHERE t.ProfessorId = 9
+
+GROUP BY
+a.Nome,
+p.nome
+
+ORDER BY
+count(l.id)DESC
+";
+            var resultado = await _db.QueryAsync<DashBoardPDTO>(sql, professorId);
+            return resultado;
+        }
+
     }
 }

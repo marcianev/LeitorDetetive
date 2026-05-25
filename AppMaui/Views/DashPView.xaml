@@ -2,6 +2,9 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppMaui.Views.DashPView"
+                          xmlns:vm="clr-namespace:AppMaui.ViewsModels"
+x:DataType="vm:DashPViewModel"
+xmlns:DTO="clr-namespace:AppMaui.Core.DTOs"
              >
     <Grid>
         <Grid.RowDefinitions>
@@ -87,62 +90,74 @@
                         Text="LEITORES NO TOP 5" 
                         Style="{StaticResource sLbTitulo}"   
                        />
-                <Label x:Name="lbMaisSub" 
-                        Grid.ColumnSpan="2"
+                <Label x:Name="lbMaisSub"                        
                         VerticalOptions="End"   
+                       TranslationX="170"
                         HorizontalOptions="{OnIdiom Phone=Center, Desktop=Start}"
                         Text="Alunos com mais leituras" 
-                        FontSize="{OnIdiom Phone=12, Desktop=15}"
+                        FontSize="{OnIdiom Phone=12, Desktop=12}"
                         Style="{StaticResource sLbTitulo}"   
                        />
 
-                <!--lista-->
-                <Label x:Name="lbNomeAluno" 
-                        Grid.Row="1"
-                        Text="Pedro" 
-                        FontAttributes="Bold"
-                        FontSize="{OnIdiom Phone=16,Desktop=20}"
-                        TranslationX="{OnIdiom Phone=60, Desktop=90}"
-                        TranslationY="{OnIdiom Phone=0, Desktop=30}"
-                        VerticalOptions="Start"
-                        HorizontalOptions="Start"
-                        TextColor="{StaticResource marromEscuro}"/>
-
-                <Border Grid.Row="1"
-                         Stroke="Transparent"
-                         BackgroundColor="{StaticResource azulClaro}"
-                         Margin="20,15"
-                         VerticalOptions="End">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="5"/>
-                    </Border.StrokeShape>
-                    <Label x:Name="lbPatente" 
-                            Grid.Row="1"
-                            Text="DETETIVE" 
-                            FontAttributes="Bold"
-                            HorizontalOptions="Start"
-                            TranslationX="{OnIdiom Phone=40, Desktop=70}"
-                            TextColor="{StaticResource begeClaro}"/>
-                </Border>
-                <Image x:Name="imgAluno" 
-                        Grid.Row="1" 
-                        Margin="5" 
-                        HorizontalOptions="Start" 
-                        Source="menino1.webp" 
-                        Style="{StaticResource sImgGeral}"
-                        />
-                <Label x:Name="lbQtdLivro" 
-                        Grid.Row="1" 
-                        Grid.Column="1"
-                        Text="15 livros" 
-                        FontAttributes="Bold"
-                        FontSize="{OnIdiom Phone = 15, Desktop = 18}"
-                        VerticalOptions="Center"
-                        HorizontalOptions="Center"
-                        TextColor="{StaticResource marromEscuro}"/>
+                <CollectionView ItemsSource="{Binding DashBoards}"
+                                Grid.Row="1"
+                                Grid.RowSpan="4"
+                                Grid.ColumnSpan="2"
+                                BackgroundColor="AliceBlue">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="DTO:DashBoardPDTO">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>                                   
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <!--lista-->
+                               
+                                <Label x:Name="lbNomeAluno" 
+                                       Grid.Column="1"
+                                        Text="{Binding Aluno}" 
+                                        FontAttributes="Bold"
+                                        FontSize="{OnIdiom Phone=16,Desktop=20}"                                                                              
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Center"
+                                        TextColor="{StaticResource marromEscuro}"/>
+                                
+                                <Border Grid.Column="0"
+                                        Stroke="Transparent"
+                                        BackgroundColor="{StaticResource azulClaro}"
+                                        Margin="20,15"
+                                        VerticalOptions="Fill"
+                                    HorizontalOptions="Fill"
+                                    >
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="5"/>
+                                    </Border.StrokeShape>
+                                    <Label           
+   Text="{Binding Patente}" 
+   FontAttributes="Bold"
+   HorizontalOptions="Center"
+                                        Margin="4"
+   TextColor="{StaticResource begeClaro}"/>
+                                </Border>
+                                <Label x:Name="lbQtdLivro"  
+Grid.Column="3"
+Text="{Binding QuantidadeLeituras}" 
+FontAttributes="Bold"
+FontSize="{OnIdiom Phone = 15, Desktop = 18}"
+VerticalOptions="Center"
+HorizontalOptions="Center"
+TextColor="{StaticResource marromEscuro}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </Grid>
-        </Border>
-
+        </Border>     
+       
         <!--quadro Novas patentes-->
         <Border x:Name="brdAvancos"                    
                  Stroke="{StaticResource palhaMedio}"                     

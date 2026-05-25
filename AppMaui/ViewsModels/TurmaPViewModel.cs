@@ -1,4 +1,5 @@
-﻿using AppMaui.Core.Models;
+﻿using AppMaui.Core.DTOs;
+using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -6,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,23 +22,37 @@ namespace AppMaui.ViewsModels
         private bool mostrarCadastro;
         [ObservableProperty]
         private ObservableCollection<Turma> turmas = new();
+        [ObservableProperty]
+        private ObservableCollection<LivrosMaisLidosDTO> topLivros = new();
+        [ObservableProperty]
+        private ObservableCollection<LivrosBemAvaliadosDTO> bemAvaliados = new();
 
         public Usuario _usuario;
         public CadastroTViewModel CadastroTVM { get; }
         private readonly TurmaService _turmaService;
+        private readonly LeituraService _leituraService;
+        private readonly AvaliacaoService _avaliacaoService;
 
-        public TurmaPViewModel(CadastroTViewModel cadastroTVM, TurmaService turmaService)
+
+        public TurmaPViewModel(CadastroTViewModel cadastroTVM, TurmaService turmaService,
+            LeituraService leituraService, AvaliacaoService avaliacaoService)
         {
             CadastroTVM = cadastroTVM;
             _turmaService = turmaService;
+            _leituraService = leituraService;
+            _avaliacaoService = avaliacaoService;
             _usuario = new Usuario();
             Logado();
             CadastroTVM.OnFecharCadastro = () =>
             {
                 MostrarCadastro = false;
                 _ = CarregarTurmas();
+                _ = CarregarRanking();    
+                _ = CarregarBemAvaliados();
             };
-            CarregarTurmas();
+            _ = CarregarTurmas();
+            _ = CarregarRanking();
+            _ = CarregarBemAvaliados();
         }
 
         //receber dados do usuario logado
@@ -48,6 +64,26 @@ namespace AppMaui.ViewsModels
                 return;
             }
             _usuario = SessaoService.UsuarioLogado;            
+        }
+
+        //carregar os mais bem avaliados
+        public async Task CarregarBemAvaliados()
+        {
+            if(_usuario.Tipo != "Professor")
+                return;
+
+            var lista = await _avaliacaoService.TopAvaliados(_usuario.Id);
+            BemAvaliados = new ObservableCollection<LivrosBemAvaliadosDTO>(lista);
+        }
+
+        //carregar os mais lidos
+        public async Task CarregarRanking()
+        {
+            if (_usuario.Tipo != "Professor")
+                return;
+
+            var lista = await _leituraService.RankingLeitura(_usuario.Id);            
+            TopLivros = new ObservableCollection<LivrosMaisLidosDTO>(lista);            
         }
 
         //listar turmas
@@ -77,6 +113,6 @@ namespace AppMaui.ViewsModels
             CadastroTVM.Nome = turma.Nome;
             CadastroTVM.Turma = turma;            
             MostrarCadastro = true;
-        }
+        }       
     }
 }

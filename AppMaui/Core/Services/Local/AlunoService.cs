@@ -191,7 +191,22 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao gerar DTO: {ex.Message}");
             }
-           
+
+        }
+        //chama a query de dashboard para professor
+        public async Task<List<DashBoardPDTO>> GerarDashBoardProfessor(int idProfessor)
+        {
+            try
+            {
+                //validação
+                if (idProfessor <= 0)
+                    return null;
+                return await _repositorio.GerarDashBoardP(idProfessor);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao gerar DTO: {ex.Message}");
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ using static System.Net.Mime.MediaTypeNames;
 namespace AppMaui.Core.Services.Local
 {
     public class AvaliacaoService(AvaliacaoRepository _repositorio, 
-        OpenAIService openAIService)   
+        OpenAIService openAIService, ProfessorService _professorService)   
     {          
         //recebe o modelo de avaliação, salva uma avaliação no banco de dados
 
@@ -151,6 +151,37 @@ namespace AppMaui.Core.Services.Local
             
             
 
+        }
+
+        //listar por livro e por turma
+        public async Task<List<AvaliacaoDTO>> ListarPorLivroTurma(int idLivro, int idUsuario)
+        {
+            try
+            {
+                if (idLivro <= 0 || idUsuario <= 0)
+                    return null;
+
+                var professor = await _professorService.BuscarProfessorPorUsuario(idUsuario);
+                return await _repositorio.GetByLivroProfessor(idLivro, professor.Id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao listar livros: {ex.Message}");
+            }
+        }
+
+        //listar os top 5 vem avaliados
+        public async Task<List<LivrosBemAvaliadosDTO>> TopAvaliados(int idUsuario)
+        {
+            //validaçao
+            if (idUsuario <= 0)
+                return null;
+
+            var professor = await _professorService.BuscarProfessorPorUsuario(idUsuario);
+            if (professor == null)
+                return null;
+
+            return await _repositorio.GetBemAvalidado(professor.Id); 
         }
     }
 }

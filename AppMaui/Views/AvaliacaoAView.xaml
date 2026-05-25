@@ -269,7 +269,9 @@ VerticalOptions="Center"
                             <!--Status-->
                             <Label       
         VerticalOptions="Center" 
-        HorizontalOptions="Center"                            
+        HorizontalOptions="Center"       
+                                IsVisible="{Binding Source={RelativeSource AncestorType={x:Type ContentView}}, 
+                                Path=BindingContext.MostrarStatus}"
         FontSize="{OnIdiom Phone=17, Desktop=14}"    
         TranslationX="{OnIdiom Phone=10, Desktop=20}"
         Text="{Binding Status}"     

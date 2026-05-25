@@ -38,7 +38,8 @@ namespace AppMaui.Core.Repositories
 
         //metodo deletar
         public async Task<int> Delete(Avaliacao avaliacao) => await _db.DeleteAsync(avaliacao);
-
+        
+        //listagem geral de comentarios
         public async Task<List<AvaliacaoDTO>> GetByLivro(int idLivro)
         {
             string sql = @"
@@ -72,6 +73,80 @@ namespace AppMaui.Core.Repositories
             ";
 
             var resultado = await _db.QueryAsync<AvaliacaoDTO>(sql,idLivro);
+            return resultado;
+
+        }
+
+        //listagem de comentarios das turma para professor moderar
+        public async Task<List<AvaliacaoDTO>> GetByLivroProfessor(int idLivro, int idProfessor)
+        {
+            string sql = @"
+    SELECT
+        a.Id as IdAvaliacao,
+        a.nota,
+        a.comentario,
+        a.status,
+        a.dataCadastro,
+
+        al.nickname AS Nickname,
+
+        t.nome AS Turma,
+
+        l.titulo AS NomeLivro,
+        l.autor AS Autor,
+        l.ilustrador AS Ilustrados,
+        l.capa AS Capa
+
+    FROM avaliacao a
+
+    INNER JOIN aluno al
+        ON a.usuarioId = al.usuarioId
+
+    INNER JOIN turma t
+        ON al.turmaId = t.id
+
+    INNER JOIN livro l
+        ON a.livroId = l.id
+
+    INNER JOIN professor pt
+        ON t.professorId = pt.Id
+
+    WHERE a.livroId = ?
+      AND pt.Id = ?
+    ";
+
+            var resultado = await _db.QueryAsync<AvaliacaoDTO>(
+                sql,
+                idLivro,
+                idProfessor
+            );
+
+            return resultado;
+        }
+        //retorna a lista de livros mais bem avaliados
+        public async Task<List<LivrosBemAvaliadosDTO>> GetBemAvalidado(int idProfessor)
+        {
+            var sql = @"
+                    Select
+                        t.nome AS Turma,
+                        l.Titulo AS Titulo,
+                        l.Capa AS Capa,
+                        AVG(a.nota) AS Nota
+                    FROM  avaliacao a
+                    INNER JOIN aluno al ON al.usuarioId = a.usuarioId
+                    INNER JOIN turma t ON t.Id = al.turmaId
+                    INNER JOIN livro l ON l.Id = a.livroId
+                    Where t.professorId = ?
+                    GROUP BY
+                       t.nome,
+                       l.titulo,
+                       l.capa
+                    ORDER BY Nota DESC
+                    limit 5";
+
+            var resultado = await _db.QueryAsync<LivrosBemAvaliadosDTO>(
+                sql,
+                idProfessor);
             return resultado;
 
         }

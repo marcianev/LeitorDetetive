@@ -106,6 +106,7 @@ namespace AppMaui
             builder.Services.AddTransient<CadastroPViewModel>();
             builder.Services.AddTransient<CadastroTViewModel>();
             builder.Services.AddTransient<DashAViewModel>();
+            builder.Services.AddTransient<DashPViewModel>();
             builder.Services.AddTransient<DesafioViewModel>();
             builder.Services.AddTransient<EstanteViewModel>();
             builder.Services.AddTransient<LoginViewModel>();            

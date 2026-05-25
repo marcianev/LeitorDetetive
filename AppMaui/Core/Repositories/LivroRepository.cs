@@ -1,4 +1,6 @@
 ﻿using AppMaui.Core.Data;
+using AppMaui.Core.DTOs;
+using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using SQLite;
 using System;
@@ -41,8 +43,8 @@ namespace AppMaui.Core.Repositories
             using var reader = new StreamReader(stream);
             var json = await reader.ReadToEndAsync();
             var livros = JsonSerializer.Deserialize<List<Livro>>(json);
-            if(livros != null)
+            if (livros != null)
                 await _db.InsertAllAsync(livros);
         }
-    } 
+    }       
 }

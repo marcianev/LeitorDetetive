@@ -33,6 +33,8 @@ namespace AppMaui.ViewsModels
         private bool comentar;
         [ObservableProperty]
         private Color corBorda;
+        [ObservableProperty]
+        private bool mostrarStatus;
 
         private Usuario usuario;
 
@@ -61,10 +63,16 @@ namespace AppMaui.ViewsModels
         public async Task Inicializar()
         {
             usuario = SessaoService.UsuarioLogado;
-            if(usuario.Tipo == "Professor")            
-                corBorda = (Color)Application.Current!.Resources["palhaMedio"];
+            if(usuario.Tipo == "Professor")
+            {
+                CorBorda = (Color)Application.Current!.Resources["palhaMedio"];
+                MostrarStatus = true;
+            }   
             else if (usuario.Tipo == "Aluno")
-                corBorda = (Color)Application.Current!.Resources["verdeMedio"];
+            {
+                CorBorda = (Color)Application.Current!.Resources["verdeMedio"];
+                MostrarStatus = false;
+            }                
 
             Comentar = false;
             var lista = await _livroService.ListarLivros();
@@ -85,31 +93,38 @@ namespace AppMaui.ViewsModels
         //carregar avaliações dto
         public async Task CarregarComentarios(int idLivro)
         {
-           if(usuario.Tipo == "Aluno")
-            {
+
+            List<AvaliacaoDTO> avaliacoes = [];
+            if (usuario.Tipo == "Aluno")
+            {                
                 var concluido = await _leituraService.GetLeituraPorLivroUsuario(idLivro, usuario.Id);
+                avaliacoes = await _avaliacaoService.ListarPorLivro(idLivro);
                 if (concluido == null)
                     Comentar = false;
                 else if (concluido.Status != StatusLeitura.Concluida)
                     Comentar = false;
                 else
                     Comentar = true;
-            }           
+            }    
+            else if (usuario.Tipo == "Professor")
+                avaliacoes = await _avaliacaoService.ListarPorLivroTurma(idLivro, usuario.Id);
 
             ComentariosE.Clear();
-            ComentariosD.Clear();
-
-            var avaliacoes = await _avaliacaoService.ListarPorLivro(idLivro);
+            ComentariosD.Clear();         
+            
+                   
             if (avaliacoes == null)
-                return;    
+                return;
+            int indice = 0;
 
             foreach(var avaliacao in avaliacoes)
             {
                 if (avaliacao.Status == StatusAvaliacao.Aprovada || usuario.Tipo == "Professor")
-                    if (avaliacao.IdAvaliacao % 2 == 0)
+                    if (indice % 2 == 0)
                         ComentariosE.Add(avaliacao);
                     else
                         ComentariosD.Add(avaliacao);
+                indice++;
             }            
         }
 
@@ -127,7 +142,7 @@ namespace AppMaui.ViewsModels
         [RelayCommand]
         private async Task ModerarComentario(AvaliacaoDTO comentario)
         {          
-            if (usuario.Tipo != "Professor" || comentario == null || comentario.Status == StatusAvaliacao.Aprovada)
+            if (usuario.Tipo != "Professor" || comentario == null)
                 return;
 
             var resposta = await _dialogoService.Consulta3(

@@ -1,4 +1,5 @@
-﻿using AppMaui.Core.Enums;
+﻿using AppMaui.Core.DTOs;
+using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using AppMaui.Core.Repositories;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AppMaui.Core.Services.Local
 {
-    public class LeituraService(LeituraRepository _repositorio, AlunoService _aluno)
+    public class LeituraService(LeituraRepository _repositorio, AlunoService _aluno, ProfessorService _professorService)
     {      
         //recebe o modelo e salva um aluno no banco de dados
         public async Task<bool> SalvarLeitura(Leitura leitura)
@@ -171,6 +172,27 @@ namespace AppMaui.Core.Services.Local
             catch (Exception ex)
             {
                 throw new Exception($"Erro ao concluir leitura: {ex.Message}");
+            }
+        }
+
+        //listar livros mais lidos
+        public async Task<List<LivrosMaisLidosDTO>> RankingLeitura(int usuarioId)
+        {
+            try
+            {
+                //validaçao
+                if (usuarioId <= 0)
+                    return null;
+
+                var professor = await _professorService.BuscarProfessorPorUsuario(usuarioId);
+                if (professor == null)
+                    return null;               
+
+                return await _repositorio.GetTopLivrosProfessor(professor.Id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao listar maiores leituras: {ex.Message}");
             }
         }
     }

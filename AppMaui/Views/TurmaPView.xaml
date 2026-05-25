@@ -5,7 +5,8 @@
              xmlns:model="clr-namespace:AppMaui.Core.Models"
              xmlns:views="clr-namespace:AppMaui.Views"
              xmlns:vm="clr-namespace:AppMaui.ViewsModels"
-            x:DataType="vm:TurmaPViewModel">
+            x:DataType="vm:TurmaPViewModel"
+              xmlns:dto="clr-namespace:AppMaui.Core.DTOs">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="{OnIdiom Phone=1*, Desktop=*}"/>
@@ -86,7 +87,7 @@
                    Style="{StaticResource sLbTitulo}"   
                    />
 
-                <!-- lista-->
+                <!-- lista Turma-->
                 <Label Grid.Row="1" 
                        Grid.Column="1"
                        FontAttributes="Bold" 
@@ -222,31 +223,76 @@
                  Text="LIVROS MAIS LIDOS"
                  Style="{StaticResource sLbTitulo}"   
                  />
-
                 <!-- lista-->
-                <Border Grid.Row="1"    
-                  BackgroundColor="{StaticResource verdeEscuro}"   
-                  VerticalOptions="Center"  
-                  Margin="5"
-                  Style="{StaticResource sBrdAzul}">
-                    <Label x:Name="lbTurmaL"
-                     Text="5º ano A"
-                     TextColor="{StaticResource begeClaro}"
-                     />
-                </Border>
-                <Image x:Name="imgLivro"
-                 Grid.Row="1"
-                 Grid.Column="1"
-                 Source="livros.webp"      
-                 Margin="20"
-                 />
-                <Label x:Name="lbQtdLido"
-                 Grid.Row="1"
-                 Grid.Column="2"
-                 Text="15"
-                 FontAttributes="Bold"                             
-                 TextColor="{StaticResource marromEscuro}"
-                 />
+                <Label Grid.Row="1" 
+        Grid.Column="1"
+        FontAttributes="Bold" 
+        HorizontalOptions="Center"
+        Text="Título"
+         TextColor="{StaticResource marromEscuro}"
+         />
+                <Label Grid.Row="1" 
+        Grid.Column="2"
+        HorizontalOptions="Center"
+        FontAttributes="Bold" 
+        Text="Quant"
+         TextColor="{StaticResource marromEscuro}"
+         />
+                <CollectionView ItemsSource="{Binding TopLivros}"
+                Grid.Row="1"
+                Grid.ColumnSpan="3">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="dto:LivrosMaisLidosDTO">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>                                   
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Border                                    
+ BackgroundColor="{StaticResource verdeEscuro}"   
+ VerticalOptions="Center"  
+                                    HorizontalOptions="Fill"
+ Margin="5"
+ Style="{StaticResource sBrdAzul}">
+                                    <Label x:Name="lbTurmaL"
+                                           HorizontalOptions="Center"
+    Text="{Binding Turma}"
+    TextColor="{StaticResource begeClaro}"
+    />
+                                </Border>
+                                <Image x:Name="imgLivro"
+                                       Grid.Column="1"
+
+Source="{Binding CapaLivro}"      
+Margin="20"
+/>
+                                <Label x:Name="lbQtdLido"
+                                       Grid.Column="2"
+
+Text="{Binding TituloLivro}"
+                    VerticalOptions="Center"                   FontSize="10"
+FontAttributes="Bold"                             
+TextColor="{StaticResource marromEscuro}"
+/>
+                                <Label 
+                                       Grid.Column="3"
+                                    VerticalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+
+Text="{Binding QuantidadeLeituras}"
+FontAttributes="Bold"                             
+TextColor="{StaticResource marromEscuro}"
+/>
+                            </Grid>
+                            
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </Grid>
         </Border>
         
@@ -317,31 +363,76 @@
                   Text="MELHORES AVALIADOS"
                   Style="{StaticResource sLbTitulo}"   
                   />
-
+                <Label Grid.Row="1" 
+        Grid.Column="1"
+        FontAttributes="Bold" 
+        HorizontalOptions="Center"
+        Text="Título"
+         TextColor="{StaticResource marromEscuro}"
+         />
+                <Label Grid.Row="1" 
+        Grid.Column="2"
+        HorizontalOptions="Center"
+        FontAttributes="Bold" 
+        Text="Nota"
+         TextColor="{StaticResource marromEscuro}"
+         />
                 <!--lista-->
-                <Border Grid.Row="1"   
-                   BackgroundColor="{StaticResource verdeEscuro}"  
-                   VerticalOptions="Center"  
-                   Margin="5"
-                   Style="{StaticResource sBrdAzul}">
-                    <Label x:Name="lbTurmaA"
-                      Text="5º ano A"
-                      TextColor="{StaticResource begeClaro}"
-                      />
-                </Border>
-                <Image x:Name="imgLivroA"
-                  Grid.Row="1"
-                  Grid.Column="1"
-                  Source="livros.webp"      
-                  Margin="30"
-                  />
-                <Image x:Name="imgAva"
-                  Grid.Row="1"
-                  Grid.Column="2"
-                  Source="estrela.webp"
-                  Margin="0,45"
-                  HorizontalOptions="Start"
-                  />
+                <CollectionView ItemsSource="{Binding BemAvaliados}"
+                                Grid.Row="1"
+                                Grid.ColumnSpan="3">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="dto:LivrosBemAvaliadosDTO">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Border                                    
+ BackgroundColor="{StaticResource verdeEscuro}"   
+ VerticalOptions="Center"  
+                                    HorizontalOptions="Fill"
+ Margin="5"
+ Style="{StaticResource sBrdAzul}">
+                                    <Label x:Name="lbTurmaL"
+                                           HorizontalOptions="Center"
+    Text="{Binding Turma}"
+    TextColor="{StaticResource begeClaro}"
+    />
+                                </Border>
+                                <Image x:Name="imgLivro"
+                                       Grid.Column="1"
+
+Source="{Binding Capa}"      
+Margin="20"
+/>
+                                <Label x:Name="lbQtdLido"
+                                       Grid.Column="2"
+
+Text="{Binding Titulo}"
+                    VerticalOptions="Center"                   FontSize="10"
+FontAttributes="Bold"                             
+TextColor="{StaticResource marromEscuro}"
+/>
+                                <Label 
+                                       Grid.Column="3"
+                                    VerticalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+
+Text="{Binding Nota}"
+FontAttributes="Bold"                             
+TextColor="{StaticResource marromEscuro}"
+/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+               
             </Grid>
         </Border>
         <!--botão de cadastrar aluno-->
