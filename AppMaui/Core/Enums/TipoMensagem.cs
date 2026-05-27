@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace AppMaui.Core.Enums
 {
-    //enumeração para os tipos de mensagens que podem ser anexadas à notificação
+    /// <summary>
+    /// Define os tipos de mensagens automáticas que podem salvas no sistema.
+    /// </summary>
     public enum TipoMensagem
     {
         Sucesso,

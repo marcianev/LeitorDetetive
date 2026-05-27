@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace AppMaui.Core.Models
 {
+    /// <summary>
+    /// Representa o mapeamento entre uma letra original e seu símbolo criptografado.
+    /// </summary>
     public class LetraCriptografada
     {
         public string LetraOriginal { get; set; }
+
         public string Simbolo { get; set; }
     }
 }

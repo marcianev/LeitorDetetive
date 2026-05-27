@@ -8,46 +8,43 @@ using System.Threading.Tasks;
 
 namespace AppMaui.Core.Repositories
 {
-    // classe já recebe injeção de dependência do banco de dados
-    public class RespostaRepository(DatabaseService context)
+    namespace AppMaui.Core.Repositories
     {
-        //declara a variável de conexão com o banco de dados SQLite
-        private readonly SQLite.SQLiteAsyncConnection _db = context.Conexao;
-
-        //metodo add
-        public async Task<int> Add(Resposta resposta) => await _db.InsertAsync(resposta);
-
-        //metodo listar
-        public async Task<List<Resposta>> GetAll() => await _db.Table<Resposta>().ToListAsync();
-
-        //metodo resposta por desafio
-        public async Task<List<Resposta>> GetByDesafio(int id) =>
-            await _db.Table<Resposta>().Where(r => r.DesafioId == id).ToListAsync();
-
-        //metodo buscar por id
-        public async Task<Resposta?> GetById(int id) => await _db.Table<Resposta>().Where(r => r.Id == id).FirstOrDefaultAsync();
-
-        //metodo atualizar
-        public async Task<int> Update(Resposta resposta) => await _db.UpdateAsync(resposta);
-
-        //metodo deletar
-        public async Task<int> Delete(Resposta resposta) => await _db.DeleteAsync<Resposta>(resposta);
-        
-        //buscar resposta por aluno e por desafio 
-        public async Task<List<Resposta>> GetByAlunoDesafio(int alunoId, int desafioId) =>
-            await _db.Table<Resposta>().Where(r => r.AlunoId == alunoId && r.DesafioId == desafioId).ToListAsync();
-
-        //buscar resposta por aluno para determinado livro
-        public async Task<List<Resposta>> BuscarRespostasLivro(int alunoId, int livroId)
+        /// <summary>
+        /// Repositório para respostas de alunos aos desafios com consultas customizadas.
+        /// </summary>
+        public class RespostaRepository(DatabaseService context)
         {
-            string sql = @"
-        SELECT r.*
-        FROM resposta r
-        INNER JOIN desafio d ON d.id = r.desafioId
-        WHERE r.alunoId = ?
-        AND d.livroId = ?";
+            private readonly SQLite.SQLiteAsyncConnection _db = context.Conexao;
 
-            return await _db.QueryAsync<Resposta>(sql, alunoId, livroId);
+            public async Task<int> Add(Resposta resposta) => await _db.InsertAsync(resposta);
+
+            public async Task<List<Resposta>> GetAll() => await _db.Table<Resposta>().ToListAsync();
+
+            public async Task<List<Resposta>> GetByDesafio(int id) =>
+                await _db.Table<Resposta>().Where(r => r.DesafioId == id).ToListAsync();
+
+            public async Task<Resposta?> GetById(int id) => await _db.Table<Resposta>().Where(r => r.Id == id).FirstOrDefaultAsync();
+
+            public async Task<int> Update(Resposta resposta) => await _db.UpdateAsync(resposta);
+
+            public async Task<int> Delete(Resposta resposta) => await _db.DeleteAsync<Resposta>(resposta);
+
+            public async Task<List<Resposta>> GetByAlunoDesafio(int alunoId, int desafioId) =>
+                await _db.Table<Resposta>().Where(r => r.AlunoId == alunoId && r.DesafioId == desafioId).ToListAsync();
+
+            /// <summary>Retorna respostas de um aluno para todos os desafios de um livro específico.</summary>
+            public async Task<List<Resposta>> BuscarRespostasLivro(int alunoId, int livroId)
+            {
+                string sql = @"
+                SELECT r.*
+                FROM resposta r
+                INNER JOIN desafio d ON d.id = r.desafioId
+                WHERE r.alunoId = ?
+                AND d.livroId = ?";
+
+                return await _db.QueryAsync<Resposta>(sql, alunoId, livroId);
+            }
         }
     }
 }

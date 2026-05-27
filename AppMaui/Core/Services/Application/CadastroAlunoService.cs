@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace AppMaui.Core.Services.Application
 {
+    /// <summary>
+    /// Orquestra o cadastro de alunos, gerando credenciais, nickname e registrando usuário e aluno no banco.
+    /// </summary>
     public class CadastroAlunoService
     {
         private readonly UsuarioService _usuarioService;
@@ -35,18 +38,16 @@ namespace AppMaui.Core.Services.Application
             _turmaService = turmaService;
         }
 
-        //metodo salvar usuario e aluno
+        /// <summary>Cadastra um novo aluno gerando nickname, senha provisória e registrando em transação.</summary>
         public async Task<string> CadastrarAluno(CadastroAlunoDTO cadastroAlunoDTO)
         {
             try
             {               
-                //validações
                 if (string.IsNullOrWhiteSpace(cadastroAlunoDTO.Nome))
                     return "Nome obrigatório";               
 
                 var db = _databaseService.Conexao;
 
-                //gerar senha provisoria
                 string senhaProvisoria = SenhaService.GerarCodigoAluno(4);
                 cadastroAlunoDTO.CodAcess = senhaProvisoria;
                 string hash = _criptoService.GerarHash(cadastroAlunoDTO.CodAcess);
@@ -54,7 +55,6 @@ namespace AppMaui.Core.Services.Application
                 if (turma == 0)
                     turma = 1;
 
-                //cadastra
                 var usuario = new Usuario
                 {
                     User = nick,
@@ -64,14 +64,12 @@ namespace AppMaui.Core.Services.Application
                     Tipo = "Aluno"                   
                 };
 
-
-
                 var aluno = new Aluno
                 {
                     Nome = cadastroAlunoDTO.Nome,
                     TurmaId = turma,
                     PatenteId = 1,
-                    CodigoAcesso =cadastroAlunoDTO.CodAcess,
+                    CodigoAcesso = cadastroAlunoDTO.CodAcess,
                     Nickname = nick
                 };               
 
@@ -88,39 +86,34 @@ namespace AppMaui.Core.Services.Application
             {
                 return $"Erro ao cadastrar: {ex.Message}";
             }
-        }//fim salvar
+        }
 
-        //metodo para gerar nickname do aluno
+        /// <summary>
+        /// Gera nickname único combinando iniciais do aluno e professor com número aleatório.
+        /// Limita até 90 tentativas para evitar loops infinitos.
+        /// </summary>
         public async Task<(string, int)> GerarNickname(string aluno)
         {
             Debug.WriteLine("chegamos no gerarNickname");
-            //validação
             if (string.IsNullOrWhiteSpace(aluno))
                 return (string.Empty, 0);
 
-            //busca o nome do professor
             var user = SessaoService.UsuarioLogado;
             Professor professor = await _professorService.BuscarProfessorPorUsuario(user.Id);
             if (professor == null)
-                return (string.Empty,0);
-            
-            //aproveitar a pesquisa do professor para registrar o idTurma no dto
+                return (string.Empty, 0);
+
             int turma = await _turmaService.BuscarPorProfessor(professor.Id);
 
-            //transforma o nome do aluno e do professor em arrays de caracteres para pegar as iniciais
             char[] n = aluno.ToUpper().ToCharArray();
             char[] p = professor.Nome.ToUpper().ToCharArray();
 
-            //variaveis
             Random rand = new();
             int numm;
             int i = 0;
             string nickname;
             bool nicknameExists;
 
-            //por enquanto funciona, para até 90 repetições
-            //preciso pensar em algoritmo para ampliar
-            //gerar nickname com as iniciais do nome do aluno, do professor e um número aleatório de 2 dígitos
             do
             {
                 numm = rand.Next(10, 99);
@@ -129,9 +122,8 @@ namespace AppMaui.Core.Services.Application
                 i++;
             } while (nicknameExists && i < 90);
             return (nickname, turma);
-        }//fecha método gerar nickname       
-
-
+        }
     }
+}
 
 }

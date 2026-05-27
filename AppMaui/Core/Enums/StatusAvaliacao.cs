@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace AppMaui.Core.Enums
 {
-    //enumeração para status de avaliação, para controle do processo de validação dos comentários
+    /// <summary>
+    /// Define os status de avaliação para controle do processo de validação dos comentários.
+    /// </summary>
     public enum StatusAvaliacao
     {
         AnaliseAutomatica,

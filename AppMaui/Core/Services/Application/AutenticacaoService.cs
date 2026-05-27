@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace AppMaui.Core.Services.Application
 {
+    /// <summary>
+    /// Serviço responsável pela autenticação de usuários com validação de credenciais e hash.
+    /// </summary>
     public class AutenticacaoService : IAutenticacaoService
     {
         private readonly UsuarioService _usuarioService;
@@ -24,6 +27,7 @@ namespace AppMaui.Core.Services.Application
             _criptoService = criptoService;
         }
 
+        /// <summary>Autentica usuário validando credenciais e registrando sessão ativa.</summary>
         public async Task<Usuario?> Autenticar(string user, string senha)
         {
             var usuario = await _usuarioService.BuscarUsuarioPorUser(user);
@@ -33,6 +37,7 @@ namespace AppMaui.Core.Services.Application
 
             if (!_criptoService.VerificarHash(senha, usuario.Senha))
                 return null;
+
             SessaoService.Login(usuario);
 
             return usuario;

@@ -1,25 +1,32 @@
 ﻿using AppMaui.Core.Enums;
 using SQLite;
 
-
 namespace AppMaui.Core.Models
 {
+    /// <summary>
+    /// Representa a avaliação de um livro feita por um usuário.
+    /// Gerencia nota, comentário e status do processo de validação.
+    /// </summary>
     public class Avaliacao
     {
-        //atributos do modelo de avaliação, com as anotações do SQLite para definir as propriedades da
-        //tabela no banco de dados
         [PrimaryKey, AutoIncrement, NotNull, Unique]
         public int Id { get; set; }
+
         [NotNull]
         public int Nota { get; set; }
+
         [MaxLength(300)]
         public string Comentario { get; set; } = string.Empty;
-        [NotNull]
+       
+        // Status de validação do comentário (análise automática, manual, aprovada ou reprovada).        
         public StatusAvaliacao Status { get; set; }
+
         [NotNull]
         public int UsuarioId { get; set; }
+
         [NotNull]
         public int LivroId { get; set; }
+
         [NotNull]
         public DateTime DataCadastro { get; set; }
     }

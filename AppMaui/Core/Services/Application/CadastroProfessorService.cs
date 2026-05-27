@@ -4,12 +4,13 @@ using AppMaui.Core.Models;
 using AppMaui.Core.Services.External;
 using AppMaui.Core.Services.Local;
 using AppMaui.Core.Services.Security;
-using AppMaui.Services;
 using AppMaui.Services.Interfaces;
-using System.Diagnostics;
 
 namespace AppMaui.Core.Services.Application
 {
+    /// <summary>
+    /// Orquestra o cadastro e atualização de professores, gerando credenciais e enviando email de boas-vindas.
+    /// </summary>
     public class CadastrarProfessorService
     {
         private readonly UsuarioService _usuarioService;
@@ -17,7 +18,6 @@ namespace AppMaui.Core.Services.Application
         private readonly EmailService _emailService;
         private readonly DatabaseService _databaseService;
         private readonly ICriptoService _criptoService;
-
 
         public CadastrarProfessorService(UsuarioService usuarioService, ProfessorService professorService, 
             ICriptoService criptoService, DatabaseService databaseService, EmailService es)
@@ -29,12 +29,11 @@ namespace AppMaui.Core.Services.Application
             _criptoService = criptoService;
         }
 
-        //metodo salvar usuario e professor
+        /// <summary>Cadastra novo professor ou atualiza dados de um existente. Envia email com senha provisória.</summary>
         public async Task<string> CadastrarProfessor(CadastroProfessorDTO cadastroProfessorDTO)       
         {         
             try
             {       
-                //validações              
                 if (string.IsNullOrWhiteSpace(cadastroProfessorDTO.Nome))
                     return "Nome obrigatório";
                 if (string.IsNullOrWhiteSpace(cadastroProfessorDTO.User))
@@ -43,12 +42,14 @@ namespace AppMaui.Core.Services.Application
                     return "Email obrigatório";
                 if (string.IsNullOrWhiteSpace(cadastroProfessorDTO.Cpf))
                     return "CPF obrigatório";
+
                 var professor = new Professor
                 {
                     Nome = cadastroProfessorDTO.Nome,
                     Cpf = cadastroProfessorDTO.Cpf,
                     Email = cadastroProfessorDTO.Email
                 };
+
                 if (cadastroProfessorDTO.Id > 0)
                 {
                     professor.Id = cadastroProfessorDTO.Id;
@@ -64,12 +65,10 @@ namespace AppMaui.Core.Services.Application
                 {
                     var db = _databaseService.Conexao;
 
-                    //gerar senha provisoria
                     string senhaProvisoria = SenhaService.GerarSenhaProvisoria(8);
                     cadastroProfessorDTO.Senha = senhaProvisoria;
                     string hash = _criptoService.GerarHash(cadastroProfessorDTO.Senha);
 
-                    //cadastra
                     var usuario = new Usuario
                     {
                         User = cadastroProfessorDTO.User,
@@ -78,16 +77,15 @@ namespace AppMaui.Core.Services.Application
                         StatusUsuario = true,
                         Tipo = "Professor"
                     };
-                    
+
+                    // Executa o cadastro do usuário e do professor em uma única transação
+                    // para garantir consistência dos dados em caso de falha durante o processo 
                     await db.RunInTransactionAsync(tran =>
                     {
                         tran.Insert(usuario);
                         professor.UsuarioId = usuario.Id;
                         tran.Insert(professor);
                     });
-
-                    Debug.WriteLine(cadastroProfessorDTO.User);
-                    //envia email com senha provisoria                
                     string assunto = "Bem-vindo ao Ajolede - Sua senha provisória";
                     string mensagem = $"Olá {cadastroProfessorDTO.User},\n\nSua conta foi criada com sucesso! Sua senha provisória é: " +
                         $"{senhaProvisoria}\n\nPor favor, acesse em PRIMEIRO ACESSO e altere sua senha.\n\nAtenciosamente,\nEquipe Ajolede";
