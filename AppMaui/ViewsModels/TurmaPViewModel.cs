@@ -4,20 +4,14 @@ using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppMaui.ViewsModels
 {
     public partial class TurmaPViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string mensagem;
+        private string? mensagem;
         [ObservableProperty]
         private bool mostrarCadastro;
         [ObservableProperty]
@@ -73,7 +67,8 @@ namespace AppMaui.ViewsModels
                 return;
 
             var lista = await _avaliacaoService.TopAvaliados(_usuario.Id);
-            BemAvaliados = new ObservableCollection<LivrosBemAvaliadosDTO>(lista);
+            if(lista != null)
+                BemAvaliados = new ObservableCollection<LivrosBemAvaliadosDTO>(lista);
         }
 
         //carregar os mais lidos
@@ -82,8 +77,9 @@ namespace AppMaui.ViewsModels
             if (_usuario.Tipo != "Professor")
                 return;
 
-            var lista = await _leituraService.RankingLeitura(_usuario.Id);            
-            TopLivros = new ObservableCollection<LivrosMaisLidosDTO>(lista);            
+            var lista = await _leituraService.RankingLeitura(_usuario.Id);  
+            if(lista != null)
+                TopLivros = new ObservableCollection<LivrosMaisLidosDTO>(lista);            
         }
 
         //listar turmas

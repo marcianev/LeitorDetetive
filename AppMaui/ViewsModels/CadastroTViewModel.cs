@@ -1,9 +1,9 @@
 ﻿using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
+using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Diagnostics;
 
 namespace AppMaui.ViewsModels
 {
@@ -26,11 +26,14 @@ namespace AppMaui.ViewsModels
 
         private readonly TurmaService _turmaService;
         private readonly ProfessorService _professorService;
+        private readonly IDialogoService _dialogoService;
 
-        public CadastroTViewModel(TurmaService turmaService, ProfessorService professorService)
+        public CadastroTViewModel(TurmaService turmaService, ProfessorService professorService,
+            IDialogoService dialogoService)
         {
             _turmaService = turmaService;
             _professorService = professorService;
+            _dialogoService = dialogoService;
             turma = new Turma();
             ModoAlterar = true;
             _usuario = SessaoService.UsuarioLogado ?? new Usuario();
@@ -63,13 +66,20 @@ namespace AppMaui.ViewsModels
                         
             if (Turma.Id != 0)
             {
-                var res = await _turmaService.AtualizarTurma(Turma);
-                if (res)
-                    Mensagem = "Turma atualizada com sucesso!";
-                else
+                bool confirmacao = await _dialogoService.Confirmar(
+                    "Confirmação", $"Deseja arquivar a turma {Turma.Nome}? \n Ao confirmar você perderá o acesso aos dados dessa turma. ",
+                    "Sim", "Não");
+
+                if (confirmacao)
                 {
-                    Mensagem = "Erro ao atualizar turma.";                                   
-                }                   
+                    var res = await _turmaService.AtualizarTurma(Turma);
+                    if (res)
+                        Mensagem = "Turma atualizada com sucesso!";
+                    else
+                    {
+                        Mensagem = "Erro ao atualizar turma.";
+                    }
+                }                             
             }
             else
             {
@@ -102,12 +112,20 @@ namespace AppMaui.ViewsModels
                 Mensagem = string.Empty;
                 return;
             }
-            Turma.Status = false;
-            var res = await _turmaService.AtualizarTurma(Turma);
-            if (res)
-                Mensagem = "Turma arquivada com sucesso!";
-            else
-                Mensagem = "Erro ao arquivar turma.";
+
+            bool confirmacao = await _dialogoService.Confirmar(
+                    "Confirmação", $"Deseja arquivar a turma {Turma.Nome}? \n Ao confirmar você perderá o acesso aos dados dessa turma. ",
+                    "Sim", "Não");
+
+            if (confirmacao)
+            {
+                Turma.Status = false;
+                var res = await _turmaService.AtualizarTurma(Turma);
+                if (res)
+                    Mensagem = "Turma arquivada com sucesso!";
+                else
+                    Mensagem = "Erro ao arquivar turma.";                
+            }
             await Task.Delay(3000);
             Mensagem = string.Empty;
             FecharCadastro();

@@ -14,16 +14,13 @@ namespace AppMaui.Core.Services.Security
     /// </summary>
     public class SenhaService
     {
-        UsuarioService _usuarioService;
-        ICriptoService _criptoService;
-        EmailService _emailService;
+        private readonly UsuarioService _usuarioService;
+        private readonly ICriptoService _criptoService;       
 
-        public SenhaService(UsuarioService usuarioservice, ICriptoService criptoService,
-            EmailService emailService)
+        public SenhaService(UsuarioService usuarioservice, ICriptoService criptoService)
         {
             _usuarioService = usuarioservice;
-            _criptoService = criptoService;
-            _emailService = emailService;
+            _criptoService = criptoService;           
         }
 
         /// <summary>Gera uma senha provisória com caracteres minúsculos, maiúsculos, números e especiais.</summary>
@@ -155,7 +152,7 @@ namespace AppMaui.Core.Services.Security
                 await _usuarioService.AtualizarUsuario(usuario);
 
 
-                return "Nova senha enviada para seu email.";
+                return "Nova senha gerada.";
             }
             catch (Exception ex)
             {

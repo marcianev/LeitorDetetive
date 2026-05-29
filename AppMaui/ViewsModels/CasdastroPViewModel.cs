@@ -1,18 +1,10 @@
 ﻿using AppMaui.Core.DTOs;
-using AppMaui.Core.Models;
-using AppMaui.Core.Repositories;
-using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
 using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.Interfaces;
 using AppMaui.Services;
+using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppMaui.ViewsModels
 {
@@ -45,18 +37,18 @@ namespace AppMaui.ViewsModels
         private CadastroProfessorDTO _dto;
         private readonly CadastrarProfessorService _cps;      
         private readonly IValidationService _validationService;
-        private readonly UsuarioRepository _usuarioRepository;
         private readonly ConectividadeService _conectividadeService;
+        private readonly IDialogoService _dialogoService;
 
         public CadastroPViewModel(CadastrarProfessorService cadPs, IValidationService validationService, 
-            UsuarioRepository usuarioRepository, ConectividadeService conectividadeService)
+           ConectividadeService conectividadeService, IDialogoService dialogoService)
         {
             
             _dto = new CadastroProfessorDTO();
             _cps = cadPs;
             _validationService = validationService;
-            _usuarioRepository = usuarioRepository;
             _conectividadeService = conectividadeService;
+            _dialogoService = dialogoService;
             ModoAlterar = true;
         }        
 
@@ -77,7 +69,7 @@ namespace AppMaui.ViewsModels
                     FecharCadastro();
                     return;
                 }
-                //valida exitência
+                //valida existência
                 if (string.IsNullOrWhiteSpace(Nome) ||
                     string.IsNullOrWhiteSpace(Email) ||
                     string.IsNullOrWhiteSpace(Cpf) ||
@@ -99,12 +91,21 @@ namespace AppMaui.ViewsModels
                 };
                 if (Id != 0)
                 {
-                    if (UserTemp != User)
+                    bool confirmacao = await _dialogoService.Confirmar(
+                    "Confirmação", $"Deseja atualizar os dados de {Nome}?",
+                    "Sim", "Não");
+
+                    if (confirmacao)
                     {
-                        _dto.User = User;
-                    }                   
-                    _dto.Id = Id;
-                    _dto.UsuarioId = UsuarioId;
+                        if (UserTemp != User)
+                        {
+                            _dto.User = User;
+                        }
+                        _dto.Id = Id;
+                        _dto.UsuarioId = UsuarioId;
+                    }
+                    else
+                        return;
                 }
                 else
                 {
@@ -144,8 +145,7 @@ namespace AppMaui.ViewsModels
 
                 Mensagem = await _cps.CadastrarProfessor(_dto);
                 await Task.Delay(3000);
-                Mensagem = string.Empty;
-               
+                Mensagem = string.Empty;               
             }
             finally
             {

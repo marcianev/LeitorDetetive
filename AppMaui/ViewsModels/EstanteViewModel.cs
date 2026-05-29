@@ -7,7 +7,6 @@ using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 
 namespace AppMaui.ViewsModels
@@ -32,7 +31,7 @@ namespace AppMaui.ViewsModels
         private readonly LivroService _livroService;
         private readonly LeituraService _leituraService;
         private readonly Leitura _leitura = new();
-        private Livro _livroSelecionado = new();
+        private Livro? _livroSelecionado = new();
         private readonly IDialogoService _dialogoService;
         private readonly Usuario? _usuario = new();
 
@@ -43,7 +42,7 @@ namespace AppMaui.ViewsModels
             _dialogoService = dialogoService;
             _leituraService = leituraService;
             _usuario = SessaoService.UsuarioLogado;
-            CarregarLivros();
+            _ = CarregarLivros();
         }
 
         public async Task CarregarLivros()
@@ -54,6 +53,9 @@ namespace AppMaui.ViewsModels
             {
                 foreach (var livro in lista)
                 {
+                    if (_usuario == null)
+                        return;
+
                     var leitura = await _leituraService.GetLeituraPorLivroUsuario
                         (livro.Id, _usuario.Id);
 
@@ -103,7 +105,10 @@ namespace AppMaui.ViewsModels
         [RelayCommand]
         private async Task IniciarLeitura()
         {
-            if (_livroSelecionado.Id <= 0)
+            if (_usuario == null)
+                return;
+
+            if (_livroSelecionado == null || _livroSelecionado.Id <= 0)
             {
                 await _dialogoService.Mensagem("Escolhar um livro.", "Selecione um livro antes de iniciar leitura.", "OK");
                 return;

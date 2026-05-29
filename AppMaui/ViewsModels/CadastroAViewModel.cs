@@ -1,8 +1,6 @@
 ﻿using AppMaui.Core.DTOs;
 using AppMaui.Core.Models;
-using AppMaui.Core.Repositories;
 using AppMaui.Core.Services.Application;
-using AppMaui.Core.Services.Interfaces;
 using AppMaui.Core.Services.Local;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -99,11 +97,18 @@ namespace AppMaui.ViewsModels
         {
             if (Aluno.Id != 0)
             {
-                var resp = await _alunoService.DeletarAluno(Aluno.Id);
-                if (resp)
-                    Mensagem = "Cadastro deletado.";
-                else
-                    Mensagem = "Erro ao deletar aluno.";
+                bool confirmacao = await _dialogoService.Confirmar(
+                    "Confirmação", $"Deseja deletar {Nome}? Caso confirme o aluno será retirado do sistema.",
+                    "Sim", "Não");
+                
+                if (confirmacao)
+                {
+                    var resp = await _alunoService.DeletarAluno(Aluno.Id);
+                    if (resp)
+                        Mensagem = "Cadastro deletado.";
+                    else
+                        Mensagem = "Erro ao deletar aluno.";
+                }                    
             }
             else
                 Mensagem = "Id de aluno é obrigatória";
@@ -149,14 +154,22 @@ namespace AppMaui.ViewsModels
                 return;
             }
             var usuario = await _usuarioService.BuscarUsuarioPorId(Aluno.UsuarioId);
-            if (usuario != null) 
-                usuario.StatusUsuario = false;
+            if (usuario == null)
+                return;
 
-            var res = await _usuarioService.AtualizarUsuario(usuario);
-            if (res)
-                Mensagem = "Aluno arquivado com sucesso!";
-            else
-                Mensagem = "Erro ao arquivar aluno.";
+            bool confirmacao = await _dialogoService.Confirmar(
+                    "Confirmação", $"Deseja arquivar {Nome}? Caso confirme o aluno perderá o acesso às trilhas e desafios até que seja reenturmado.",
+                    "Sim", "Não");
+
+            if (confirmacao)
+            {
+                usuario.StatusUsuario = false;
+                var res = await _usuarioService.AtualizarUsuario(usuario);
+                if (res)
+                    Mensagem = "Aluno arquivado com sucesso!";
+                else
+                    Mensagem = "Erro ao arquivar aluno.";
+            }                
             await Task.Delay(3000);
             Mensagem = string.Empty;
             FecharCadastro();
@@ -170,8 +183,5 @@ namespace AppMaui.ViewsModels
             Nome = string.Empty;
             OnFecharCadastro?.Invoke();            
         }
-        
-
-        
     }
 }

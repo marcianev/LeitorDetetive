@@ -10,15 +10,15 @@ namespace AppMaui.ViewsModels
     public partial class AlunoPViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string? mensagem;
+        private string? mensagem = string.Empty;
         [ObservableProperty]
         private bool mostrarCadastro;
         [ObservableProperty]
-        private ObservableCollection<Aluno> alunos = new();
+        private ObservableCollection<Aluno> alunos = [];
         [ObservableProperty]
-        private ObservableCollection<Turma> turmas = new();
+        private ObservableCollection<Turma> turmas = [];
         [ObservableProperty]
-        private Turma turmaSelecionada;
+        private Turma turmaSelecionada = new();
 
         public CadastroAViewModel CadastroAVM { get; }
         private readonly AlunoService _alunoService;
@@ -26,7 +26,7 @@ namespace AppMaui.ViewsModels
 
         public AlunoPViewModel(CadastroAViewModel cadastroAVM, 
             AlunoService alunoService, TurmaService turmaService)
-        {
+        {            
             CadastroAVM = cadastroAVM;
             _alunoService = alunoService;
             _turmaService = turmaService;
@@ -35,8 +35,8 @@ namespace AppMaui.ViewsModels
                 MostrarCadastro = false;
                 _ = CarregaAlunos();
             };
-            CarregaAlunos();
-            CarregaTurmas();
+            _ = CarregaAlunos();
+            _ = CarregaTurmas();
         }
 
         //listar alunos
@@ -51,7 +51,7 @@ namespace AppMaui.ViewsModels
             else
             {
                 Mensagem = string.Empty;
-                var lista = await _alunoService.ListarAlunos(turmaSelecionada.Id);
+                var lista = await _alunoService.ListarAlunos(TurmaSelecionada.Id);
                 if (lista != null)
                     Alunos = new ObservableCollection<Aluno>(lista);
             }
@@ -63,6 +63,8 @@ namespace AppMaui.ViewsModels
         public async Task CarregaTurmas()
         {
             var usuario = SessaoService.UsuarioLogado;
+            if (usuario == null)
+                return;
             if(usuario.Tipo == "Professor")
             {
                   var lista = await _turmaService.ListarTurmaPorUsuario(usuario.Id);
@@ -98,6 +100,8 @@ namespace AppMaui.ViewsModels
             if (value == null)
                 return;
             var usuario = SessaoService.UsuarioLogado;
+            if(usuario == null) 
+                return;
             if (usuario.Tipo != "Professor")
                 return;
             await CarregaAlunos();

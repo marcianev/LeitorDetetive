@@ -12,9 +12,9 @@ namespace AppMaui.Core.Services.Local
         /// Gera mapa de criptografia mapeando cada letra a um símbolo.
         /// TODO: Quando banco estender, modificar para cálculo que divida o id do livro pela quantidade de símbolos.
         /// </summary>
-        public List<LetraCriptografada> Gerar(int desafio)
+        public static List<LetraCriptografada> Gerar(int desafio)
         {
-            List<LetraCriptografada> mapa = new();            
+            List<LetraCriptografada> mapa = [];            
 
             for (int i = 0; i < CriptogramaSimbolos.Alfabeto.Length; i++)
             {               
@@ -34,7 +34,7 @@ namespace AppMaui.Core.Services.Local
         }
 
         /// <summary>Criptografa uma palavra usando o mapa gerado para o desafio.</summary>
-        public async Task<string> Criptografar(string palavra, int livro)
+        public static async Task<string> Criptografar(string palavra, int livro)
         {
             var mapa = Gerar(livro);
 

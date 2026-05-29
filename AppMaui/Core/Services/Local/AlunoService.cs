@@ -146,7 +146,7 @@ namespace AppMaui.Core.Services.Local
                 {
                     int novoNivel = quantidadeLeituras / 3;
                     aluno.PatenteId = await _repositorio.GetIdPatente(novoNivel + 1, aluno.PatenteId);
-                    EventoSistema eventoSistema = new EventoSistema()
+                    EventoSistema eventoSistema = new()
                     {
                         Tabela = "Aluno",
                         TipoEvento = Eventos.NivelUp,                        

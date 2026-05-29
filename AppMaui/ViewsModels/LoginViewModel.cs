@@ -1,6 +1,4 @@
-﻿using AppMaui.Core.Models;
-using AppMaui.Core.Services;
-using AppMaui.Core.Services.Application;
+﻿using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.Interfaces;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;

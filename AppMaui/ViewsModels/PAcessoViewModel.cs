@@ -1,17 +1,7 @@
 ﻿using AppMaui.Core.DTOs;
-using AppMaui.Core.Models;
-using AppMaui.Core.Repositories;
-using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.Security;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppMaui.ViewsModels
 {

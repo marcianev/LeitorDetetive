@@ -237,10 +237,14 @@ InputTransparent="False">
               Padding="0"
               Style="{StaticResource sBrdAzulSS}"
               Stroke="{StaticResource palhaMedio}">
-            <Label Text="{Binding LbBotao1}" 
+                <Label Text="{Binding LbBotao1}" 
                    FontAttributes="Bold"
                  TextColor="{StaticResource begeClaro}"
-                 HorizontalOptions="Center"/>
+                 HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AbrirPrimViewCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
         </Border>
 
         <!-- BOTÃO SEGUNDA VIEW-->
@@ -270,10 +274,14 @@ InputTransparent="False">
               Padding="0"
               Style="{StaticResource sBrdAzulSS}"
               Stroke="{StaticResource palhaMedio}">
-            <Label Text="{Binding LbBotao2}" 
+                <Label Text="{Binding LbBotao2}" 
                    FontAttributes="Bold"
                  TextColor="{StaticResource begeClaro}"
-                 HorizontalOptions="Center"/>
+                 HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AbrirSegViewCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
         </Border>
 
         <!-- BOTÃO TERCEIRA VIEW-->
@@ -309,6 +317,9 @@ InputTransparent="False">
                  TextColor="{StaticResource begeClaro}" 
                  Padding="0,3"
                    HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AbrirTercViewCommand}"/>
+                    </Label.GestureRecognizers>
                 <Label.FontSize>
                     <OnIdiom x:TypeArguments="x:Double"
                            Phone ="10"

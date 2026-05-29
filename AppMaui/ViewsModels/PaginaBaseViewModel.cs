@@ -1,20 +1,10 @@
-﻿using AppMaui.Core.Enums;
-using AppMaui.Core.Models;
+﻿using AppMaui.Core.Models;
 using AppMaui.Core.Services;
-using AppMaui.Core.Services.External;
 using AppMaui.Core.Services.Local;
 using AppMaui.Services.Interfaces;
 using AppMaui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppMaui.ViewsModels
 {

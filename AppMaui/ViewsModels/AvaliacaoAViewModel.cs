@@ -6,14 +6,8 @@ using AppMaui.Core.Services.Local;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace AppMaui.ViewsModels
 {
@@ -32,11 +26,11 @@ namespace AppMaui.ViewsModels
         [ObservableProperty]
         private bool comentar;
         [ObservableProperty]
-        private Color corBorda;
+        private Color? corBorda;
         [ObservableProperty]
         private bool mostrarStatus;
 
-        private Usuario usuario;
+        private Usuario? usuario = new();
 
         public CadastroCViewModel CadastroCVM{ get; set; }
        
@@ -56,13 +50,16 @@ namespace AppMaui.ViewsModels
             CadastroCVM = cadastroCViewModel;
             CadastroCVM.OnFecharCadastro = () => MostrarCadastro = false;
 
-            Inicializar();
+            _ = Inicializar();
         }
 
         //carregar os dados iniciais
         public async Task Inicializar()
         {
             usuario = SessaoService.UsuarioLogado;
+            if (usuario == null)
+                return;
+
             if(usuario.Tipo == "Professor")
             {
                 CorBorda = (Color)Application.Current!.Resources["palhaMedio"];
@@ -85,7 +82,7 @@ namespace AppMaui.ViewsModels
         {
             if (value == null)
                 return;
-            CarregarComentarios(value.Id);
+            _ = CarregarComentarios(value.Id);
            
 
         }
@@ -94,7 +91,10 @@ namespace AppMaui.ViewsModels
         public async Task CarregarComentarios(int idLivro)
         {
 
-            List<AvaliacaoDTO> avaliacoes = [];
+            List<AvaliacaoDTO>? avaliacoes = [];
+            if (usuario == null)
+                return;
+
             if (usuario.Tipo == "Aluno")
             {                
                 var concluido = await _leituraService.GetLeituraPorLivroUsuario(idLivro, usuario.Id);
@@ -135,14 +135,17 @@ namespace AppMaui.ViewsModels
             MostrarCadastro = true;
             CadastroCVM.Titulo = LivroSelecionado.Titulo;
             CadastroCVM.ViewLivroId = LivroSelecionado.Id;
-            CadastroCVM.ViewUsuarioId = SessaoService.UsuarioLogado.Id;   
+            if(usuario == null) 
+                return;
+            CadastroCVM.ViewUsuarioId = usuario.Id;   
         }
 
         //abrir moderação
         [RelayCommand]
         private async Task ModerarComentario(AvaliacaoDTO comentario)
         {          
-            if (usuario.Tipo != "Professor" || comentario == null)
+
+            if (usuario != null && usuario.Tipo != "Professor" || comentario == null)
                 return;
 
             var resposta = await _dialogoService.Consulta3(

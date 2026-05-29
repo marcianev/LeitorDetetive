@@ -3,13 +3,8 @@ using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace AppMaui.ViewsModels
 {
@@ -41,17 +36,13 @@ namespace AppMaui.ViewsModels
 
         //metodo de carregamento
         public async Task CarregarDados()
-        {
-            Debug.WriteLine("chegamos aqui");
-          
+        {          
             if (_usuario.Tipo != "Professor")
                 return;
 
             var lista = await _alunoService.GerarDashBoardProfessor(_usuario.Id);
             if (lista != null)
-                DashBoards = new ObservableCollection<DashBoardPDTO>(lista);
-            Debug.WriteLine(lista.Count);
-
+                DashBoards = new ObservableCollection<DashBoardPDTO>(lista);    
         }
     }
 }

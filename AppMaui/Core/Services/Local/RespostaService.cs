@@ -24,12 +24,12 @@ namespace AppMaui.Core.Services.Local
                     return false;
 
                 var respostaExistente = await _repostitorio.GetByAlunoDesafio(resposta.AlunoId, resposta.DesafioId);
-                if (!respostaExistente.Any())
+                if (respostaExistente.Count ==0)
                 {
                     resposta.UltimoRegistro = DateTime.Now;
 
                     await _repostitorio.Add(resposta);
-                    EventoSistema eventoSistema = new EventoSistema()
+                    EventoSistema eventoSistema = new()
                     {
                         Tabela = "Resposta",
                         TipoEvento = Eventos.RespostaSalva,                       

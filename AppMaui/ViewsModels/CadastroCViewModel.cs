@@ -1,24 +1,16 @@
 ﻿using AppMaui.Core.DTOs;
-using AppMaui.Core.Enums;
-using AppMaui.Core.Models;
 using AppMaui.Core.Services.Local;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppMaui.ViewsModels
 {
     public partial class CadastroCViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string titulo;
+        private string? titulo;
         [ObservableProperty]
-        private string viewComentario;
+        private string? viewComentario;
         [ObservableProperty]
         private int viewLivroId;
         [ObservableProperty]
@@ -26,7 +18,7 @@ namespace AppMaui.ViewsModels
         [ObservableProperty]
         private int viewNota;
         [ObservableProperty]
-        private string mensagem;
+        private string? mensagem;
 
         private readonly AvaliacaoService _avaliacaoService;
         private AvaliacaoDTO _dto;

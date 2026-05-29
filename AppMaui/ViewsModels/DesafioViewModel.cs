@@ -6,13 +6,8 @@ using AppMaui.Core.Services.Local;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace AppMaui.ViewsModels
 {
@@ -27,11 +22,11 @@ namespace AppMaui.ViewsModels
         [ObservableProperty]
         private bool botaoVisivel;
         [ObservableProperty]
-        private ObservableCollection<DesafiosDTO>? desafiosDTOEsquerda = [];
+        private ObservableCollection<DesafiosDTO> desafiosDTOEsquerda = [];
         [ObservableProperty]
-        private ObservableCollection<DesafiosDTO>? desafiosDTODireita = [];
+        private ObservableCollection<DesafiosDTO> desafiosDTODireita = [];
         [ObservableProperty]
-        private ObservableCollection<LetraDTO>? palavraSecretaLetras = [];
+        private ObservableCollection<LetraDTO> palavraSecretaLetras = [];
         
         private readonly DesafioService _desafioService;
         private readonly LivroService _livroService;
@@ -40,7 +35,6 @@ namespace AppMaui.ViewsModels
         private IDialogoService _idialogoService;
         private readonly AlunoService _alunoService;       
         private readonly Usuario? _usuario = new();
-        private readonly CriptogramaService _criptogramaService;
 
         public DesafioViewModel(DesafioService desafioService, LivroService livroService,
             RespostaService respostaService, LeituraService leituraService,
@@ -53,9 +47,8 @@ namespace AppMaui.ViewsModels
             _leituraService = leituraService;
             _idialogoService = dialogoService;
             _alunoService = alunoService;
-            _criptogramaService = criptogramaService;
             _usuario = SessaoService.UsuarioLogado;
-            DefinirLivro();
+            _ = DefinirLivro();
         }
 
         public async Task DefinirLivro()
@@ -73,7 +66,11 @@ namespace AppMaui.ViewsModels
                 {
                     //busca dados do livro, do aluno e dos desafios e respostas para o livro
                     var livro = await _livroService.BuscarLivroPorId(leitura.LivroId);
+                    if (livro == null)
+                        return;
                     var aluno = await _alunoService.BuscarAlunoUsuario(_usuario.Id);
+                    if (aluno == null)
+                        return;
                     var desafios = await _desafioService.ListarDesafiosPorLivro(livro.Id);
                     var respostas = await _respostaService.ListarAlunoDesafio(livro.Id, aluno.Id);
                                         
@@ -104,7 +101,7 @@ namespace AppMaui.ViewsModels
                             var lDTO = new LetraDTO
                             {
                                 LetraOriginal = letra.ToString(),
-                                LetraCriptograma = await _criptogramaService.Criptografar(letra.ToString(), livro.Id),
+                                LetraCriptograma = await CriptogramaService.Criptografar(letra.ToString(), livro.Id),
                                 Posicao = posicao,
                                 LetraDigitada = palavraSalva.Length > posicao ? palavraSalva[posicao].ToString() : string.Empty,
                                 Destacada = letraDestaque,
@@ -256,6 +253,9 @@ namespace AppMaui.ViewsModels
 
             if (livroConcluido)
             {
+                if (_usuario == null)
+                    return;
+
                 var concluir = await _leituraService.ConcluirLeitura(_usuario.Id);
                 if (concluir)
                 {

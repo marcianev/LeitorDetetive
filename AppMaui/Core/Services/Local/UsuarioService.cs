@@ -25,7 +25,7 @@ namespace AppMaui.Core.Services.Local
                     string.IsNullOrEmpty(usuario.Tipo))
                     return null;
 
-                Usuario u = new Usuario
+                Usuario u = new()
                 {
                     User = usuario.User,
                     Tipo = usuario.Tipo,
