@@ -1,33 +1,43 @@
-﻿using AppMaui.Core.Models;
-using AppMaui.Core.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AppMaui.Core.Enums;
+using AppMaui.Core.Models;
+using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
+using AppMaui.Core.Services.Logging;
+
 
 namespace AppMaui.Core.Services.Local
 {
-    public class RespostaService(RespostaRepository _repostitorio)
+    /// <summary>
+    /// Serviço para gerenciar respostas de alunos aos desafios com validação de duplicidade.
+    /// </summary>
+    public class RespostaService(RespostaRepository _repostitorio, 
+       EventoService eventoService)
     {
-        //metodo salvar resposta
+        /// <summary>
+        /// Salva resposta apenas se o aluno não possui resposta prévia para o mesmo desafio.
+        /// Registra este evento para notificar ao professor
+        /// </summary>
         public async Task<bool> SalvarResposta(Resposta resposta)
         {
             try
             {
-                //validações
-                if (resposta.AlunoId <= 0 ||
-                    resposta.DesafioId <= 0)
+                if (resposta.AlunoId <= 0 || resposta.DesafioId <= 0)
                     return false;
-              
-                //procurar resposta já existente para o mesmo aluno e desafio
+
                 var respostaExistente = await _repostitorio.GetByAlunoDesafio(resposta.AlunoId, resposta.DesafioId);
                 if (!respostaExistente.Any())
                 {
                     resposta.UltimoRegistro = DateTime.Now;
 
                     await _repostitorio.Add(resposta);
+                    EventoSistema eventoSistema = new EventoSistema()
+                    {
+                        Tabela = "Resposta",
+                        TipoEvento = Eventos.RespostaSalva,                       
+                        Descricao = "Aluno salvou resposta.",
+                        ReferenciaId = resposta.DesafioId,
+                        UsuarioId = resposta.AlunoId                        
+                    };
+                    await eventoService.SalvarEvento(eventoSistema);
                     return true;
                 }
                 else
@@ -37,10 +47,8 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao salvar resposta: {ex.Message}");
             }
+        }
 
-        }//fim salvar
-
-        //metodo listar
         public async Task<List<Resposta>> ListarRespostas()
         {
             try
@@ -54,18 +62,15 @@ namespace AppMaui.Core.Services.Local
             }
         }
 
-        //metodo atualizar
         public async Task<bool> AtualizarResposta(Resposta resposta)
         {
             try
             {
-                //validações
                 if (resposta.Id <= 0 ||
                     resposta.AlunoId <= 0 ||
                     resposta.DesafioId <= 0)
                     return false;
 
-                //r.Palavra = TransformarPalavra(letras);
                 resposta.UltimoRegistro = DateTime.Now;
 
                 await _repostitorio.Update(resposta);
@@ -75,16 +80,12 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao atualizar resposta: {ex.Message}");
             }
-        }//fim listar
+        }
 
-        //aqui irá o listar por desafio
-
-        //metodo deletar resposta
         public async Task<bool> DeletarResposta(int id)
         {
             try
             {
-                //validação
                 if (id <= 0)
                     return false;
                 var resposta = await _repostitorio.GetById(id);
@@ -98,10 +99,10 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao deletar resposta: {ex.Message}");
             }
-        }//fim deletar
+        }
 
-        //listar respostas por livro e usuario, para exibir na estante
-        public async Task<List<Resposta>> ListarAlunoDesafio(int livroId, int alunoId)
+        /// <summary>Retorna respostas de um aluno para todos os desafios de um livro específico.</summary>
+        public async Task<List<Resposta>?> ListarAlunoDesafio(int livroId, int alunoId)
         {
             try
             {

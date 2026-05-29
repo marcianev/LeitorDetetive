@@ -13,16 +13,14 @@ namespace AppMaui.Core.Services.Application
     /// </summary>
     public class CadastrarProfessorService
     {
-        private readonly UsuarioService _usuarioService;
         private readonly ProfessorService _professorService;
         private readonly EmailService _emailService;
         private readonly DatabaseService _databaseService;
         private readonly ICriptoService _criptoService;
 
-        public CadastrarProfessorService(UsuarioService usuarioService, ProfessorService professorService, 
+        public CadastrarProfessorService(ProfessorService professorService, 
             ICriptoService criptoService, DatabaseService databaseService, EmailService es)
         {
-            _usuarioService = usuarioService;
             _professorService = professorService;
             _emailService = es;
             _databaseService = databaseService;
@@ -42,6 +40,15 @@ namespace AppMaui.Core.Services.Application
                     return "Email obrigatório";
                 if (string.IsNullOrWhiteSpace(cadastroProfessorDTO.Cpf))
                     return "CPF obrigatório";
+
+                var emailExiste = await _professorService.EmailExiste(cadastroProfessorDTO.Email);
+                if (emailExiste)
+                    return "Email já cadastrado.";
+
+                cadastroProfessorDTO.Cpf = cadastroProfessorDTO.Cpf.Replace(".", "").Replace("-", "");
+                var cpfExiste = await _professorService.CPFExiste(cadastroProfessorDTO.Cpf);
+                if (cpfExiste)
+                    return "CPF já cadastrado";
 
                 var professor = new Professor
                 {
@@ -86,9 +93,9 @@ namespace AppMaui.Core.Services.Application
                         professor.UsuarioId = usuario.Id;
                         tran.Insert(professor);
                     });
-                    string assunto = "Bem-vindo ao Ajolede - Sua senha provisória";
-                    string mensagem = $"Olá {cadastroProfessorDTO.User},\n\nSua conta foi criada com sucesso! Sua senha provisória é: " +
-                        $"{senhaProvisoria}\n\nPor favor, acesse em PRIMEIRO ACESSO e altere sua senha.\n\nAtenciosamente,\nEquipe Ajolede";
+                    string assunto = "Bem-vindo ao Leitor Detetive - Sua senha provisória";
+                    string mensagem = $"Olá, {cadastroProfessorDTO.User}.\n\nSua conta foi criada com sucesso! Sua senha provisória é: " +
+                        $"{senhaProvisoria}\n\nPor favor, acesse em PRIMEIRO ACESSO e altere sua senha.\n\nAtenciosamente,\nEquipe Leitor Detetive.";
                     bool resul = await _emailService.EnviarEmail(cadastroProfessorDTO.Email, assunto, mensagem);
                     return $"Cadastro realizado {cadastroProfessorDTO.User}";
                 }     

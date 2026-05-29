@@ -1,33 +1,31 @@
 ﻿using AppMaui.Core.DTOs;
 using AppMaui.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppMaui.Core.Services.Local
 {
+    /// <summary>
+    /// Gerencia a geração e aplicação de cifras de substituição para desafios de criptografia.
+    /// </summary>
     public class CriptogramaService
     {      
-        public List<LetraCriptografada> Gerar (int desafio)
+        /// <summary>
+        /// Gera mapa de criptografia mapeando cada letra a um símbolo.
+        /// TODO: Quando banco estender, modificar para cálculo que divida o id do livro pela quantidade de símbolos.
+        /// </summary>
+        public List<LetraCriptografada> Gerar(int desafio)
         {
-           // var resultado = new List<LetraCriptografada>();
             List<LetraCriptografada> mapa = new();            
-           
 
             for (int i = 0; i < CriptogramaSimbolos.Alfabeto.Length; i++)
-            {
+            {               
                 if (desafio >= 40)
                     desafio = 0;
                 else
-                    desafio++;               
-               
+                    desafio++;
+
                 mapa.Add(new LetraCriptografada
                 {
                     LetraOriginal = CriptogramaSimbolos.Alfabeto[i],
-
                     Simbolo = CriptogramaSimbolos.Lista[desafio]
                 });
             }
@@ -35,9 +33,10 @@ namespace AppMaui.Core.Services.Local
             return mapa;      
         }
 
-        public async Task<string> Criptografar(string palavra)
+        /// <summary>Criptografa uma palavra usando o mapa gerado para o desafio.</summary>
+        public async Task<string> Criptografar(string palavra, int livro)
         {
-            var mapa = Gerar(40);
+            var mapa = Gerar(livro);
 
             var dicionario = mapa.ToDictionary(
                 x => x.LetraOriginal,

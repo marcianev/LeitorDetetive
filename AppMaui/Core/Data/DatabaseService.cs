@@ -30,22 +30,22 @@ namespace AppMaui.Core.Data
         //cria as tabelas do banco de dados SQLite para as entidades
         public async Task CriarTabelas()
         {
-            await _conexao.CreateTableAsync<Aluno>();
-            await _conexao.CreateTableAsync<Avaliacao>();
-            await _conexao.CreateTableAsync<Desafio>();
-            await _conexao.CreateTableAsync<Leitura>();
-            await _conexao.CreateTableAsync<Livro>();
-            await _conexao.CreateTableAsync<Log>();
-            await _conexao.CreateTableAsync<Mensagem>();
-            await _conexao.CreateTableAsync<Notificacao>();
-            await _conexao.CreateTableAsync<Patente>();
-            await _conexao.CreateTableAsync<Professor>();
-            await _conexao.CreateTableAsync<Resposta>();
-            await _conexao.CreateTableAsync<Trilha>();
-            await _conexao.CreateTableAsync<Turma>();
-            await _conexao.CreateTableAsync<Usuario>();
+            
+                await _conexao.CreateTableAsync<Aluno>();
+                await _conexao.CreateTableAsync<Avaliacao>();
+                await _conexao.CreateTableAsync<Desafio>();
+                await _conexao.CreateTableAsync<Leitura>();
+                await _conexao.CreateTableAsync<Livro>();
+                await _conexao.CreateTableAsync<EventoSistema>();
+                await _conexao.CreateTableAsync<Mensagem>();
+                await _conexao.CreateTableAsync<Notificacao>();
+                await _conexao.CreateTableAsync<Patente>();
+                await _conexao.CreateTableAsync<Professor>();
+                await _conexao.CreateTableAsync<Resposta>();
+                await _conexao.CreateTableAsync<Trilha>();
+                await _conexao.CreateTableAsync<Turma>();
+                await _conexao.CreateTableAsync<Usuario>();
+                  
         }
-
-
     }
 }

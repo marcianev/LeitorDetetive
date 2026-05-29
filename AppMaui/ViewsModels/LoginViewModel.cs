@@ -1,4 +1,5 @@
 ﻿using AppMaui.Core.Models;
+using AppMaui.Core.Services;
 using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.Interfaces;
 using AppMaui.Services.Interfaces;
@@ -26,8 +27,15 @@ namespace AppMaui.ViewsModels
 
         [ObservableProperty]
         private bool mostrarPrimeiroAcesso;
+
         [ObservableProperty]
         private bool carregando;
+
+        [ObservableProperty]
+        private bool ehSenha;
+
+        [ObservableProperty]
+        private string olho;
 
 
         public CadastroPViewModel CadastroPVM { get; }
@@ -51,13 +59,15 @@ namespace AppMaui.ViewsModels
         {
             CadastroPVM = cadastroPVM;
             NovaSenhaVM = novaSenhaVM;
-            PrimeiroAcessoVM = pAcessoVM;
+            PrimeiroAcessoVM = pAcessoVM;            
             _auth = auth;
             _navigationService = nav;                 
             CadastroPVM.OnFecharCadastro = () => MostrarCadastro = false;
             CadastroPVM.OnCarregando = (valor) => Carregando = valor;
             NovaSenhaVM.OnFecharNovaSenha = () => MostrarNovaSenha = false;
             PrimeiroAcessoVM.OnFecharPAcesso = () => MostrarPrimeiroAcesso = false;
+            EhSenha = true;
+            Olho = "\uf06e";
         }
 
         //mostra a view de cadastro
@@ -72,7 +82,7 @@ namespace AppMaui.ViewsModels
         [RelayCommand]
         private void AbrirNovaSenha()
         {
-            MostrarNovaSenha = true;
+            MostrarNovaSenha = true;           
         }
 
         //mostra a view para primeiro acesso
@@ -99,7 +109,7 @@ namespace AppMaui.ViewsModels
                 }
                 var user = await _auth.Autenticar(Usuario, Senha);
 
-                if (user != null)
+                if (user != null && user.StatusSenha == true)
                 {
                     Usuario = string.Empty;
                     Senha = string.Empty;
@@ -119,6 +129,14 @@ namespace AppMaui.ViewsModels
             }
 
            
+        }
+
+        [RelayCommand]
+        private async Task VisualizarSenha()
+        {
+            EhSenha = !EhSenha;
+
+            Olho = EhSenha ? "\uf06e" : "\uf070";
         }
     }
 }

@@ -192,8 +192,8 @@
                         Text="Senha"
                            HorizontalOptions="Center"
 VerticalOptions="Center"
-                        />
-                </Border>
+                        />                  
+                </Border>               
                 <Border Grid.Row="2" 
                      Grid.Column="1"
                      Style="{StaticResource sBrdEntry}">
@@ -201,8 +201,22 @@ VerticalOptions="Center"
                         Text="{Binding Senha}"
                         TextColor="{StaticResource marromEscuro}"
                            Placeholder="Senha"
-                           IsPassword="True"/>
+                           IsPassword="{Binding EhSenha}"/>
                 </Border>
+                <Label Grid.Row="2"
+        Grid.Column="1"
+        HorizontalOptions="End"
+        VerticalOptions="Center"
+        TranslationX="-20"
+                       TranslationY="8"
+                       FontFamily="FontAwesome"                      
+        Text="{Binding Olho}"
+        TextColor="{StaticResource azulCinza}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer 
+                            Command="{Binding VisualizarSenhaCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
                 <!--label para mensagem-->
                 <Label x:Name="lbMsm"
                     Grid.Row="3"
@@ -328,9 +342,14 @@ InputTransparent="False">
             Color="White"
             WidthRequest="60"
             HeightRequest="60"/>
-
                     <Label
-            Text="Aguarde enquanto trabalhamos..."
+FontFamily="FontAwesome"
+        TextColor="{StaticResource marromClaro}"
+        HorizontalOptions="Center"
+Text="&#xf002;"
+FontSize="40" />
+                    <Label
+            Text="Consultando Arquivos..."
             TextColor="Black"
             HorizontalOptions="Center"
                         Background="{StaticResource palhaClaro}"/>

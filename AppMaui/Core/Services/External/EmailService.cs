@@ -1,15 +1,12 @@
 ﻿using AppMaui.Core.Settings;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppMaui.Core.Services.External
 {
+    /// <summary>
+    /// Serviço para envio de emails usando configurações de SMTP.
+    /// </summary>
     public class EmailService
     {
         private readonly EmailSettings _settings;
@@ -19,6 +16,7 @@ namespace AppMaui.Core.Services.External
             _settings = settings;
         }
 
+        /// <summary>Envia email usando credenciais SMTP configuradas. Retorna sucesso ou falha do envio.</summary>
         public async Task<bool> EnviarEmail(string destino, string assunto, string mensagem)
         {
             try
@@ -31,7 +29,7 @@ namespace AppMaui.Core.Services.External
 
                 using var email = new MailMessage
                 {
-                    From = new MailAddress(_settings.Email, "Ajolede"),
+                    From = new MailAddress(_settings.Email, "Leitor Detetive"),
                     Subject = assunto,
                     Body = mensagem,
                     IsBodyHtml = false
@@ -43,10 +41,8 @@ namespace AppMaui.Core.Services.External
 
                 return true;
             }
-            catch (Exception ex)
-            {
-                // depois você pode logar isso
-                Console.WriteLine($"Erro ao enviar email: {ex.Message}");
+            catch
+            {               
                 return false;
             }
         }

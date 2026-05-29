@@ -1,11 +1,161 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppMaui.Views.NovaSenhaView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             x:Class="AppMaui.Views.NovaSenhaView"
+                           xmlns:vm="clr-namespace:AppMaui.ViewsModels"
+           x:DataType="vm:NovaSenhaViewModel"
+             BackgroundColor="#A4000000"              
+HorizontalOptions="Fill"
+VerticalOptions="Fill">
+    <Grid HorizontalOptions="Center" VerticalOptions="Center">
+        <Border x:Name="brdCadProf"   
+           Stroke="{StaticResource azulMedio}" 
+           WidthRequest="300"   
+           Style="{StaticResource sBrdPrincipal}"
+           Margin="10">
+            <Grid>
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="0.9*"/>
+                    <RowDefinition/>
+                    <RowDefinition/>                    
+                    <RowDefinition Height="0.3*"/>
+                    <RowDefinition Height="0.9*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Cabeçalho formulário cadastro-->
+                <Rectangle x:Name="rtgCadTitulo" 
+                  Grid.ColumnSpan="2"
+                  Fill="{StaticResource verdeEscuro}" 
+                  Stroke="{StaticResource verdeEscuro}"
+                  />
+                <Label x:Name="lbCadTituloSombra1" 
+              FontSize="{OnIdiom Desktop=20}"
+              Grid.ColumnSpan="2"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              TranslationX="5"         
+               TranslationY="1"
+              Text="NOVA SENHA"
+              Style="{StaticResource sLbSombra1}"   
+              />
+                <Label x:Name="lbCadTituloSombra2" 
+              FontSize="{OnIdiom Desktop=20}"
+              Grid.ColumnSpan="2"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              TranslationX="4"   
+               TranslationY="1"
+               Text="NOVA SENHA"
+              Style="{StaticResource sLbSombra2}"   
+              />
+                <Label x:Name="lbCadTituloSombra3" 
+              FontSize="{OnIdiom Desktop=20}"
+              Grid.ColumnSpan="2"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              TranslationX="5"   
+              TranslationY="-1"
+              Text="NOVA SENHA"
+              Style="{StaticResource sLbSombra3}"   
+              />
+                <Label x:Name="lbCadTituloSombra4" 
+              FontSize="{OnIdiom Desktop=20}"
+              Grid.ColumnSpan="2"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              TranslationX="6"   
+              TranslationY="-1"
+            Text="NOVA SENHA" 
+              Style="{StaticResource sLbSombra4}"   
+              />
+                <Label x:Name="lbCadTitulo"
+              FontSize="{OnIdiom Desktop=20}"
+              Grid.ColumnSpan="2"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              TranslationX="5"   
+               Text="NOVA SENHA"
+              Style="{StaticResource sLbTitulo}"   
+              />  
+                
+                <!--label e entry Usuario-->
+                <Border x:Name="brdUsuario" 
+               Grid.Row="1"     
+               Margin="10,15,0,0" Style="{StaticResource sBrdAzul}">
+                    <Label TextColor="{StaticResource begeClaro}"
+                  FontAttributes="Bold" 
+                  Text="Usuário"   
+                            HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                  />
+                </Border>
+                <Border Grid.Row="1" 
+               Grid.Column="1"    
+               Style="{StaticResource sBrdEntry}">
+                    <Entry x:Name="etrUser"
+                  TextColor="{StaticResource marromEscuro}"
+                    Text="{Binding User}"/>
+                </Border>
+
+                <!--label e entry email-->
+                <Border x:Name="brdEmail" 
+               Grid.Row="2" 
+               Margin="10,15,0,0" 
+               Style="{StaticResource sBrdAzul}">
+                    <Label TextColor="{StaticResource begeClaro}"
+                  FontAttributes="Bold" 
+                  Text="E-mail"
+                            HorizontalOptions="Center"
+                           VerticalOptions="Center"
+           />
+                </Border>
+                <Border Grid.Row="2" 
+               Grid.Column="1"
+               Style="{StaticResource sBrdEntry}">
+                    <Entry x:Name="etrEmail"
+                  TextColor="{StaticResource marromEscuro}"
+                    Text="{Binding Email}"/>
+                </Border>              
+
+                <!--botão de CANCELAR-->
+                <Button x:Name="BtnCancelar"
+               Grid.Row="6" 
+               Grid.ColumnSpan="2"
+               Margin="10,0"
+               HorizontalOptions="Start" 
+                        VerticalOptions="Center"
+               Text="CANCELAR"
+               Style="{StaticResource sBtn}"
+               BackgroundColor="{StaticResource palhaEscuro}"      
+                 Command="{Binding FecharNovaSenhaCommand}"
+               />            
+
+                <!--botão de enviar-->
+                <Button x:Name="BtnCad" 
+               Grid.Row="6" 
+               Grid.Column="1"
+                Margin="15,0"
+               HorizontalOptions="End" 
+                        VerticalOptions="Center"
+               Text="ENVIAR"
+               Style="{StaticResource sBtn}"
+               BackgroundColor="{x:StaticResource verdeMedio}"
+                Command="{Binding EnviarNovaSenhaCommand}"
+        />
+                <!--label para mensagem-->
+                <Label x:Name="lbMsm"
+                    Grid.Row="3"
+                    Grid.ColumnSpan="2"
+                    Text="{Binding Mensagem}"   
+                    TextColor="{StaticResource marromEscuro}"
+                        HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                    />
+            </Grid>
+        </Border>
+    </Grid>
 </ContentView>

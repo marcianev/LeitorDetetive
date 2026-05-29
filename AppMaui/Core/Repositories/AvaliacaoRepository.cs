@@ -67,7 +67,7 @@ namespace AppMaui.Core.Repositories
             }
 
             /// <summary>Retorna avaliações de um livro filtradas por turma do professor para moderação.</summary>
-            public async Task<List<AvaliacaoDTO>> GetByLivroProfessor(int idLivro, int idProfessor)
+            public async Task<List<AvaliacaoDTO>?> GetByLivroProfessor(int idLivro, int idProfessor)
             {
                 string sql = @"
                 SELECT

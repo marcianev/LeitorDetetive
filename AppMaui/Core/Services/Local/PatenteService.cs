@@ -1,21 +1,17 @@
 ﻿using AppMaui.Core.Models;
-using AppMaui.Core.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
 
 namespace AppMaui.Core.Services.Local
 {
+    /// <summary>
+    /// Serviço para gerenciar patentes com validações e população de dados iniciais.
+    /// </summary>
     public class PatenteService(PatenteRepository _repositorio)
     {
-        //metodo salvar patente
         public async Task<bool> SalvarPatente(Patente patente)
         {
             try
             {
-                //validações
                 if (string.IsNullOrEmpty(patente.Nome) ||
                     patente.Nome.Length > 100)
                     return false;
@@ -25,11 +21,10 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao salvar o aluno: {ex.Message}");
+                throw new Exception($"Erro ao salvar o aluno: {ex.Message}");
             }
-        }//fim salvar
+        }
 
-        //metodo listar patente
         public async Task<List<Patente>> ListarPatentesPorTrilha(int id)
         {
             try
@@ -43,9 +38,8 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao listar patentes: {e.Message}");
             }
-        }//fim listar
+        }
 
-        //metodo atualizar patente
         public async Task<bool> AtualizarPatente(Patente patente)
         {
             try
@@ -62,11 +56,10 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception e)
             {
-                throw new Exception ($"Erro ao atualizar a patente: {e.Message}");
+                throw new Exception($"Erro ao atualizar a patente: {e.Message}");
             }
-        }//fim atualizar
+        }
 
-        //metodo deletar patente
         public async Task<bool> DeletarPatente(int id)
         {
             try
@@ -82,11 +75,11 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception e)
             {
-                throw new Exception ($"Erro ao deletar patente: {e.Message}");
+                throw new Exception($"Erro ao deletar patente: {e.Message}");
             }
-        }//fim deletar
-         
-        //metodo para popular livros
+        }
+
+        /// <summary>Popula a tabela de patentes com dados iniciais do arquivo JSON.</summary>
         public async Task PopularPatentes()
         {
             try

@@ -1,17 +1,16 @@
 ﻿using AppMaui.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace AppMaui.Core.Services.Security
 {
+    /// <summary>
+    /// Serviço de criptografia usando PBKDF2 com SHA256 para hash seguro de senhas.
+    /// </summary>
     public class CriptoService : ICriptoService
     {
-        //gerar criptografia da senha
+        /// <summary>Gera hash seguro de uma senha usando PBKDF2-SHA256 com salt aleatório de 16 bytes.</summary>
         public string GerarHash(string senha)
         {
             byte[] salt = RandomNumberGenerator.GetBytes(16);
@@ -27,10 +26,9 @@ namespace AppMaui.Core.Services.Security
             return Convert.ToBase64String(salt) + "." + Convert.ToBase64String(hash);
         }
 
-        //verificar se a senha digitada corresponde à senha armazenada
+        /// <summary>Verifica se uma senha digitada corresponde ao hash armazenado usando comparação de tempo constante.</summary>
         public bool VerificarHash(string senhaDigitada, string hashSalvo)
         {
-           
             var partes = hashSalvo.Split('.');
 
             byte[] salt = Convert.FromBase64String(partes[0]);

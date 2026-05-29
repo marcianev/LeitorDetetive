@@ -1,46 +1,38 @@
 ﻿using AppMaui.Core.Models;
-using AppMaui.Core.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
 
 namespace AppMaui.Core.Services.Local
 {
+    /// <summary>
+    /// Serviço para gerenciar notificações de usuários com validações e persistência.
+    /// </summary>
     public class NotificacaoService(NotificacaoRepository _repositorio)
     {
-        //metodo salvar notificação
         public async Task<bool> SalvarNotificacao(Notificacao notificacao)
         {
             try
             {
-                //validações
                 string s = notificacao.Motivo.ToString();
                 if (s.Length > 100 ||
                     notificacao.UsuarioId <= 0)
                     return false;
 
-                //chamar metodo que buscará mensagem cadastrada no banco para o texto 
                 notificacao.DataEmissao = DateTime.Now;
                 notificacao.Status = false;
 
                 await _repositorio.Add(notificacao);
                 return true;
-                //chamar o metodo para enviar a notificação para o usuario professor por email
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao salvar notificação: {ex.Message}");
+                throw new Exception($"Erro ao salvar notificação: {ex.Message}");
             }
-        }//fecha método salvar notificacao
+        }
 
-        //metodo para listar notificações de um usuário
         public async Task<List<Notificacao>> ListarNotificacoesPorUsuario(int usuarioId)
         {
             try
             {
-                //validação
                 if (usuarioId <= 0)
                     throw new Exception("ID do usuário é inválido.");
 
@@ -51,14 +43,12 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao listar notificações: {ex.Message}");
             }
-        }//fim listar
+        }
 
-        //metodo para atualizar notificacao
         public async Task<bool> AtualizarNotificacao(Notificacao notificacao)
         {
             try
             {
-                //validações
                 if (notificacao.Id <= 0 ||
                     notificacao.Motivo.ToString().Length > 100 ||
                     string.IsNullOrEmpty(notificacao.Texto) ||
@@ -75,16 +65,14 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao atualizar notificação: {ex.Message}");
+                throw new Exception($"Erro ao atualizar notificação: {ex.Message}");
             }
-        }//fim atualizar
+        }
 
-        //metodo para deletar notificacao
         public async Task<bool> DeletarNotificacao(int id)
         {
             try
             {
-                //validação
                 if (id <= 0)
                     return false;
                 var notificacao = await _repositorio.GetById(id);
@@ -96,11 +84,8 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao deletar notificação: {ex.Message}");
+                throw new Exception($"Erro ao deletar notificação: {ex.Message}");
             }
-        }//fim deletar
-
-        //metodo listar notificações para o tipo definido
-        //sorteará um mensagem na lista e retornará o texto para ser enviado na notificação
+        }
     }
 }

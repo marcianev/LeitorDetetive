@@ -1,22 +1,18 @@
-﻿using AppMaui.Core.Enums;
-using AppMaui.Core.Models;
-using AppMaui.Core.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AppMaui.Core.Models;
+using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
+
 
 namespace AppMaui.Core.Services.Local
 {
+    /// <summary>
+    /// Serviço para gerenciar mensagens template com validações e população de dados iniciais.
+    /// </summary>
     public class MensagemService(MensagemRepository _repository)
     {
-        //metodo salvar mensagem
         public async Task<bool> SalvarMensagem(Mensagem mensagem)
         {
             try
             {
-                //validações
                 if (string.IsNullOrEmpty(mensagem.Conteudo) ||
                     mensagem.Conteudo.Length > 100 ||
                     Enum.IsDefined(mensagem.Tipo))
@@ -31,11 +27,10 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao salvar mensagem: {ex.Message}");
+                throw new Exception($"Erro ao salvar mensagem: {ex.Message}");
             }
-        }//fim método salvar mensagem
+        }
 
-        //metodo listar mensagens
         public async Task<List<Mensagem>> ListarMensagens()
         {
             try
@@ -47,14 +42,12 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao listar mensagens: {ex.Message}");
             }
-        }//fim método listar mensagens
+        }
 
-        //metodo atualizar mensagem
         public async Task<bool> AtualizarMensagem(Mensagem mensagem)
         {
             try
             {
-                //validações
                 if (mensagem.Id <= 0 ||
                     string.IsNullOrEmpty(mensagem.Conteudo) ||
                     Enum.IsDefined(mensagem.Tipo) == false ||
@@ -66,16 +59,14 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao atualizar mensagem: {ex.Message}");
+                throw new Exception($"Erro ao atualizar mensagem: {ex.Message}");
             }
-        }//fim método atualizar mensagem
+        }
 
-        //metodo deletar mensagem
         public async Task<bool> DeletarMensagem(int id)
         {
             try
             {
-                //validação
                 if (id <= 0)
                     return false;
                 var mensagem = await _repository.GetById(id);
@@ -87,11 +78,12 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao deletar mensagem: {ex.Message}");
+                throw new Exception($"Erro ao deletar mensagem: {ex.Message}");
             }
-        }//fim método deletar mensagem
+        }
 
-        //metodo para popular mensagens
+        /// <summary> Popula a tabela de mensagens com dados iniciais do arquivo JSON. </summary>
+        
         public async Task PopularMensagens()
         {
             try

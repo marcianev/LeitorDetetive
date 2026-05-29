@@ -1,14 +1,11 @@
 ﻿using AppMaui.Core.Models;
-using AppMaui.Core.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
 
 namespace AppMaui.Core.Services.Local
 {
+    /// <summary>
+    /// Serviço para gerenciar usuários com validações e persistência.
+    /// </summary>
     public class UsuarioService
     {
         private readonly UsuarioRepository _repositorio;
@@ -18,12 +15,10 @@ namespace AppMaui.Core.Services.Local
             _repositorio = usuarioRepository;
         }
 
-        //metodo salvar
         public async Task<Usuario?> SalvarUsuario(Usuario usuario)
         {
             try
             {
-                //validações
                 if (string.IsNullOrEmpty(usuario.User) ||
                     await _repositorio.GetByUser(usuario.User) != null ||
                     usuario.User.Length > 50 ||
@@ -47,9 +42,8 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro salvar aluno: {ex.Message}");
             }
-        }//fim salvar
+        }
 
-        //metodo listar
         public async Task<List<Usuario>> ListarUsuarios()
         {
             try
@@ -61,14 +55,12 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao listar usuários: {ex.Message}");
             }
-        }//fim listar
+        }
 
-        //metodo atualizar
         public async Task<bool> AtualizarUsuario(Usuario usuario)
         {
             try
             {
-                //validações
                 if (usuario.Id <= 0 ||
                     await _repositorio.GetById(usuario.Id) == null ||
                     string.IsNullOrEmpty(usuario.User) ||
@@ -84,16 +76,14 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao atualizar usuário: {ex.Message}");
+                throw new Exception($"Erro ao atualizar usuário: {ex.Message}");
             }
-        }//fim atualizar
+        }
 
-        //metodo deletar
         public async Task<bool> DeletarUsuario(int id)
         {
             try
             {
-                //validação
                 if (id <= 0)
                     return false;
                 var usuario = await _repositorio.GetById(id);
@@ -106,16 +96,14 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-               throw new Exception ($"Erro ao deletar usuário: {ex.Message}");
+               throw new Exception($"Erro ao deletar usuário: {ex.Message}");
             }
-        }//fim deletar
+        }
 
-        //buscar id de usuario por nome
         public async Task<Usuario?> BuscarUsuarioPorUser(string user)
         {
             try
             {
-
                 if (string.IsNullOrEmpty(user))
                     return null;
 
@@ -129,14 +117,12 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao buscar usuário por User {ex.Message}");
             }
-        }//fim buscar id de usuario por nome           
+        }
 
-        //buscar usuario por id
         public async Task<Usuario?> BuscarUsuarioPorId(int id)
         {
             try
             {
-                
                 if (id <= 0)
                     return null;
                 var usuario = await _repositorio.GetById(id);
@@ -149,6 +135,6 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao buscar usuário por ID: {ex.Message}");
             }
-        }//fim buscar usuario por id
+        }
     }
 }

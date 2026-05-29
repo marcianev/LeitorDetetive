@@ -23,7 +23,7 @@ namespace AppMaui.Core.Models
         [NotNull]
         public string TipoDesafio { get; set; } = string.Empty;
 
-        ///summary>Índices das letras que formam a palavra secreta (desafios do tipo palavra secreta).</summary>
+        ///<summary>Índices das letras que formam a palavra secreta (desafios do tipo palavra secreta).</summary>
         public int IndicesPalavraSecreta { get; set; }
     }
 }

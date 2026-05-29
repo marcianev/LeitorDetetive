@@ -1,5 +1,6 @@
 ﻿using AppMaui.Core.Models;
 using AppMaui.Core.Repositories;
+using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,15 @@ using System.Threading.Tasks;
 
 namespace AppMaui.Core.Services.Local
 {
+    /// <summary>
+    /// Serviço para gerenciar operações de professores com validações e persistência.
+    /// </summary>
     public class ProfessorService(ProfessorRespository _repositorio)
     {
-        //metodo salvar professor
         public async Task<bool> SalvarProfessor(Professor professor)
         {
             try
             {
-                //validações
                 if (string.IsNullOrEmpty(professor.Nome) ||
                     professor.Nome.Length > 100 ||
                     string.IsNullOrEmpty(professor.Email) ||
@@ -30,11 +32,10 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao cadastrar professor: {ex.Message}");
+                throw new Exception($"Erro ao cadastrar professor: {ex.Message}");
             }
-        }//fim salvar
+        }
 
-        //metodo listar
         public async Task<List<Professor>> ListarProfessor()
         {
             try
@@ -46,14 +47,12 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao listar professor: {ex.Message}");
             }
-        }//fim listar
+        }
 
-        //metodo atualizar
         public async Task<bool> AtualizarProfessor(Professor professor)
         {
             try
             {
-                //validações
                 if (string.IsNullOrEmpty(professor.Nome) ||
                     professor.Nome.Length > 100 ||
                     string.IsNullOrEmpty(professor.Email) ||
@@ -69,16 +68,14 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao atualizar professor: {ex.Message}");
+                throw new Exception($"Erro ao atualizar professor: {ex.Message}");
             }
-        }//fim atualizar
+        }
 
-        //metodo deletar 
         public async Task<bool> DeletarProfessor(int id)
         {           
             try
             {
-                //validação
                 if (id <= 0)
                     return false;
                 var professor = await _repositorio.GetById(id);
@@ -90,16 +87,14 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao deletar professor: {ex.Message}");
+                throw new Exception($"Erro ao deletar professor: {ex.Message}");
             }
-        }//fim deletar
+        }
 
-        //buscar professor por usuario
         public async Task<Professor?> BuscarProfessorPorUsuario(int usuarioId)
         {
             try
             {
-                //validação
                 if (usuarioId <= 0)
                     return null;
                 var professor = await _repositorio.GetByUsuarioId(usuarioId);
@@ -111,8 +106,55 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao buscar professor por ID: {ex.Message}");
             }
-        }//fecha método buscar professor por usuario
+        }
 
-    }//fim classe
+        ///<summary>busca professor através do iddaTurma</summary>
+        public async Task<Professor?> BuscarPorTurma(int turmaId)
+        {
+            try
+            {
+                if (turmaId <= 0)
+                    return null;
+
+                return await _repositorio.GetByTurma(turmaId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        ///<sumary>verifica a existência do email no banco.</sumary>
+        public async Task<bool> EmailExiste(string email)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(email))
+                    return false;
+
+                return await _repositorio.EmailExiste(email);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"Erro ao buscar email: {ex.Message}");
+            }
+        }
+
+        ///<sumary>verifica a existência do cpf no banco.</sumary>
+        public async Task<bool> CPFExiste(string cpf)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(cpf))
+                    return false;
+
+                return await _repositorio.CPFExiste(cpf);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"Erro ao buscar email: {ex.Message}");
+            }
+        }
+    }
 }
 

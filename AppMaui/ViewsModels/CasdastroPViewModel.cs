@@ -1,8 +1,10 @@
 ﻿using AppMaui.Core.DTOs;
 using AppMaui.Core.Models;
 using AppMaui.Core.Repositories;
+using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
 using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.Interfaces;
+using AppMaui.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -44,14 +46,17 @@ namespace AppMaui.ViewsModels
         private readonly CadastrarProfessorService _cps;      
         private readonly IValidationService _validationService;
         private readonly UsuarioRepository _usuarioRepository;
+        private readonly ConectividadeService _conectividadeService;
 
-        public CadastroPViewModel(CadastrarProfessorService cadPs, IValidationService validationService, UsuarioRepository usuarioRepository)
+        public CadastroPViewModel(CadastrarProfessorService cadPs, IValidationService validationService, 
+            UsuarioRepository usuarioRepository, ConectividadeService conectividadeService)
         {
-            //ins = new InteligenciaServico();
+            
             _dto = new CadastroProfessorDTO();
             _cps = cadPs;
             _validationService = validationService;
             _usuarioRepository = usuarioRepository;
+            _conectividadeService = conectividadeService;
             ModoAlterar = true;
         }        
 
@@ -62,6 +67,16 @@ namespace AppMaui.ViewsModels
             try
             {
                 OnCarregando?.Invoke(true);
+
+                var temInternet = _conectividadeService.TemInternet();
+                if(!temInternet)
+                {
+                    Mensagem = "É necessário conexão para novo cadastro";
+                    await Task.Delay(3000);
+                    Mensagem = string.Empty;
+                    FecharCadastro();
+                    return;
+                }
                 //valida exitência
                 if (string.IsNullOrWhiteSpace(Nome) ||
                     string.IsNullOrWhiteSpace(Email) ||
@@ -71,6 +86,7 @@ namespace AppMaui.ViewsModels
                     Mensagem = "Todos os campos são obrigatórios";
                     await Task.Delay(3000);
                     Mensagem = string.Empty;
+                    FecharCadastro();
                     return;
                 }
                 //carrega o DTO
@@ -86,8 +102,7 @@ namespace AppMaui.ViewsModels
                     if (UserTemp != User)
                     {
                         _dto.User = User;
-                    }
-                    Debug.WriteLine($"dto.Id: {_dto.User}");
+                    }                   
                     _dto.Id = Id;
                     _dto.UsuarioId = UsuarioId;
                 }
@@ -100,16 +115,29 @@ namespace AppMaui.ViewsModels
                         Mensagem = "CPF inválido, digite um valor válido.";
                         await Task.Delay(3000);
                         Mensagem = string.Empty;
+                        FecharCadastro();
                         return;
                     }
 
                     //Chama o validar email
-                    bool valEmail = _validationService.ValidarEmail(Email);
+                    bool valEmail = _validationService.ValidarEmail(Email);                    
                     if (!valEmail)
                     {
                         Mensagem = "Email inválido, digite um valor válido.";
                         await Task.Delay(3000);
                         Mensagem = string.Empty;
+                        FecharCadastro();
+                        return;
+                    }
+
+                    //chama o validar nome
+                    bool valNome = _validationService.ValidarNome(Nome);
+                    if (!valNome)
+                    {
+                        Mensagem = "Sobrenome, apenas letras.";
+                        await Task.Delay(3000);
+                        Mensagem = string.Empty;
+                        FecharCadastro();
                         return;
                     }
                 }
@@ -133,6 +161,10 @@ namespace AppMaui.ViewsModels
         [RelayCommand]
         private void FecharCadastro()
         {
+            Nome = string.Empty;
+            User = string.Empty;
+            Email = string.Empty;
+            Cpf = string.Empty;
             OnFecharCadastro?.Invoke();
         }
     }

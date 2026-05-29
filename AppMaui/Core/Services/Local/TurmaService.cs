@@ -1,18 +1,14 @@
 ﻿using AppMaui.Core.Models;
-using AppMaui.Core.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
 
 namespace AppMaui.Core.Services.Local
 {
+    /// <summary>
+    /// Serviço para gerenciar turmas com integração de professor e trilha.
+    /// </summary>
     public class TurmaService(TurmaRepository _repositorio, 
         ProfessorService _professorService)
     {
-        //metodo salvar
         public async Task<bool> SalvarTurma(Turma turma)
         {
             try
@@ -33,24 +29,21 @@ namespace AppMaui.Core.Services.Local
                 return true;
             }
             catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                throw new Exception ($"Erro ao salvar turma: {ex.Message}");
+            {              
+                throw new Exception($"Erro ao salvar turma: {ex.Message}");
             }
-        }//fim salvar
+        }
 
-        //metodo listar por usuario
-        public async Task<List<Turma>> ListarTurmaPorUsuario(int idUsuario)
+        public async Task<List<Turma>?> ListarTurmaPorUsuario(int idUsuario)
         {
             try
             {
-                //validação
                 if (idUsuario <= 0)
                     throw new Exception("id invalido");
 
-                //busca o id do professor
                 var professor = await _professorService.BuscarProfessorPorUsuario(idUsuario);
-
+                if (professor == null)
+                    return null;
                 var turmas = await _repositorio.GetByProfessor(professor.Id);
                 return turmas;
             }
@@ -60,7 +53,6 @@ namespace AppMaui.Core.Services.Local
             }
         }
 
-        //metodo atualizar
         public async Task<bool> AtualizarTurma(Turma turma)
         {
             try
@@ -69,30 +61,26 @@ namespace AppMaui.Core.Services.Local
                     turma.Nome.Length > 100 ||
                     turma.ProfessorId <= 0 ||
                     turma.TrilhaId <= 0 ||
-                    turma.TamanhoTrilha <= 0 ||                 
+                    turma.TamanhoTrilha <= 0 ||
                     turma.DataCriacao == DateTime.MinValue ||
                     turma.Status == null)
-                {
-                    Debug.WriteLine("Não validou");
+                {                   
                     return false;
                 }     
                 await _repositorio.Update(turma);
                 return true;
             }
             catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                throw new Exception ($"Erro ao atualizar turma: {ex.Message}");
+            {               
+                throw new Exception($"Erro ao atualizar turma: {ex.Message}");
             }
-        }//fim atualizar
+        }
 
-        //metodo deletar
         public async Task<bool> DeletarTurma(int id)
         {
             try
             {
-                //validação
-                if (id <=0)
+                if (id <= 0)
                     return false;
                 var turma = await _repositorio.GetById(id);
                 if (turma == null)
@@ -103,16 +91,14 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao deletar turma: {ex.Message}");
+                throw new Exception($"Erro ao deletar turma: {ex.Message}");
             }
-        }//fim deletar
+        }
 
-       //METODO BUSCAR POR ID DO PROFESSOR
-       public async Task<int> BuscarPorProfessor(int id)
+        public async Task<int> BuscarPorProfessor(int id)
         {
             try
             {
-                //validação
                 if (id <= 0)
                     return 0;
 
@@ -127,14 +113,12 @@ namespace AppMaui.Core.Services.Local
             }
         }
 
-        //buscar por id
-        public async Task<Turma> BuscarPorId(int id)
+        public async Task<Turma?> BuscarPorId(int id)
         {
-            //validar id
             if (id <= 0)
                 return null;
 
-            return await _repositorio.GetById(id); ;
+            return await _repositorio.GetById(id);
         }
     }
 }

@@ -6,8 +6,8 @@ namespace AppMaui.Core.Models
     /// </summary>
     public class LetraCriptografada
     {
-        public string LetraOriginal { get; set; }
+        public string LetraOriginal { get; set; } = string.Empty;
 
-        public string Simbolo { get; set; }
+        public string Simbolo { get; set; } = string.Empty;
     }
 }

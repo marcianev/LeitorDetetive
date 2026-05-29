@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace AppMaui.Core.Services.Interfaces
 {
+    /// <summary>
+    /// Define contrato para validações de dados.
+    /// </summary>
     public interface IValidationService
     {
         bool ValidarCPF(string cpf);
+
         bool ValidarEmail(string email);
+
+        bool ValidarNome(string nomeCompleto);
     }
 }

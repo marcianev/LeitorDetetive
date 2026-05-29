@@ -54,6 +54,7 @@ namespace AppMaui.ViewsModels
                 Mensagem = "Todos os campos são obrigatórios.";
                 await Task.Delay(3000);
                 Mensagem = "";
+                FecharPAcesso();
                 return;
             }
 
@@ -63,6 +64,7 @@ namespace AppMaui.ViewsModels
                 Mensagem = "A nova senha e a confirmação não coincidem.";
                 await Task.Delay(3000);
                 Mensagem = "";
+                FecharPAcesso();
                 return;
             }
 
@@ -72,7 +74,7 @@ namespace AppMaui.ViewsModels
             {
                 User = User,
                 Senha = NovaSenha,
-                SenhaProvisoria = senhaProvisoria
+                SenhaProvisoria = SenhaProvisoria
             };          
 
             var resultado = await _senhaService.NovaSenhaDefinitiva(usuarioDto);
@@ -81,13 +83,14 @@ namespace AppMaui.ViewsModels
                 Mensagem = resultado;
                 await Task.Delay(3000);
                 Mensagem = "";
-                //limpar o formulario                
+                FecharPAcesso();                           
             }
             else
             {
                 Mensagem = resultado;
                 await Task.Delay(3000);
                 Mensagem = "";
+                FecharPAcesso();
                 return;
             }
         }
@@ -96,6 +99,10 @@ namespace AppMaui.ViewsModels
         [RelayCommand]
         private void FecharPAcesso()
         {
+            User = string.Empty;
+            SenhaProvisoria = string.Empty;
+            NovaSenha = string.Empty;
+            ConfirmacaoNovaSenha = string.Empty;
             OnFecharPAcesso?.Invoke();
         }
     }

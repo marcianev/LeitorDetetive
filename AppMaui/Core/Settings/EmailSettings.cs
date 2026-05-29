@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AppMaui.Core.Settings
 {
+    /// <summary>
+    /// Configurações de SMTP para envio de emails.
+    /// </summary>
     public class EmailSettings
     {
         public string SmtpServer { get; set; } = string.Empty;

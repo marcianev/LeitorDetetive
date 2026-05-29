@@ -1,13 +1,6 @@
 ﻿using AppMaui.Core.Models;
-using AppMaui.Core.Repositories;
 using AppMaui.Core.Services.Local;
-using AppMaui.Core.Services.Security;
 using AppMaui.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppMaui.Core.Services.Application
 {
@@ -18,13 +11,16 @@ namespace AppMaui.Core.Services.Application
     {
         private readonly UsuarioService _usuarioService;
         private readonly ICriptoService _criptoService;
+        private readonly SessaoService _sessaoService;
 
         public AutenticacaoService(
             UsuarioService usuarioService,
-            ICriptoService criptoService)
+            ICriptoService criptoService,
+            SessaoService sessaoService)
         {
             _usuarioService = usuarioService;
             _criptoService = criptoService;
+            _sessaoService = sessaoService;
         }
 
         /// <summary>Autentica usuário validando credenciais e registrando sessão ativa.</summary>
@@ -38,7 +34,7 @@ namespace AppMaui.Core.Services.Application
             if (!_criptoService.VerificarHash(senha, usuario.Senha))
                 return null;
 
-            SessaoService.Login(usuario);
+            await _sessaoService.Login(usuario);
 
             return usuario;
         }

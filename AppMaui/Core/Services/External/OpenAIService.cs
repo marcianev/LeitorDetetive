@@ -1,16 +1,15 @@
 ﻿using AppMaui.Core.Enums;
 using AppMaui.Core.Settings;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
+
 
 namespace AppMaui.Core.Services.External
 {
+    /// <summary>
+    /// Serviço para integração com API OpenAI para validação automática de comentários.
+    /// </summary>
     public class OpenAIService
     {
         private readonly HttpClient _httpClient;       
@@ -25,6 +24,10 @@ namespace AppMaui.Core.Services.External
                 new AuthenticationHeaderValue("Bearer", _openAISettings.ApiKey);
         }
 
+        /// <summary>
+        /// Valida comentário usando GPT-4 mini para moderação automática.
+        /// Aprova comentários normais e reprova apenas conteúdo prejudicial.
+        /// </summary>
         public async Task<StatusAvaliacao> ValidarComentario(string comentario)
         {
             var corpo = new
@@ -37,7 +40,7 @@ namespace AppMaui.Core.Services.External
                         role = "user",
                         content = $"Você é um moderador de comentários de leitura infantil." +
                         $"Analise o comentário abaixo: {comentario}. Aprove comentários normais " +
-                        $"de opinião, mesmo que simples, curtos ou com pequenos erros de português." +
+                        $"de opinião, mesmo que simples, curtos ou com erros de português." +
                         $"Reprove apenas comentários que contenham:\r\n- palavrões\r\n- ofensas\r" +
                         $"\n- discurso de ódio\r\n- conteúdo sexual\r\n- spam\r\n- texto sem sentido\r" +
                         $"\n- conteúdo totalmente fora do contexto do livro\r\n\r" +

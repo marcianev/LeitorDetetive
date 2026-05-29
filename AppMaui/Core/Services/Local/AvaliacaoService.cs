@@ -1,38 +1,29 @@
 ﻿
 using AppMaui.Core.DTOs;
-using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
-using AppMaui.Core.Repositories;
+using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
 using AppMaui.Core.Services.External;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace AppMaui.Core.Services.Local
 {
+    /// <summary>
+    /// Gerencia avaliações de livros com validação automática de comentários via OpenAI.
+    /// </summary>
     public class AvaliacaoService(AvaliacaoRepository _repositorio, 
         OpenAIService openAIService, ProfessorService _professorService)   
     {          
-        //recebe o modelo de avaliação, salva uma avaliação no banco de dados
-
+        /// <summary>Salva avaliação após validação automática de conteúdo via OpenAI.</summary>
         public async Task<bool> SalvarAvaliacao(AvaliacaoDTO dto)
         {
             try
             {
-                //validações
-                if (dto.Nota < 1 
-                    || dto.Nota > 5 ||
+                if (dto.Nota < 1 || dto.Nota > 5 ||
                     string.IsNullOrEmpty(dto.Comentario) ||
                     dto.Comentario.Length > 300)
-                    return false;               
-                   
+                    return false;
 
                 var status = await openAIService.ValidarComentario(dto.Comentario);
-               
+
                 var avaliacao = new Avaliacao()
                 {
                     Nota = dto.Nota,
@@ -42,51 +33,38 @@ namespace AppMaui.Core.Services.Local
                     LivroId = dto.LivroId,
                     DataCadastro = DateTime.Now
                 };
-                Debug.WriteLine($"Cheguei aqui {status}");
 
                 await Task.Delay(2000);
                 var salvo = await _repositorio.Add(avaliacao);
-                if (salvo <= 0)
-                {
-
-                    return false;
-                }
-                else
-                    return true;
+                return salvo > 0;
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao salvar avaliação: {ex.Message}");
+                throw new Exception($"Erro ao salvar avaliação: {ex.Message}");
             }
-        }//fecha método salvar avaliação
+        }
 
-        //metodo para listar avaliações
+        /// <summary>Lista todas as avaliações de alunos pertencentes a uma turma.</summary>
         public async Task<List<Avaliacao>> ListarAvaliacoes(int turmaId)
         {
             try
             {
-                //validação do id da turma
                 if (turmaId <= 0)
-                    throw new Exception("ID do aluno é inválido.");
+                    throw new Exception("ID da turma é inválido.");
 
-                var avaliacoes = await _repositorio.GetByTurma(turmaId);
-                return avaliacoes;
+                return await _repositorio.GetByTurma(turmaId);
             }
             catch (Exception ex)
             {
                 throw new Exception($"Erro ao listar avaliações: {ex.Message}");
             }
-        }//fim listar
+        }
 
-        //metodo para atualizar avaliação
         public async Task<bool> AtualizarAvaliacao(AvaliacaoDTO dto)
         {
             try
             {
-                //validações
-                if (dto.IdAvaliacao <= 0 ||
-                    dto.Nota < 1 || 
-                    dto.Nota > 5 ||
+                if (dto.IdAvaliacao <= 0 || dto.Nota < 1 || dto.Nota > 5 ||
                     string.IsNullOrEmpty(dto.Comentario) ||
                     dto.Comentario.Length > 100)
                     return false;
@@ -104,22 +82,20 @@ namespace AppMaui.Core.Services.Local
 
                 await _repositorio.Update(avaliacao);
                 return true;
-                //chamar o metodo de validação automática aqui
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao atualizar avaliação: {ex.Message}");
+                throw new Exception($"Erro ao atualizar avaliação: {ex.Message}");
             }
-        }//fecha método atualizar avaliação
+        }
 
-        //metodo para deletar avaliação
         public async Task<bool> DeletarAvaliacao(int id)
         {
             try
             {
-                //validação do id da avaliação
                 if (id <= 0)
                     return false;
+
                 var avaliacao = await _repositorio.GetById(id);
                 if (avaliacao == null)
                     return false;
@@ -129,16 +105,15 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao deletar avaliação: {ex.Message}");
+                throw new Exception($"Erro ao deletar avaliação: {ex.Message}");
             }
-        }//fecha método deletar avaliação      
+        }
 
-        //listar avaliações por livros
-        public async Task<List<AvaliacaoDTO>> ListarPorLivro(int livroId)
+        /// <summary>Retorna todas as avaliações de um livro com dados do aluno e turma.</summary>
+        public async Task<List<AvaliacaoDTO>?> ListarPorLivro(int livroId)
         {
             try
             {
-                //validar id
                 if (livroId <= 0)
                     return null;
 
@@ -146,15 +121,12 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro listar comentários: {ex.Message}");
+                throw new Exception($"Erro ao listar comentários: {ex.Message}");
             }
-            
-            
-
         }
 
-        //listar por livro e por turma
-        public async Task<List<AvaliacaoDTO>> ListarPorLivroTurma(int idLivro, int idUsuario)
+        /// <summary>Retorna avaliações de um livro apenas das turmas do professor.</summary>
+        public async Task<List<AvaliacaoDTO>?> ListarPorLivroTurma(int idLivro, int idUsuario)
         {
             try
             {
@@ -162,6 +134,8 @@ namespace AppMaui.Core.Services.Local
                     return null;
 
                 var professor = await _professorService.BuscarProfessorPorUsuario(idUsuario);
+                if(professor == null)
+                    return null;
                 return await _repositorio.GetByLivroProfessor(idLivro, professor.Id);
             }
             catch (Exception ex)
@@ -170,10 +144,9 @@ namespace AppMaui.Core.Services.Local
             }
         }
 
-        //listar os top 5 vem avaliados
-        public async Task<List<LivrosBemAvaliadosDTO>> TopAvaliados(int idUsuario)
+        /// <summary>Retorna os 5 livros mais bem avaliados pelas turmas do professor.</summary>
+        public async Task<List<LivrosBemAvaliadosDTO>?> TopAvaliados(int idUsuario)
         {
-            //validaçao
             if (idUsuario <= 0)
                 return null;
 

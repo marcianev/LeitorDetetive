@@ -5,9 +5,9 @@ using SQLite;
 namespace AppMaui.Core.Models
 {
     /// <summary>
-    /// Representa um registro de auditoria rastreando alterações nas tabelas do sistema.
+    /// Representa um registro de eventos com fins de notificações, dashboards e exclusões.
     /// </summary>
-    public class Log
+    public class EventoSistema
     {
         [PrimaryKey, AutoIncrement, NotNull, Unique]
         public int Id { get; set; }
@@ -16,19 +16,16 @@ namespace AppMaui.Core.Models
         public string Tabela { get; set; } = string.Empty;
 
         [NotNull, MaxLength(10)]
-        public AcaoLog Acao { get; set; }
+        public Eventos TipoEvento { get; set; }
 
         [NotNull, MaxLength(50)]
-        public string Campo { get; set; } = string.Empty;
-
-        [MaxLength(100)]
-        public string ValorAnterior { get; set; } = string.Empty;
-
-        [MaxLength(100)]
-        public string ValorNovo { get; set; } = string.Empty;
+        public string Descricao { get; set; } = string.Empty;
 
         [NotNull]
-        public DateTime DataHora { get; set; }
+        public DateTime DataEvento{ get; set; }
+
+        [NotNull]
+        public int ReferenciaId { get; set; }
 
         [NotNull]
         public int UsuarioId { get; set; }

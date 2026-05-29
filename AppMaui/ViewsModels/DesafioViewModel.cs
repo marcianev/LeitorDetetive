@@ -104,7 +104,7 @@ namespace AppMaui.ViewsModels
                             var lDTO = new LetraDTO
                             {
                                 LetraOriginal = letra.ToString(),
-                                LetraCriptograma = await _criptogramaService.Criptografar(letra.ToString()),
+                                LetraCriptograma = await _criptogramaService.Criptografar(letra.ToString(), livro.Id),
                                 Posicao = posicao,
                                 LetraDigitada = palavraSalva.Length > posicao ? palavraSalva[posicao].ToString() : string.Empty,
                                 Destacada = letraDestaque,

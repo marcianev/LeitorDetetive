@@ -356,9 +356,15 @@ InputTransparent="False">
                 Color="White"
                 WidthRequest="60"
                 HeightRequest="60"/>
+                    <Label
+                FontFamily="FontAwesome"
+                        TextColor="{StaticResource marromClaro}"
+                        HorizontalOptions="Center"
+                Text="&#xf002;"
+                FontSize="40" />        
 
                     <Label
-                Text="Aguarde enquanto trabalhamos..."
+                Text="Consultando Arquivos..."
                 TextColor="Black"
                 HorizontalOptions="Center"
                         Background="{StaticResource palhaClaro}"/>

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace AppMaui.Core.Settings
 {
+    /// <summary>
+    /// Configurações para integração com a API OpenAI.
+    /// </summary>
     public class OpenAISettings
     {
         public string ApiKey { get; set; }

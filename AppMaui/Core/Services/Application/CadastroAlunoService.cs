@@ -1,16 +1,10 @@
 ﻿using AppMaui.Core.Data;
 using AppMaui.Core.DTOs;
 using AppMaui.Core.Models;
-using AppMaui.Core.Services.External;
 using AppMaui.Core.Services.Local;
 using AppMaui.Core.Services.Security;
 using AppMaui.Services.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppMaui.Core.Services.Application
 {
@@ -18,19 +12,17 @@ namespace AppMaui.Core.Services.Application
     /// Orquestra o cadastro de alunos, gerando credenciais, nickname e registrando usuário e aluno no banco.
     /// </summary>
     public class CadastroAlunoService
-    {
-        private readonly UsuarioService _usuarioService;
+    {       
         private readonly AlunoService _alunoService;        
         private readonly DatabaseService _databaseService;
         private readonly ICriptoService _criptoService;
         private readonly ProfessorService _professorService;
         private readonly TurmaService _turmaService;
 
-        public CadastroAlunoService(UsuarioService usuarioService, AlunoService alunoService,
+        public CadastroAlunoService(AlunoService alunoService,
             ICriptoService criptoService, DatabaseService databaseService, ProfessorService professorService,
             TurmaService turmaService)
-        {
-            _usuarioService = usuarioService;
+        {           
             _alunoService = alunoService;
             _databaseService = databaseService;
             _criptoService = criptoService;
@@ -99,7 +91,9 @@ namespace AppMaui.Core.Services.Application
                 return (string.Empty, 0);
 
             var user = SessaoService.UsuarioLogado;
-            Professor professor = await _professorService.BuscarProfessorPorUsuario(user.Id);
+            if(user == null)
+                return (string.Empty, 0);
+            Professor? professor = await _professorService.BuscarProfessorPorUsuario(user.Id);
             if (professor == null)
                 return (string.Empty, 0);
 
@@ -126,4 +120,4 @@ namespace AppMaui.Core.Services.Application
     }
 }
 
-}
+

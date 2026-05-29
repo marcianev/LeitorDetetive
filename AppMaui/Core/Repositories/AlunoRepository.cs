@@ -66,7 +66,7 @@ namespace AppMaui.Core.Repositories
             }
 
             /// <summary>Gera dashboard do aluno com patente atual, leitura e última avaliação.</summary>
-            public async Task<DashBoardADTO>? GerarDashBoard(int usuarioId)
+            public async Task<DashBoardADTO?> GerarDashBoard(int usuarioId)
             {
                 string sql = @"
                 SELECT 
@@ -90,7 +90,7 @@ namespace AppMaui.Core.Repositories
             }
 
             /// <summary>Gera dashboard do professor com alunos, patentes e total de leituras por turma.</summary>
-            public async Task<List<DashBoardPDTO>> GerarDashBoardP(int professorId)
+            public async Task<List<DashBoardPDTO>?> GerarDashBoardP(int professorId)
             {
                 string sql = @"
                 Select 

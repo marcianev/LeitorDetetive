@@ -1,21 +1,18 @@
 ﻿using AppMaui.Core.Models;
-using AppMaui.Core.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
+
 
 namespace AppMaui.Core.Services.Local
 {
+    /// <summary>
+    /// Serviço para gerenciar livros com validações e população de dados iniciais.
+    /// </summary>
     public class LivroService(LivroRepository _repositorio)
     {
-        //mettodo salva livro
         public async Task<bool> SalvarLivro(Livro livro)
         {
             try
             {
-                //validações
                 if (string.IsNullOrEmpty(livro.Titulo) ||
                     livro.Titulo.Length > 100 ||
                     string.IsNullOrEmpty(livro.Autor) ||
@@ -29,11 +26,10 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao salvar livro: {ex.Message}");
+                throw new Exception($"Erro ao salvar livro: {ex.Message}");
             }
-        }//fecha método salvar livro
+        }
 
-        //metodo para listar livros
         public async Task<List<Livro>> ListarLivros()
         {
             try
@@ -45,14 +41,12 @@ namespace AppMaui.Core.Services.Local
             {
                 throw new Exception($"Erro ao listar livros: {ex.Message}");
             }
-        }//fim listar
+        }
 
-        //metodo para atualizar livro
         public async Task<bool> AtualizarLivro(Livro livro)
         {
             try
             {
-                //validações
                 if (livro.Id <= 0 ||
                     string.IsNullOrEmpty(livro.Titulo) ||
                     livro.Titulo.Length > 100 ||
@@ -67,16 +61,14 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao atualizar livro: {ex.Message}");
+                throw new Exception($"Erro ao atualizar livro: {ex.Message}");
             }
-        }//fim atualizar
+        }
 
-        //metodo para deletar livro
         public async Task<bool> DeletarLivro(int id)
         {
             try
             {
-                //validação
                 if (id <= 0)
                     return false;
                 var livro = await _repositorio.GetById(id);
@@ -88,11 +80,10 @@ namespace AppMaui.Core.Services.Local
             }
             catch (Exception ex)
             {
-                throw new Exception ($"Erro ao deletar livro: {ex.Message}");
+                throw new Exception($"Erro ao deletar livro: {ex.Message}");
             }
-        }//fim deletar
+        }
 
-        //buscar um livro pelo id
         public async Task<Livro?> BuscarLivroPorId(int id)
         {
             try
@@ -108,7 +99,7 @@ namespace AppMaui.Core.Services.Local
             }
         }
 
-        //metodo para popular livros
+        /// <summary>Popula a tabela de livros com dados iniciais do arquivo JSON.</summary>
         public async Task PopularLivros()
         {
             try

@@ -1,5 +1,5 @@
 ﻿using AppMaui.Core.Data;
-using AppMaui.Core.Repositories;
+using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.External;
@@ -63,9 +63,9 @@ namespace AppMaui
             builder.Services.AddTransient<AvaliacaoRepository>();
             builder.Services.AddSingleton<DatabaseService>();            
             builder.Services.AddSingleton<DesafioRepository>();
+            builder.Services.AddSingleton<EventoRepository>();
             builder.Services.AddSingleton<LeituraRepository>();
-            builder.Services.AddSingleton<LivroRepository>();
-            builder.Services.AddSingleton<LogRepository>();
+            builder.Services.AddSingleton<LivroRepository>();            
             builder.Services.AddSingleton<MensagemRepository>();
             builder.Services.AddSingleton<NotificacaoRepository>();
             builder.Services.AddSingleton<PatenteRepository>();
@@ -85,7 +85,7 @@ namespace AppMaui
             builder.Services.AddSingleton<EmailService>();
             builder.Services.AddSingleton<LeituraService>();
             builder.Services.AddSingleton<LivroService>();
-            builder.Services.AddSingleton<LogService>();
+            builder.Services.AddSingleton<EventoService>();
             builder.Services.AddSingleton<MensagemService>();
             builder.Services.AddSingleton<NotificacaoService>();
             builder.Services.AddSingleton<OpenAIService>();
@@ -94,6 +94,7 @@ namespace AppMaui
             builder.Services.AddSingleton<RespostaService>();
             builder.Services.AddSingleton<SenhaService>();
             builder.Services.AddSingleton<SessaoService>();
+            builder.Services.AddSingleton<ConectividadeService>();
             builder.Services.AddSingleton<TrilhaService>();
             builder.Services.AddSingleton<TurmaService>();
             builder.Services.AddSingleton<UsuarioService>();
