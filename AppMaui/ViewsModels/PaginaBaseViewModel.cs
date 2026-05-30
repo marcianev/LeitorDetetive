@@ -1,14 +1,17 @@
 ﻿using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
+using AppMaui.Messages;
 using AppMaui.Services.Interfaces;
 using AppMaui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AppMaui.ViewsModels
 {
-    public partial class PaginaBaseViewModel : ObservableObject
+    public partial class PaginaBaseViewModel : ObservableObject,
+        IRecipient<AtivarLoading>
     {
         
         [ObservableProperty]
@@ -35,7 +38,7 @@ namespace AppMaui.ViewsModels
         [ObservableProperty]
         private string lbBotao3 = string.Empty;
         [ObservableProperty]
-        private bool carregando;
+        public bool carregando;    
         
 
         public CadastroPViewModel CadastroPVM { get; }
@@ -46,7 +49,7 @@ namespace AppMaui.ViewsModels
         private readonly EstanteAView _estanteAView;
         private readonly TurmaPView _turmaPView;
         private readonly DesafioView _desafio;
-        private readonly AvaliacaoAView _avaliacaoAView;       
+        private readonly AvaliacaoAView _avaliacaoAView;
         private Professor? _professor;
         private readonly ProfessorService _professorService;
         private readonly INavigationService _navigationService;
@@ -71,7 +74,8 @@ namespace AppMaui.ViewsModels
             _navigationService = navigationService;
             _dialogoService = dialogoService;
             _usuario = new Usuario();            
-            _professor = new();            
+            _professor = new();           
+            WeakReferenceMessenger.Default.Register(this);
         }
 
         public async void Inicializar()
@@ -79,7 +83,7 @@ namespace AppMaui.ViewsModels
             try
             {                
                 Carregando = true;
-                await Task.Delay(3000);
+                await Task.Delay(1000);
                 await Logado();
                 CadastroPVM.OnFecharCadastro = () => MostrarCadastro = false;
                 if (_usuario.Tipo == "Professor")
@@ -220,6 +224,16 @@ namespace AppMaui.ViewsModels
                 SessaoService.Logout();
             }
             await _navigationService.NavegarPara("///Login");
-        }       
+        }      
+        
+        public async void Receive(AtivarLoading message)
+        {
+            await Shell.Current.DisplayAlert(
+        "Loading",
+        $"{message.Value}\n{Environment.StackTrace}",
+        "OK");
+
+            Carregando = message.Value;
+        }
     }
 }

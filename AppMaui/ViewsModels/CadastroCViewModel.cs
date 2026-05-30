@@ -1,7 +1,9 @@
 ﻿using AppMaui.Core.DTOs;
 using AppMaui.Core.Services.Local;
+using AppMaui.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AppMaui.ViewsModels
 {
@@ -23,11 +25,11 @@ namespace AppMaui.ViewsModels
         private readonly AvaliacaoService _avaliacaoService;
         private AvaliacaoDTO _dto;
 
-        public Action? OnFecharCadastro { get; set; }
+        public Action? OnFecharCadastro { get; set; }       
 
         public CadastroCViewModel(AvaliacaoService avaliacaoService)
         {
-            _avaliacaoService = avaliacaoService;
+            _avaliacaoService = avaliacaoService;            
             _dto = new();
         }
 
@@ -58,16 +60,27 @@ namespace AppMaui.ViewsModels
                 UsuarioId = ViewUsuarioId,
                 LivroId = ViewLivroId
             };
-            var salvo = await _avaliacaoService.SalvarAvaliacao(_dto);
-            if (salvo)
-            {             
-                Mensagem = "Vamos dar uma olhada na sua mensagem.";
-                await Task.Delay(3000);
-                Mensagem = "";
-                FecharCadastro();
-            }              
-            else
-                Mensagem = "Erro ao salvar a avaliação.";
+
+            WeakReferenceMessenger.Default.Send(new AtivarLoading(true));
+            try
+            {
+                var salvo = await _avaliacaoService.SalvarAvaliacao(_dto);
+                if (salvo)
+                {
+
+                    Mensagem = "Vamos dar uma olhada na sua mensagem.";
+                    await Task.Delay(3000);
+                    Mensagem = "";
+                    FecharCadastro();
+                }
+                else
+                    Mensagem = "Erro ao salvar a avaliação.";
+            }
+            finally
+            {
+                WeakReferenceMessenger.Default.Send(new AtivarLoading(false));
+                WeakReferenceMessenger.Default.Send(new EnviarComentario());                
+            }    
         }
 
         //fechar view

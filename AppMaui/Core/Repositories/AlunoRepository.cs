@@ -74,7 +74,9 @@ namespace AppMaui.Core.Repositories
                     p.Nome AS Patente,
                     a.Nickname,
                     m.Conteudo AS MensagemPatente,
-                (SELECT COUNT(*) FROM Leitura lt WHERE lt.UsuarioId = a.UsuarioId) AS QuantidadeLeitura,
+                (SELECT COUNT(*) FROM Leitura lt WHERE lt.UsuarioId = a.UsuarioId
+                AND lt.status = ?)
+                AS QuantidadeLeitura,
                 (SELECT l.Titulo FROM Leitura lu INNER JOIN Livro l ON l.Id = lu.LivroId 
                  WHERE lu.UsuarioId = a.UsuarioId AND lu.Status = '2' ORDER BY lu.DataFim DESC LIMIT 1) AS Titulo,
                 (SELECT l.Capa FROM Leitura lu INNER JOIN Livro l ON l.Id = lu.LivroId 
@@ -86,7 +88,7 @@ namespace AppMaui.Core.Repositories
                 LEFT JOIN Mensagem m ON m.Titulo = Patente
                 WHERE a.UsuarioId = ?";
 
-                var resultado = await _db.QueryAsync<DashBoardADTO>(sql, usuarioId);
+                var resultado = await _db.QueryAsync<DashBoardADTO>(sql, StatusLeitura.Concluida, usuarioId);
                 return resultado.FirstOrDefault();
             }
 

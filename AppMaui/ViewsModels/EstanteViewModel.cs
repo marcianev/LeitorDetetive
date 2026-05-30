@@ -3,15 +3,17 @@ using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
+using AppMaui.Messages;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 
 
 namespace AppMaui.ViewsModels
 {
-    public partial class EstanteViewModel : ObservableObject
+    public partial class EstanteViewModel : ObservableObject, IRecipient<ConcluirDesafio>
     {
         [ObservableProperty]
         private string? titulo;
@@ -27,6 +29,7 @@ namespace AppMaui.ViewsModels
         private bool livroAtual = false;
         [ObservableProperty]
         private bool proximoLivro = false;
+        
 
         private readonly LivroService _livroService;
         private readonly LeituraService _leituraService;
@@ -42,6 +45,7 @@ namespace AppMaui.ViewsModels
             _dialogoService = dialogoService;
             _leituraService = leituraService;
             _usuario = SessaoService.UsuarioLogado;
+            WeakReferenceMessenger.Default.Register(this);
             _ = CarregarLivros();
         }
 
@@ -51,6 +55,7 @@ namespace AppMaui.ViewsModels
             var lista = await _livroService.ListarLivros();
             if (lista != null)
             {
+                EstanteDTOs.Clear();
                 foreach (var livro in lista)
                 {
                     if (_usuario == null)
@@ -65,7 +70,7 @@ namespace AppMaui.ViewsModels
                             CapaAnterior = livro.Capa;
                         if(leitura.Status == StatusLeitura.Iniciada)
                             CapaAtual = livro.Capa;                        
-                    }
+                    }                   
                     EstanteDTOs.Add(new EstanteDTO
                     {
                         IdLivro = livro.Id,
@@ -123,6 +128,8 @@ namespace AppMaui.ViewsModels
             _leitura.UsuarioId = _usuario.Id;
             await _leituraService.SalvarLeitura(_leitura);
             await _dialogoService.Mensagem("Leitura iniciada.", $"Você iniciou a leitura de {_livroSelecionado.Titulo}.", "OK");
+            WeakReferenceMessenger.Default.Send(new IniciarLeituraMessage());
+            await CarregarLivros();
         }
 
         //ajuste de visivibilidade
@@ -138,6 +145,12 @@ namespace AppMaui.ViewsModels
                 ProximoLivro = false;
                 LivroAtual = true;
             }
-        }        
+        }   
+
+         //validar respostas
+        public async void Receive(ConcluirDesafio message)
+        {
+            await CarregarLivros();
+        }
     }
 }

@@ -3,15 +3,19 @@ using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
+using AppMaui.Messages;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 
 namespace AppMaui.ViewsModels
 {
-    public partial class AvaliacaoAViewModel : ObservableObject
+    public partial class AvaliacaoAViewModel : ObservableObject,
+        IRecipient<ConcluirDesafio>, IRecipient<EnviarComentario>
     {  
         [ObservableProperty]
         private ObservableCollection<Livro> livros = [];
@@ -28,12 +32,10 @@ namespace AppMaui.ViewsModels
         [ObservableProperty]
         private Color? corBorda;
         [ObservableProperty]
-        private bool mostrarStatus;
-        [ObservableProperty]
-        private bool carregando;
+        private bool mostrarStatus;      
 
         private Usuario? usuario = new();
-
+       
         public CadastroCViewModel CadastroCVM{ get; set; }
        
         private readonly LivroService _livroService;
@@ -49,10 +51,9 @@ namespace AppMaui.ViewsModels
             _avaliacaoService = avaliacaoService;
             _leituraService = leituraService;
             _dialogoService = dialogoService;
-            CadastroCVM = cadastroCViewModel;
+            CadastroCVM = cadastroCViewModel;            
             CadastroCVM.OnFecharCadastro = () => MostrarCadastro = false;
-            Carregando = false;
-
+            WeakReferenceMessenger.Default.RegisterAll(this);
             _ = Inicializar();
         }
 
@@ -140,7 +141,8 @@ namespace AppMaui.ViewsModels
             CadastroCVM.ViewLivroId = LivroSelecionado.Id;
             if(usuario == null) 
                 return;
-            CadastroCVM.ViewUsuarioId = usuario.Id;   
+            CadastroCVM.ViewUsuarioId = usuario.Id;
+            
         }
 
         //abrir moderação
@@ -156,24 +158,32 @@ namespace AppMaui.ViewsModels
                 "Cancelar",
                 "Excluir",
                 "Aprovar");
-
-            Carregando = true;
+           
             switch (resposta)
-            {
-                
+            {                
                 case "Aprovar":
                     comentario.Status = StatusAvaliacao.Aprovada;
-                    await _avaliacaoService.AtualizarAvaliacao(comentario);
+                    await _avaliacaoService.AtualizarAvaliacao(comentario);      
+                    
                     break;
                 case "Excluir":
                     await _avaliacaoService.DeletarAvaliacao(comentario.IdAvaliacao);
                     break;
                 case "Cancelar":
                     break;               
-            }
-            Carregando = false;
-            await CarregarComentarios(comentario.LivroId);
+            }           
+               
         }
 
-}
+        public async void Receive(ConcluirDesafio mensage)
+        {
+            await Inicializar();
+        }
+
+        public async void Receive(EnviarComentario mensage)
+        {            
+            await CarregarComentarios(LivroSelecionado.Id);
+        }
+        
+    }
 }

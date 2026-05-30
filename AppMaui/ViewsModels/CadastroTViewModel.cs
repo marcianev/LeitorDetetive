@@ -1,13 +1,16 @@
 ﻿using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
+using AppMaui.Messages;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AppMaui.ViewsModels
 {
     public partial class CadastroTViewModel : ObservableObject
+      
     {
         [ObservableProperty]
         private string? nome;
@@ -33,7 +36,7 @@ namespace AppMaui.ViewsModels
         {
             _turmaService = turmaService;
             _professorService = professorService;
-            _dialogoService = dialogoService;
+            _dialogoService = dialogoService;           
             turma = new Turma();
             ModoAlterar = true;
             _usuario = SessaoService.UsuarioLogado ?? new Usuario();
@@ -88,7 +91,11 @@ namespace AppMaui.ViewsModels
                 Turma.TrilhaId = 1;
                 var resul = await _turmaService.SalvarTurma(Turma);
                 if (resul)
+                {
                     Mensagem = "Turma salva com sucesso!";
+                    WeakReferenceMessenger.Default.Send(new AdicionarTurma());
+                    FecharCadastro();
+                }                    
                 else
                 {
                     Mensagem = "Erro ao salvar turma.";                                    
@@ -138,6 +145,6 @@ namespace AppMaui.ViewsModels
             Turma = new();
             Nome = string.Empty;
             TamanhoTrilha = null;
-        }
+        }        
     }
 }

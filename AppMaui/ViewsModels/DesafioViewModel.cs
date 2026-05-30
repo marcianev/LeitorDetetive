@@ -3,15 +3,18 @@ using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
+using AppMaui.Messages;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 
 
 namespace AppMaui.ViewsModels
 {
-    public partial class DesafioViewModel : ObservableObject
+    public partial class DesafioViewModel : ObservableObject, IRecipient<IniciarLeituraMessage>,
+        IRecipient<ConcluirDesafio>
     {
         [ObservableProperty]
         private string? capa;
@@ -27,6 +30,8 @@ namespace AppMaui.ViewsModels
         private ObservableCollection<DesafiosDTO> desafiosDTODireita = [];
         [ObservableProperty]
         private ObservableCollection<LetraDTO> palavraSecretaLetras = [];
+
+
         
         private readonly DesafioService _desafioService;
         private readonly LivroService _livroService;
@@ -48,6 +53,7 @@ namespace AppMaui.ViewsModels
             _idialogoService = dialogoService;
             _alunoService = alunoService;
             _usuario = SessaoService.UsuarioLogado;
+            WeakReferenceMessenger.Default.RegisterAll(this);
             _ = DefinirLivro();
         }
 
@@ -265,6 +271,7 @@ namespace AppMaui.ViewsModels
                     Titulo = "Inicie nova Leitura.";
                     Capa = string.Empty;
                     BotaoVisivel = false;
+                    WeakReferenceMessenger.Default.Send(new ConcluirDesafio());
                 }
                 else
                     await _idialogoService.Mensagem("Erro", "Erro ao concluir leitura, tente mais tarde.", "OK");
@@ -274,5 +281,15 @@ namespace AppMaui.ViewsModels
                 await _idialogoService.Mensagem("ATENÇÃO", "Apenas respostas que estão completas foram salvas.", "OK");
             
         }//validar respostas
+
+        public async void Receive(IniciarLeituraMessage message)
+        {
+            await DefinirLivro();
+        }
+
+        public async void Receive(ConcluirDesafio message)
+        {
+            await DefinirLivro();
+        }
     }
 }

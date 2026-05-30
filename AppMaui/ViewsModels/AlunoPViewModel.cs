@@ -2,13 +2,16 @@
 using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
+using AppMaui.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 
 namespace AppMaui.ViewsModels
 {
-    public partial class AlunoPViewModel : ObservableObject
+    public partial class AlunoPViewModel : ObservableObject,
+        IRecipient<AdicionarTurma>
     {
         [ObservableProperty]
         private string? mensagem = string.Empty;
@@ -31,6 +34,7 @@ namespace AppMaui.ViewsModels
             CadastroAVM = cadastroAVM;
             _alunoService = alunoService;
             _turmaService = turmaService;
+            WeakReferenceMessenger.Default.Register(this);
             CadastroAVM.OnFecharCadastro = () =>
             {
                 MostrarCadastro = false;
@@ -108,6 +112,11 @@ namespace AppMaui.ViewsModels
                 return;            
             await CarregaAlunos();
 
+        }
+
+        public async void Receive(AdicionarTurma adicionarTurma)
+        {
+            await CarregaTurmas();
         }
     }
 }

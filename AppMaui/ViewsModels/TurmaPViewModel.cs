@@ -2,13 +2,15 @@
 using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
+using AppMaui.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 
 namespace AppMaui.ViewsModels
 {
-    public partial class TurmaPViewModel : ObservableObject
+    public partial class TurmaPViewModel : ObservableObject, IRecipient<AdicionarTurma>
     {
         [ObservableProperty]
         private string? mensagem;
@@ -36,6 +38,7 @@ namespace AppMaui.ViewsModels
             _leituraService = leituraService;
             _avaliacaoService = avaliacaoService;
             _usuario = new Usuario();
+            WeakReferenceMessenger.Default.Register(this);
             Logado();
             CadastroTVM.OnFecharCadastro = () =>
             {
@@ -109,6 +112,11 @@ namespace AppMaui.ViewsModels
             CadastroTVM.Nome = turma.Nome;
             CadastroTVM.Turma = turma;            
             MostrarCadastro = true;
-        }       
+        }  
+        
+        public async void Receive(AdicionarTurma adicionarTurma)
+        {
+            await CarregarTurmas();
+        }
     }
 }
