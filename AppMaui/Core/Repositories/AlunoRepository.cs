@@ -1,5 +1,6 @@
 ﻿using AppMaui.Core.Data;
 using AppMaui.Core.DTOs;
+using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using SQLite;
 
@@ -107,6 +108,43 @@ namespace AppMaui.Core.Repositories
 
                 var resultado = await _db.QueryAsync<DashBoardPDTO>(sql, professorId);
                 return resultado;
+            }
+
+            ///<summary>Gerar pagina de alunos no perfil do professor com patente, nickame, nome, leitura atual, e quantidade de leituras concluidas</summary>
+            public async Task<List<AlunoPDTO>?> BuscarDadosAlunoP(int idTurma)
+            {
+                string sql = @"
+         SELECT
+    a.Nome,
+    a.Nickname,
+    a.CodigoAcesso,
+    p.Nome AS Patente,
+
+    (
+        SELECT l.Capa
+        FROM Leitura lt
+        INNER JOIN Livro l ON l.Id = lt.LivroId
+        WHERE lt.UsuarioId = a.UsuarioId
+        AND lt.Status = ?
+        LIMIT 1
+    ) AS CapaLivroAtual,
+
+    (
+        SELECT COUNT(*)
+        FROM Leitura lt
+        WHERE lt.UsuarioId = a.UsuarioId
+        AND lt.Status = ?
+    ) AS QuantidadeLivrosLidos
+
+FROM Aluno a
+INNER JOIN Patente p ON p.Id = a.PatenteId
+WHERE a.TurmaId = ?";
+
+                return await _db.QueryAsync<AlunoPDTO>(
+                    sql,
+                    StatusLeitura.Iniciada,
+                    StatusLeitura.Concluida,
+                    idTurma);
             }
         }
     }

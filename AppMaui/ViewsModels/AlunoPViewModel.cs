@@ -1,4 +1,5 @@
-﻿using AppMaui.Core.Models;
+﻿using AppMaui.Core.DTOs;
+using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,19 +15,19 @@ namespace AppMaui.ViewsModels
         [ObservableProperty]
         private bool mostrarCadastro;
         [ObservableProperty]
-        private ObservableCollection<Aluno> alunos = [];
+        private ObservableCollection<AlunoPDTO> alunos = [];
         [ObservableProperty]
         private ObservableCollection<Turma> turmas = [];
         [ObservableProperty]
-        private Turma turmaSelecionada = new();
+        private Turma? turmaSelecionada;
 
         public CadastroAViewModel CadastroAVM { get; }
         private readonly AlunoService _alunoService;
         private readonly TurmaService _turmaService;
 
-        public AlunoPViewModel(CadastroAViewModel cadastroAVM, 
+        public AlunoPViewModel(CadastroAViewModel cadastroAVM,
             AlunoService alunoService, TurmaService turmaService)
-        {            
+        {
             CadastroAVM = cadastroAVM;
             _alunoService = alunoService;
             _turmaService = turmaService;
@@ -42,20 +43,19 @@ namespace AppMaui.ViewsModels
         //listar alunos
         [RelayCommand]
         public async Task CarregaAlunos()
-        {          
-            if(TurmaSelecionada == null)
+        {
+            if (TurmaSelecionada == null)
             {
                 Mensagem = "Selecione uma turma";
-
             }
             else
             {
                 Mensagem = string.Empty;
-                var lista = await _alunoService.ListarAlunos(TurmaSelecionada.Id);
+                var lista = await _alunoService.BuscarDadosAlunoP(TurmaSelecionada.Id);
+
                 if (lista != null)
-                    Alunos = new ObservableCollection<Aluno>(lista);
+                    Alunos = new ObservableCollection<AlunoPDTO>(lista);
             }
-                    
         }
 
         //listar turmas
@@ -63,17 +63,19 @@ namespace AppMaui.ViewsModels
         public async Task CarregaTurmas()
         {
             var usuario = SessaoService.UsuarioLogado;
+
             if (usuario == null)
                 return;
-            if(usuario.Tipo == "Professor")
+            if (usuario.Tipo == "Professor")
             {
-                  var lista = await _turmaService.ListarTurmaPorUsuario(usuario.Id);
+                var lista = await _turmaService.ListarTurmaPorUsuario(usuario.Id);
 
-            if (lista != null)
-                Turmas = new ObservableCollection<Turma>(lista);
+
+                if (lista != null)
+                    Turmas = new ObservableCollection<Turma>(lista);
             }
-            
-          
+
+
         }
 
         //abrir overlay de cadastro
@@ -87,25 +89,25 @@ namespace AppMaui.ViewsModels
         //abrir overlay para alterações
         [RelayCommand]
         private void AlterarCadastro(Aluno aluno)
-        {     
+        {
             CadastroAVM.ModoAlterar = true;
             CadastroAVM.Nome = aluno.Nome;
-            CadastroAVM.Aluno = aluno;            
+            CadastroAVM.Aluno = aluno;
             MostrarCadastro = true;
         }
 
         //carregad os alunos da turma selecionada
-        async partial void OnTurmaSelecionadaChanged(Turma value)
-        {
+        async partial void OnTurmaSelecionadaChanged(Turma? value)
+        {            
             if (value == null)
                 return;
             var usuario = SessaoService.UsuarioLogado;
-            if(usuario == null) 
+            if (usuario == null)
                 return;
             if (usuario.Tipo != "Professor")
-                return;
+                return;            
             await CarregaAlunos();
-           
+
         }
     }
 }

@@ -77,12 +77,14 @@ namespace AppMaui.ViewsModels
                         Mensagem = "Cadastro atualizado";
                     else
                         Mensagem = "Erro ao atualizar aluno";
+                    FecharCadastro();
                 }
                             
             }
             else
             {
                 Mensagem = await _cas.CadastrarAluno(_dto);
+                FecharCadastro();
             }
             
             await Task.Delay(3000);
@@ -115,6 +117,7 @@ namespace AppMaui.ViewsModels
             await Task.Delay(3000);
             Mensagem = string.Empty;
             Nome = "";
+            FecharCadastro();
         }
 
         //comando para resetar a senha do aluno 

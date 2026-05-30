@@ -6,6 +6,7 @@
              x:DataType="vm:AlunoPViewModel"
              xmlns:model="clr-namespace:AppMaui.Core.Models"
              xmlns:views="clr-namespace:AppMaui.Views"
+             xmlns:dto="clr-namespace:AppMaui.Core.DTOs"
              >
     <Grid>
         <Grid.RowDefinitions >
@@ -155,7 +156,7 @@
                 <Border Margin="10,1"    
                         TranslationY="0"
                          Grid.Column="5"    
-                         HeightRequest="{OnIdiom Phone=35}"
+                         HeightRequest="{OnIdiom Phone=35, Desktop=35}"
                          HorizontalOptions="End"
                         VerticalOptions="End"
                          Style="{StaticResource sBrdEntry}">
@@ -178,112 +179,95 @@
                        FontSize="{OnIdiom Phone=12}"
                        TextColor="{StaticResource palhaEscuro}" 
                        Text="{Binding Mensagem}"/>
-                <!--lista-->
+                <!--lista-->             
+                   
                 <CollectionView ItemsSource="{Binding Alunos}"
                                 Grid.Row="2" Grid.ColumnSpan="6">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Aluno">
+                    <CollectionView.ItemTemplate> 
+                        <DataTemplate x:DataType="dto:AlunoPDTO">
                             <Grid>
-                                <Grid.RowDefinitions >
-                                    <RowDefinition Height="{OnIdiom Phone=1*, Desktop=0.6}"/>  
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.6*"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="{OnIdiom Phone= 2*, Tablet= 1.5*, Desktop= 0.3*}"/>
-                                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.2*}"/>
-                                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.3*}"/>
-                                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.3*}"/>
-                                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.2*}"/>
-                                    <ColumnDefinition Width="{OnIdiom Phone= 0.8*, Tablet= 1.5*, Desktop= 0.3*}"/>                                   
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                
                                 <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AlunoPViewModel}}, Path=AlterarCadastroCommand}"
-                                        CommandParameter="{Binding}"/>                                        
-                                </Grid.GestureRecognizers>
-
-                                <Border Grid.Column="0"
-                                         BackgroundColor="{StaticResource azulClaro}"
-                                         Margin="25,5"                        
-                                         HorizontalOptions="Start"
-                                         TranslationY="10"
-                                         TranslationX="{OnIdiom Phone=15, Desktop=20}"
-                                         VerticalOptions="Start"
-                                         Style="{StaticResource sBrdAzul}">
-                                    <Border.Padding>
-                                        <OnIdiom x:TypeArguments="Thickness"
-                                                  Phone="35,0"
-                                                  Desktop="45,0"/>
-                                    </Border.Padding>
-
-                                    <Label x:Name="lbPatente"
-                                            Text="{Binding PatenteId}"
-                                           
-                                            TextColor="{StaticResource begeClaro}"/>
+         <TapGestureRecognizer
+             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AlunoPViewModel}}, Path=AlterarCadastroCommand}"
+             CommandParameter="{Binding}"/>                                        
+     </Grid.GestureRecognizers>
+                               <Border 
+              BackgroundColor="{StaticResource azulClaro}"
+              Margin="25,5"                        
+              HorizontalOptions="Fill"
+              TranslationY="10"
+              TranslationX="{OnIdiom Phone=15, Desktop=20}"
+              VerticalOptions="Start"
+              Style="{StaticResource sBrdAzul}">                                    
+                                    <Label     
+                                        Text="{Binding Patente}" 
+                                        HorizontalOptions="Center"/>
                                 </Border>
-                                <Image x:Name="imgAluno"                                         
-                                        HeightRequest="{OnIdiom Phone=30, Desktop=40}"                                       
-                                        Margin="5" 
-                                        HorizontalOptions="Start" 
-                                        VerticalOptions="Start"
-                                        Source="menino1.webp" 
-                                        Style="{StaticResource sImgGeral}"
-                                        />
-
                                 <Label x:Name="lbNick"                                        
-                                        Grid.Column="1"
-                                        Margin="0,5"
-                                        Text="{Binding Nickname}" 
-                                        FontAttributes="Bold"    
-                                        FontSize="{OnIdiom Phone=12, Desktop=15}"   
-                                       TranslationX="{OnIdiom Phone=-25, Desktop=0}"
-                                        VerticalOptions="Center"
-                                        HorizontalOptions="Center"
-                                        TextColor="{StaticResource marromEscuro}"/>
+ Grid.Column="1"
+ Margin="5"
+ Text="{Binding Nickname}" 
+ FontAttributes="Bold"    
+ FontSize="{OnIdiom Phone=12, Desktop=15}"   
+TranslationX="{OnIdiom Phone=-25, Desktop=0}"
+ VerticalOptions="Center"
+ HorizontalOptions="Center"
+ TextColor="{StaticResource marromEscuro}"/>
+
 
                                 <Label x:Name="lbAluno"                                          
-                                        Grid.Column="2"
-                                        Margin="0,5"                                        
-                                        Text="{Binding Nome}" 
-                                        FontAttributes="Bold"                      
-                                        FontSize="{OnIdiom Phone=12, Desktop=15}" 
-                                        TranslationX="{OnIdiom Phone=-15, Desktop=0}"
-                                        VerticalOptions="Center"
-                                        HorizontalOptions="Start"
-                                        TextColor="{StaticResource marromEscuro}"
-                                        />
+         Grid.Column="2"
+         Margin="0,5"                                        
+         Text="{Binding Nome}" 
+         FontAttributes="Bold"                      
+         FontSize="{OnIdiom Phone=12, Desktop=15}" 
+         TranslationX="{OnIdiom Phone=-15, Desktop=0}"
+         VerticalOptions="Center"
+         HorizontalOptions="Start"
+         TextColor="{StaticResource marromEscuro}"
+         />
                                 <Label x:Name="lbCodigo"                                          
-                                        Grid.Column="3"
-                                        Margin="0,5"                                        
-                                        Text="{Binding CodigoAcesso}" 
-                                        FontAttributes="Bold"                      
-                                         FontSize="{OnIdiom Phone=12, Desktop=15}" 
-                                       TranslationX="{OnIdiom Phone=-15, Desktop=0}"
-                                        VerticalOptions="Center"
-                                        HorizontalOptions="Center"
-                                        TextColor="{StaticResource marromEscuro}"
-                                        />
-                                        <Image x:Name="imgLivro"                                       
-                                        Grid.Column="4"
-                                        Source="bolagoleiro.webp"
-                                        VerticalOptions="Center"
-                                               TranslationX="{OnIdiom Phone=-10, Desktop=0}"
-                                               HorizontalOptions="Center"
-                                               HeightRequest="30"
-                                        Margin="{OnIdiom Phone=5, Desktop=20}"
-                                        />
-                                        <Label x:Name="lbQtdLivros"                                       
-                                        Grid.Column="5"
-                                        Text="15"
-                                        FontAttributes="Bold"   
-                                         FontSize="{OnIdiom Phone=12, Desktop=15}"   
-                                        TranslationX="{OnIdiom Phone=-10, Desktop=0}"
-                                        VerticalOptions="Center"   
-                                               HorizontalOptions="Center"
-                                        TextColor="{StaticResource marromEscuro}"
-                                        />
+         Grid.Column="3"
+         Margin="0,5"                                        
+         Text="{Binding CodigoAcesso}" 
+         FontAttributes="Bold"                      
+          FontSize="{OnIdiom Phone=12, Desktop=15}" 
+        TranslationX="{OnIdiom Phone=-15, Desktop=0}"
+         VerticalOptions="Center"
+         HorizontalOptions="Center"
+         TextColor="{StaticResource marromEscuro}"
+         />
+                                <Image x:Name="imgLivro"                                       
+         Grid.Column="4"
+         Source="{Binding CapaLivroAtual}"
+         VerticalOptions="Center"
+                TranslationX="{OnIdiom Phone=-10, Desktop=0}"
+                HorizontalOptions="Center"
+                HeightRequest="30"
+         Margin="{OnIdiom Phone=5, Desktop=20}"
+         />
+                                <Label x:Name="lbQtdLivros"                                       
+         Grid.Column="5"
+         Text="{Binding QuantidadeLivrosLidos}"
+         FontAttributes="Bold"   
+          FontSize="{OnIdiom Phone=12, Desktop=15}"   
+         TranslationX="{OnIdiom Phone=-10, Desktop=0}"
+         VerticalOptions="Center"   
+                HorizontalOptions="Center"
+         TextColor="{StaticResource marromEscuro}"
+         />
                             </Grid>
-                      
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

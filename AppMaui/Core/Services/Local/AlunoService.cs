@@ -205,5 +205,24 @@ namespace AppMaui.Core.Services.Local
                 throw new Exception($"Erro ao gerar DTO: {ex.Message}");
             }
         }
+
+       ///<summary>
+       ///Gera dados para pagina de Alunos do perfil do professor
+       ///Com patente, nickname, nome, codigo de acesso, capa do livro atual e quantidade leituras concluidas
+       ///</summary>
+       public async Task<List<AlunoPDTO>?> BuscarDadosAlunoP(int idTurma)
+        {
+            try
+            {              
+                if (idTurma <= 0)
+                    return null;               
+                return await _repositorio.BuscarDadosAlunoP(idTurma);
+                throw new Exception("CHEGAMOS");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao gerar DTO: {ex.Message}");
+            }
+        }
     }
 }

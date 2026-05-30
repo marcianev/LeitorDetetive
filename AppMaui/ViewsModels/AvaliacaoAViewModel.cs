@@ -29,6 +29,8 @@ namespace AppMaui.ViewsModels
         private Color? corBorda;
         [ObservableProperty]
         private bool mostrarStatus;
+        [ObservableProperty]
+        private bool carregando;
 
         private Usuario? usuario = new();
 
@@ -49,6 +51,7 @@ namespace AppMaui.ViewsModels
             _dialogoService = dialogoService;
             CadastroCVM = cadastroCViewModel;
             CadastroCVM.OnFecharCadastro = () => MostrarCadastro = false;
+            Carregando = false;
 
             _ = Inicializar();
         }
@@ -154,8 +157,10 @@ namespace AppMaui.ViewsModels
                 "Excluir",
                 "Aprovar");
 
+            Carregando = true;
             switch (resposta)
             {
+                
                 case "Aprovar":
                     comentario.Status = StatusAvaliacao.Aprovada;
                     await _avaliacaoService.AtualizarAvaliacao(comentario);
@@ -164,8 +169,10 @@ namespace AppMaui.ViewsModels
                     await _avaliacaoService.DeletarAvaliacao(comentario.IdAvaliacao);
                     break;
                 case "Cancelar":
-                    break;
+                    break;               
             }
+            Carregando = false;
+            await CarregarComentarios(comentario.LivroId);
         }
 
 }

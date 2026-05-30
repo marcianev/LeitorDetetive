@@ -36,7 +36,7 @@ namespace AppMaui.Core.Services.Local
         /// <summary>Criptografa uma palavra usando o mapa gerado para o desafio.</summary>
         public static async Task<string> Criptografar(string palavra, int livro)
         {
-            var mapa = Gerar(livro);
+            var mapa = Gerar(40);
 
             var dicionario = mapa.ToDictionary(
                 x => x.LetraOriginal,
