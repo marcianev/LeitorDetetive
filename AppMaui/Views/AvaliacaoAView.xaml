@@ -9,7 +9,7 @@
              xmlns:dto="clr-namespace:AppMaui.Core.DTOs">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="{OnIdiom Phone=0.40*, Desktop=0.25*}"/>
+            <RowDefinition Height="{OnIdiom Phone=0.3*, Desktop=0.25*}"/>
             <RowDefinition Height="{OnIdiom Phone=0.20*, Desktop=0.2*}"/>
             <RowDefinition Height="{OnIdiom Phone=1*, Desktop=1*}"/>
         </Grid.RowDefinitions>
@@ -25,7 +25,7 @@
         Style="{StaticResource sBrdPrincipal}">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="{OnIdiom Phone=2.5*, Desktop=1*}"/>
+                    <RowDefinition Height="{OnIdiom Phone=1*, Desktop=1*}"/>
                     <RowDefinition />                                    
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -38,40 +38,7 @@
                    Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
                    Fill="{StaticResource verdeEscuro}" 
                    Stroke="{StaticResource verdeEscuro}"
-                   />
-                <Label x:Name="lbTitLivSombra1" 
-                       Grid.RowSpan="{OnIdiom Phone=1,Desktop=2}"
-               Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
-               VerticalOptions="Center"
-               FontSize="{OnIdiom Phone=17, Desktop=16}"
-               HorizontalOptions="{OnIdiom Phone=Center, Desktop=Center}"
-               TranslationX="1"
-               TranslationY="-1"
-               Text="{Binding LivroSelecionado.Titulo}"
-               Style="{StaticResource sLbSombra1}"   
-               />
-                <Label x:Name="lbTitLivSombra2" 
-                      Grid.RowSpan="{OnIdiom Phone=1,Desktop=2}"
-Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
-VerticalOptions="Center"
-                HorizontalOptions="{OnIdiom Phone=Center, Desktop=Center}"
-                TranslationX="1"
-                FontSize="{OnIdiom Phone=17, Desktop=16}"
-                TranslationY="-1"
-                Text="{Binding LivroSelecionado.Titulo}"
-                Style="{StaticResource sLbSombra2}"     
-                />
-                <Label x:Name="lbTitLivSombra3" 
-                      Grid.RowSpan="{OnIdiom Phone=1,Desktop=2}"
-Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
-VerticalOptions="Center"
-                HorizontalOptions="{OnIdiom Phone=Center, Desktop=Center}"
-                TranslationX="-1"
-                FontSize="{OnIdiom Phone=17, Desktop=16}"
-                TranslationY="1"
-                Text="{Binding LivroSelecionado.Titulo}"
-                Style="{StaticResource sLbSombra2}"     
-                />
+                   />                
                 <Label x:Name="lbTitLivSombra4" 
                       Grid.RowSpan="{OnIdiom Phone=1,Desktop=2}"
 Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
@@ -95,9 +62,9 @@ VerticalOptions="Center"
                />
                
                 <Image x:Name="imgCapa"
-               Grid.Row="{OnIdiom Phone=1, Desktop=0}"
+               Grid.Row="0"
                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
-               Grid.RowSpan="{OnIdiom Phone=3,Desktop=4}"
+               Grid.RowSpan="{OnIdiom Phone=1,Desktop=4}"
                Margin="15,5"                              
                HorizontalOptions="Start"                               
                Source="{Binding LivroSelecionado.Capa}"
@@ -109,53 +76,59 @@ VerticalOptions="Center"
                Grid.Column="{OnIdiom Phone=0,Desktop=1}"
                Text="AUTOR:"
                FontAttributes="Bold"
-               FontSize="14"  
+               FontSize="{OnIdiom Phone=10, Desktop= 14}"  
                HorizontalTextAlignment="Justify"                               
                HorizontalOptions="Start"
                TextColor="{StaticResource marromEscuro}"
-               TranslationX="90"
+               TranslationX="{OnIdiom Phone=5, Desktop=90}"
                />
                 <Label x:Name="lbAutor"
                Grid.Row="{OnIdiom Phone=1, Desktop=0}"
                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                       Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
                Text="{Binding LivroSelecionado.Autor}"                               
-               FontSize="14"  
+                 FontSize="{OnIdiom Phone=10, Desktop= 14}"   
                HorizontalTextAlignment="Justify"                               
                HorizontalOptions="Start"
                TextColor="{StaticResource marromEscuro}"
-               TranslationX="145"/>
+               TranslationX="{OnIdiom Phone=75, Desktop=145}"/>
                 <!--Ilustrador-->
                 <Label x:Name="lbIlusTit"
                 Grid.Row="{OnIdiom Phone=2, Desktop=1}"
                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
                Text="ILUSTRADOR:"
                FontAttributes="Bold"
-               FontSize="14"  
+               FontSize="{OnIdiom Phone=10, Desktop= 14}"  
                HorizontalTextAlignment="Justify"                               
                HorizontalOptions="Start"
+                        VerticalOptions="{OnIdiom Phone=End, Desktop=Start}"
                TextColor="{StaticResource marromEscuro}"
-               TranslationX="90"
+               TranslationX="{OnIdiom Phone=5, Desktop=90}"
                />
                 <Label x:Name="lbIlustrador"
-               Grid.Row="{OnIdiom Phone=2, Desktop=1}"
+               Grid.Row="{OnIdiom Phone=3, Desktop=1}"
                Grid.Column="{OnIdiom Phone=0, Desktop=1}"
+                       Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
                Text="{Binding LivroSelecionado.Ilustrador}"                               
-               FontSize="14"  
+               FontSize="{OnIdiom Phone=10, Desktop= 14}"  
                HorizontalTextAlignment="Justify"                              
                HorizontalOptions="Start"
+                       VerticalOptions="{OnIdiom Phone=End, Desktop=Start}"
                TextColor="{StaticResource marromEscuro}"
-               TranslationX="185"
+               TranslationX="{OnIdiom Phone=75, Desktop=185}"
                />
                 <Border   
                     TranslationY="-1"
+                    Grid.Row="{OnIdiom Phone=1, Desktop=0}"
          Grid.Column="1"   
-                Grid.RowSpan="2"
+                Grid.RowSpan="{OnIdiom Phone=1, Desktop=2}"
          HeightRequest="{OnIdiom Phone=35, Desktop=30}"
+                   
          HorizontalOptions="End"     
         VerticalOptions="Center"
          Style="{StaticResource sBrdEntry}">
                     <Picker
-                            WidthRequest="200"
+                            WidthRequest="{OnIdiom Phone= 100, Desktop=200}"
                             HeightRequest="25"
                         TextColor="{StaticResource marromMedio}"
                         VerticalTextAlignment="Start"

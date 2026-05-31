@@ -49,33 +49,7 @@
             Source="alunos.webp" 
             Style="{StaticResource sImgCabecalho}"
             />
-            <Label x:Name="lbAlunosTituloSombra1"    
-                   Grid.ColumnSpan="6"
-             TranslationX="-20"
-            FontSize="20"
-            Text="ALUNOS" 
-                   VerticalOptions="Center"
-             HorizontalOptions="Center"
-            Style="{StaticResource sLbSombra1}"   
-            />
-            <Label x:Name="lbAlunosTituloSombra2" 
-                   Grid.ColumnSpan="6"
-                   VerticalOptions="Center"
-             TranslationX="-20"
-            HorizontalOptions="Center"     
-            FontSize="20"
-            Text="ALUNOS" 
-            Style="{StaticResource sLbSombra2}"     
-            />
-            <Label x:Name="lbAlunsoTituloSombra3" 
-                   Grid.ColumnSpan="6"
-                   VerticalOptions="Center"
-             TranslationX="-20"
-             HorizontalOptions="Center"   
-            FontSize="20"
-            Text="ALUNOS" 
-            Style="{StaticResource sLbSombra3}"                      
-            />
+         
             <Label x:Name="lbAlunosTituloSombra4" 
                    Grid.ColumnSpan="6"
                    VerticalOptions="Center"
@@ -187,7 +161,7 @@
                         <DataTemplate x:DataType="dto:AlunoPDTO">
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="0.6*"/>
+                                    <RowDefinition Height="{OnIdiom Phone=1*, Desktop= 0.6*}"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -204,15 +178,17 @@
      </Grid.GestureRecognizers>
                                <Border 
               BackgroundColor="{StaticResource azulClaro}"
-              Margin="25,5"                        
+              Margin="0"                        
               HorizontalOptions="Fill"
-              TranslationY="10"
+              TranslationY="{OnIdiom Phone=0, Desktop=10}"
               TranslationX="{OnIdiom Phone=15, Desktop=20}"
               VerticalOptions="Start"
               Style="{StaticResource sBrdAzul}">                                    
                                     <Label     
                                         Text="{Binding Patente}" 
-                                        HorizontalOptions="Center"/>
+                                        HorizontalOptions="Center"
+                                        FontSize="10"
+                                        TextColor="{StaticResource begeClaro}"/>
                                 </Border>
                                 <Label x:Name="lbNick"                                        
  Grid.Column="1"
@@ -220,7 +196,7 @@
  Text="{Binding Nickname}" 
  FontAttributes="Bold"    
  FontSize="{OnIdiom Phone=12, Desktop=15}"   
-TranslationX="{OnIdiom Phone=-25, Desktop=0}"
+TranslationX="{OnIdiom Phone=20, Desktop=0}"
  VerticalOptions="Center"
  HorizontalOptions="Center"
  TextColor="{StaticResource marromEscuro}"/>
@@ -231,8 +207,8 @@ TranslationX="{OnIdiom Phone=-25, Desktop=0}"
          Margin="0,5"                                        
          Text="{Binding Nome}" 
          FontAttributes="Bold"                      
-         FontSize="{OnIdiom Phone=12, Desktop=15}" 
-         TranslationX="{OnIdiom Phone=-15, Desktop=0}"
+         FontSize="{OnIdiom Phone=10, Desktop=15}" 
+         TranslationX="{OnIdiom Phone=25, Desktop=0}"
          VerticalOptions="Center"
          HorizontalOptions="Start"
          TextColor="{StaticResource marromEscuro}"
@@ -242,8 +218,8 @@ TranslationX="{OnIdiom Phone=-25, Desktop=0}"
          Margin="0,5"                                        
          Text="{Binding CodigoAcesso}" 
          FontAttributes="Bold"                      
-          FontSize="{OnIdiom Phone=12, Desktop=15}" 
-        TranslationX="{OnIdiom Phone=-15, Desktop=0}"
+          FontSize="{OnIdiom Phone=10, Desktop=15}" 
+        TranslationX="{OnIdiom Phone= 10, Desktop=0}"
          VerticalOptions="Center"
          HorizontalOptions="Center"
          TextColor="{StaticResource marromEscuro}"
@@ -252,7 +228,7 @@ TranslationX="{OnIdiom Phone=-25, Desktop=0}"
          Grid.Column="4"
          Source="{Binding CapaLivroAtual}"
          VerticalOptions="Center"
-                TranslationX="{OnIdiom Phone=-10, Desktop=0}"
+                TranslationX="{OnIdiom Phone= 5, Desktop=0}"
                 HorizontalOptions="Center"
                 HeightRequest="30"
          Margin="{OnIdiom Phone=5, Desktop=20}"
@@ -262,7 +238,7 @@ TranslationX="{OnIdiom Phone=-25, Desktop=0}"
          Text="{Binding QuantidadeLivrosLidos}"
          FontAttributes="Bold"   
           FontSize="{OnIdiom Phone=12, Desktop=15}"   
-         TranslationX="{OnIdiom Phone=-10, Desktop=0}"
+         TranslationX="{OnIdiom Phone=-5, Desktop=0}"
          VerticalOptions="Center"   
                 HorizontalOptions="Center"
          TextColor="{StaticResource marromEscuro}"
