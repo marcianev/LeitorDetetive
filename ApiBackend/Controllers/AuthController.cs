@@ -20,7 +20,7 @@ namespace ApiBackend.Controllers
         {
             var resultado = _authService.Login(request);
 
-            if (resultado == null) 
+            if (resultado == null)
                 return Unauthorized("Usuário ou senha inválidos.");
 
             return Ok(resultado);

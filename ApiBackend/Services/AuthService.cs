@@ -1,6 +1,6 @@
-﻿using Shared.Responses.Auth;
+﻿using ApiBackend.Repostiories;
 using Shared.Requests.Auth;
-using ApiBackend.Repostiories;
+using Shared.Responses.Auth;
 
 namespace ApiBackend.Services
 {
@@ -15,14 +15,14 @@ namespace ApiBackend.Services
             _jwtService = jwtService;
         }
 
-        public LoginResponse? Login (LoginRequest request)
+        public LoginResponse? Login(LoginRequest request)
         {
             var usuario = _usuariosRepository.BuscarPorUser(request.User);
 
-            if(usuario == null)
+            if (usuario == null)
                 return null;
 
-            if(request.Senha != request.Senha)
+            if (request.Senha != request.Senha)
                 return null;
 
             return new LoginResponse

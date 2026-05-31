@@ -1,4 +1,5 @@
-﻿using AppMaui.Core.Services.Application;
+﻿using AppMaui.Core.Services.Api.Interface;
+using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.Interfaces;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -46,6 +47,8 @@ namespace AppMaui.ViewsModels
 
         private readonly INavigationService _navigationService;
 
+        private readonly IAuthApiService _authApiService;
+
 
         public LoginViewModel(IAutenticacaoService auth,
                 INavigationService nav,
@@ -53,12 +56,14 @@ namespace AppMaui.ViewsModels
                 CadastrarProfessorService cps,
                 CadastroPViewModel cadastroPVM,
                 NovaSenhaViewModel novaSenhaVM,
-                PAcessoViewModel pAcessoVM)
+                PAcessoViewModel pAcessoVM,
+                IAuthApiService authApiService)
         {
             CadastroPVM = cadastroPVM;
             NovaSenhaVM = novaSenhaVM;
             PrimeiroAcessoVM = pAcessoVM;            
             _auth = auth;
+            _authApiService = authApiService;
             _navigationService = nav;                 
             CadastroPVM.OnFecharCadastro = () => MostrarCadastro = false;
             CadastroPVM.OnCarregando = (valor) => Carregando = valor;
@@ -96,6 +101,24 @@ namespace AppMaui.ViewsModels
         {
             try
             {
+                var resultado = await _authApiService.Login(
+                    "admin",
+                    "123");
+
+                if (resultado != null)
+                {
+                    await Shell.Current.DisplayAlert(
+                        "Sucesso",
+                        resultado.User,
+                        "OK");
+                }
+                else
+                {
+                    await Shell.Current.DisplayAlert(
+                        "Erro",
+                        "Falha no login API",
+                        "OK");
+                }
                 Carregando = true;
                 if (string.IsNullOrWhiteSpace(Usuario) ||
                string.IsNullOrWhiteSpace(Senha))

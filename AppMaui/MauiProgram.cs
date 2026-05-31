@@ -1,6 +1,8 @@
 ﻿using AppMaui.Core.Data;
 using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
 using AppMaui.Core.Services;
+using AppMaui.Core.Services.Api;
+using AppMaui.Core.Services.Api.Interface;
 using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.External;
 using AppMaui.Core.Services.Interfaces;
@@ -123,6 +125,7 @@ namespace AppMaui
             builder.Services.AddSingleton<IDialogoService, DialogoService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
             builder.Services.AddSingleton<IValidationService, ValidationService>();
+            builder.Services.AddSingleton<IAuthApiService, AuthApiService> ();
             
 
             //registrar paginas
