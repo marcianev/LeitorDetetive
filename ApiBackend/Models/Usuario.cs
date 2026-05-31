@@ -9,9 +9,9 @@
 
         public string Senha { get; set; } = string.Empty;
 
-        public bool? StatusSenha { get; set; }
+        public bool StatusSenha { get; set; }
 
-        public bool? StatusUsuario { get; set; }
+        public bool StatusUsuario { get; set; }
 
         public DateTime DataCadastro { get; set; }
 

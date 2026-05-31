@@ -12,5 +12,7 @@ namespace Shared.Responses.Auth
         public string User { get; set; } = string.Empty;
         public string Tipo { get; set; } = string.Empty;
         public string Token { get; set; } = string.Empty;
+        public bool StatusSenha { get; set; }
+        public bool StatusUsuario { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace AppMaui.Services.Interfaces
 {
     public interface IAutenticacaoService
     {
-        Task<Usuario?> Autenticar(string usuario, string senha);
+        Task<Usuario?> Autenticar(string usuario, string senha);       
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using AppMaui.Core.Services.Logging;
+using Shared.Responses.Auth;
 
 namespace AppMaui.Core.Services
 {
@@ -11,6 +12,10 @@ namespace AppMaui.Core.Services
     {
         /// <summary>Armazena o usuário atualmente autenticado na sessão.</summary>
         public static Usuario? UsuarioLogado { get; private set; }
+
+        public static string? Token { get; private set; }
+        
+        public static bool LoginRemoto { get; private set; }
 
         /// <summary>Autentica um usuário e abre sua sessão.</summary>
         public async Task Login(Usuario usuario)
@@ -31,10 +36,37 @@ namespace AppMaui.Core.Services
 
         }
 
+        ///<summary>Criar sessao remota</summary>
+        public async Task LoginApi(LoginResponse response)
+        {
+            UsuarioLogado = new Usuario
+            {
+                Id = response.UsuarioId,
+                User = response.User,
+                Tipo = response.Tipo,
+                StatusSenha = response.StatusSenha,
+                StatusUsuario = response.StatusUsuario
+
+            };
+            Token = response.Token;
+            LoginRemoto = true;
+            EventoSistema eventoSistema = new()
+            {
+                Tabela = "Usuario",
+                TipoEvento = Eventos.Login,
+                Descricao = "Usuário acessou o sistema pela API",
+                ReferenciaId = response.UsuarioId,
+                UsuarioId = response.UsuarioId
+            };
+            await eventoService.SalvarEvento(eventoSistema);
+        }
+
         /// <summary>Encerra a sessão do usuário logado.</summary>
         public static void Logout()
         {
             UsuarioLogado = null;
+            Token = null;
+            LoginRemoto=false;
         }
     }
 }

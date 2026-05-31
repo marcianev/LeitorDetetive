@@ -30,7 +30,9 @@ namespace ApiBackend.Services
                 UsuarioId = usuario.Id,
                 User = usuario.User,
                 Tipo = usuario.Tipo,
-                Token = _jwtService.GerarToken(usuario)
+                Token = _jwtService.GerarToken(usuario),
+                StatusUsuario = usuario.StatusUsuario,
+                StatusSenha = usuario.StatusSenha
             };
         }
     }

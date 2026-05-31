@@ -1,9 +1,11 @@
-﻿using AppMaui.Core.Services.Api.Interface;
+﻿using AppMaui.Core.Services;
+using AppMaui.Core.Services.Api.Interface;
 using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.Interfaces;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 
 namespace AppMaui.ViewsModels
 {
@@ -100,25 +102,7 @@ namespace AppMaui.ViewsModels
         private async Task Entrar()
         {
             try
-            {
-                var resultado = await _authApiService.Login(
-                    "admin",
-                    "123");
-
-                if (resultado != null)
-                {
-                    await Shell.Current.DisplayAlert(
-                        "Sucesso",
-                        resultado.User,
-                        "OK");
-                }
-                else
-                {
-                    await Shell.Current.DisplayAlert(
-                        "Erro",
-                        "Falha no login API",
-                        "OK");
-                }
+            {               
                 Carregando = true;
                 if (string.IsNullOrWhiteSpace(Usuario) ||
                string.IsNullOrWhiteSpace(Senha))
@@ -129,6 +113,7 @@ namespace AppMaui.ViewsModels
                     return;
                 }
                 var user = await _auth.Autenticar(Usuario, Senha);
+                
 
                 if (user != null && user.StatusSenha == true)
                 {
