@@ -1,23 +1,24 @@
 ﻿using ApiBackend.Repostiories;
+using ApiBackend.Services.Interface;
 using Shared.Requests.Auth;
 using Shared.Responses.Auth;
 
 namespace ApiBackend.Services
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
-        private readonly UsuarioRepository _usuariosRepository;
-        private readonly JwtService _jwtService;
+        private readonly IUsuarioService _usuarioService;
+        private readonly IJwtService _jwtService;
 
-        public AuthService(UsuarioRepository usuariosRepository, JwtService jwtService)
+        public AuthService(IUsuarioService usuarioService, IJwtService jwtService)
         {
-            _usuariosRepository = usuariosRepository;
+            _usuarioService = usuarioService;
             _jwtService = jwtService;
         }
 
-        public LoginResponse? Login(LoginRequest request)
+        public async Task<LoginResponse?> Login(LoginRequest request)
         {
-            var usuario = _usuariosRepository.BuscarPorUser(request.User);
+            var usuario = await _usuarioService.BuscarPorUser(request.User);
 
             if (usuario == null)
                 return null;

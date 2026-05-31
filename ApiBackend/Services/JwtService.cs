@@ -1,5 +1,6 @@
 ﻿using ApiBackend.Configurations;
 using ApiBackend.Models;
+using ApiBackend.Services.Interface;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace ApiBackend.Services
 {
-    public class JwtService
+    public class JwtService : IJwtService
     {
         private readonly JwtSettings _jwtSettings;
 

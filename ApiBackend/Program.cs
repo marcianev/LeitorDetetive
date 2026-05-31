@@ -1,6 +1,9 @@
+using ApiBackend.Configurations;
 using ApiBackend.Data;
 using ApiBackend.Repostiories;
 using ApiBackend.Services;
+using ApiBackend.Services.Email;
+using ApiBackend.Services.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -40,12 +43,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-//registrar os services
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<JwtService>();
+//registrar email
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
+
 
 //registrar os repositorios
+builder.Services.AddScoped<ProfessorRepository>();
 builder.Services.AddScoped<UsuarioRepository>();
+
+
+//registrar interfaces e serviços
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IProfessorService, ProfessorService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+
 
 var app = builder.Build();
 
