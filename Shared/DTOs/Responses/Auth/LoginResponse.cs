@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared.Responses.Auth
+namespace Shared.DTOs.Responses.Auth
 {
     public class LoginResponse
     {

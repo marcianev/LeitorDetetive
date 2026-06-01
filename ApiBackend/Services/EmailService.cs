@@ -1,8 +1,9 @@
 ﻿using ApiBackend.Configurations;
+using ApiBackend.Services.Interface;
 using System.Net;
 using System.Net.Mail;
 
-namespace ApiBackend.Services.Email
+namespace ApiBackend.Services
 {
     public class EmailService : IEmailService
     {

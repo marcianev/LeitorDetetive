@@ -1,4 +1,4 @@
-﻿namespace ApiBackend.Services.Email
+﻿namespace ApiBackend.Services.Interface
 {
     public interface IEmailService
     {

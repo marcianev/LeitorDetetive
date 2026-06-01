@@ -59,7 +59,7 @@ namespace AppMaui.ViewsModels
             }
 
 
-            //criar dto
+            /*criar dto
             var usuarioDto = new CadastroProfessorDTO
             {
                 User = User,
@@ -67,7 +67,7 @@ namespace AppMaui.ViewsModels
                 SenhaProvisoria = SenhaProvisoria
             };          
 
-            var resultado = await _senhaService.NovaSenhaDefinitiva(usuarioDto);
+            var resultado = await _senhaService.NovaSenhaDefinitiva(usuarioDto);*/
             if (resultado == "Senha atualizada com sucesso.")
             {
                 Mensagem = resultado;

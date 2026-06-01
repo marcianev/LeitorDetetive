@@ -1,6 +1,7 @@
 ﻿using AppMaui.Core.Services.Api.Interface;
-using Shared.Requests.Auth;
-using Shared.Responses.Auth;
+using Shared.DTOs.Requests;
+using Shared.DTOs.Requests.Auth;
+using Shared.DTOs.Responses.Auth;
 using System.Diagnostics;
 using System.Net.Http.Json;
 
@@ -10,9 +11,9 @@ namespace AppMaui.Core.Services.Api
     {
         private readonly HttpClient _httpClient;
 
-        public AuthApiService()
+        public AuthApiService(HttpClient httpClient)
         {
-            _httpClient = new HttpClient();
+            _httpClient = httpClient;
         }
 
         public async Task<LoginResponse?> Login(
@@ -27,7 +28,7 @@ namespace AppMaui.Core.Services.Api
                     Senha = senha
                 };
                 var response = await _httpClient.PostAsJsonAsync(
-                    "https://localhost:7170/api/auth/login",
+                    "api/auth/login",
                     request);
 
                 if (!response.IsSuccessStatusCode)
@@ -42,5 +43,26 @@ namespace AppMaui.Core.Services.Api
             }
             
         }
+
+        public async Task<bool> RecuperarSenha(RecuperarSenhaRequest request)
+        {
+            try
+            {         
+                var response = await _httpClient.PostAsJsonAsync(
+                    "api/auth/recuperar-senha",
+                    request);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                throw;
+            }
+        }
     }
 }
+/*
+          
+           
+           */ 

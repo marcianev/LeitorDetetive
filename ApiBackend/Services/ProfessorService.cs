@@ -15,12 +15,12 @@ namespace ApiBackend.Services
 
         public async Task<Professor?> BuscarPorEmail(string email)
         {
-            return await _professorRepository.BuscarPorEmail(email);
+            return await _professorRepository.GetByEmail(email);
         }
 
         public async Task<Professor?> BuscarPorUsuarioId(int usuarioId)
         {
-            return await _professorRepository.BuscarPorUsuarioId(usuarioId);
+            return await _professorRepository.GetByUsuarioId(usuarioId);
         }
     }
 }

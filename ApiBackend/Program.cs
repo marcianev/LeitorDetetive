@@ -2,7 +2,6 @@ using ApiBackend.Configurations;
 using ApiBackend.Data;
 using ApiBackend.Repostiories;
 using ApiBackend.Services;
-using ApiBackend.Services.Email;
 using ApiBackend.Services.Interface;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -55,6 +54,7 @@ builder.Services.AddScoped<UsuarioRepository>();
 
 //registrar interfaces e serviços
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ICriptoService, CriptoService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IProfessorService, ProfessorService>();

@@ -12,12 +12,12 @@ namespace ApiBackend.Repostiories
             _context = context;
         }
 
-        public async Task<Professor?> BuscarPorEmail(string email)
+        public async Task<Professor?> GetByEmail(string email)
         {
             return _context.Professores.FirstOrDefault(p => p.Email == email);
         }
 
-        public async Task<Professor?> BuscarPorUsuarioId(int UsuarioId)
+        public async Task<Professor?> GetByUsuarioId(int UsuarioId)
         {
             return _context.Professores.FirstOrDefault(p => p.UsuarioId == UsuarioId);
         }

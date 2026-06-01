@@ -1,4 +1,4 @@
-﻿using ApiBackend.Services.Email;
+﻿using ApiBackend.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiBackend.Controllers

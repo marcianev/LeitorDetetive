@@ -52,12 +52,15 @@ namespace AppMaui
                 .GetSection("OpenAI")
                 .Get<OpenAISettings>();
 
+            //registrar o endereço do serviço
+            builder.Services.AddHttpClient<IAuthApiService, AuthApiService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7170/");
+            });
+
             //registra direto no DI
             builder.Services.AddSingleton(emailSettings!);
             builder.Services.AddSingleton(openAISettings!);
-
-
-
 
             //cria os serviços de injeção de dependência para o banco de dados e os repositórios
             builder.Services.AddSingleton<AlunoRepository>();
@@ -124,8 +127,7 @@ namespace AppMaui
             builder.Services.AddSingleton<ICriptoService, CriptoService>();
             builder.Services.AddSingleton<IDialogoService, DialogoService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
-            builder.Services.AddSingleton<IValidationService, ValidationService>();
-            builder.Services.AddSingleton<IAuthApiService, AuthApiService> ();
+            builder.Services.AddSingleton<IValidationService, ValidationService>();      
             
 
             //registrar paginas

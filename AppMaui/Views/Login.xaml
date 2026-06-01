@@ -258,7 +258,7 @@ VerticalOptions="Center"
                      Grid.ColumnSpan="2" 
                      Margin="10" 
                      HorizontalOptions="Start"  
-                     Text="Primeiro Acesso" 
+                     Text="Acesso Provisório" 
                      Style="{StaticResource sBtnTransparente}"
                      Command="{Binding AbrirPrimeiroAcessoCommand}"                      
                      />

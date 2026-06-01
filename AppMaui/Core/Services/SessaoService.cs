@@ -1,7 +1,7 @@
 ﻿using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using AppMaui.Core.Services.Logging;
-using Shared.Responses.Auth;
+using Shared.DTOs.Responses.Auth;
 
 namespace AppMaui.Core.Services
 {

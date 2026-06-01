@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared.Requests.Auth
+namespace Shared.DTOs.Requests
 {
-    public class LoginRequest
+    public class RecuperarSenhaRequest
     {
         public string User { get; set; } = string.Empty;
-        public string Senha { get; set; } = string.Empty;
+
+        public string Email { get; set; } = string.Empty;
     }
 }

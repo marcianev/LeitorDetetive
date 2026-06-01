@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared.Requests
+namespace Shared.DTOs.Requests
 {
-    internal class EmailRequest
+    internal class AcessoProvisorioRequest
     {
     }
 }

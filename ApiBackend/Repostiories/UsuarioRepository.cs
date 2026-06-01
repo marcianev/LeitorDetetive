@@ -12,14 +12,22 @@ namespace ApiBackend.Repostiories
             _context = context;
         }
 
-        public async Task<Usuario?> BuscarPorUser(string user)
+        public async Task<Usuario?> GetByUser(string user)
         {
             return _context.Usuarios.FirstOrDefault(u => u.User == user);
         }
 
-        public async Task<Usuario?> BuscarPorId(int id)
+        public async Task<Usuario?> GetById(int id)
         {
             return _context.Usuarios.FirstOrDefault(u =>u.Id == id);
         }
+
+        public async Task Update(Usuario usuario)
+        {
+            _context.Usuarios.Update(usuario);
+            await _context.SaveChangesAsync();
+            
+        }
+
     }
 }
