@@ -3,6 +3,7 @@ using ApiBackend.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs.Requests;
 using Shared.DTOs.Requests.Auth;
+using Shared.DTOs.Responses;
 using System.Diagnostics;
 
 namespace ApiBackend.Controllers
@@ -11,19 +12,17 @@ namespace ApiBackend.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _authService;
-        private readonly IEmailService _emailService;
+        private readonly IAuthService _authService;      
 
-        public AuthController(IAuthService authService, IEmailService emailService)
+        public AuthController(IAuthService authService)
         {
-            _authService = authService;
-            _emailService = emailService;
+            _authService = authService;         
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {           
-            var resultado = _authService.Login(request);
+            var resultado = await _authService.Login(request);
 
             if (resultado == null)
                 return Unauthorized("Usuário ou senha inválidos.");
@@ -40,6 +39,17 @@ namespace ApiBackend.Controllers
                 return BadRequest("Email não encontrado");
 
             return Ok("Código Enviado.");
+        }
+
+        [HttpPost("acesso-provisorio")]
+        public async Task<IActionResult> AcessoProvisorio(AcessoProvisorioRequest request)
+        {
+            OperacaoResponse response = await _authService.AcessoProvisorio(request);
+
+            if (!response.Sucesso)
+                return BadRequest(response);
+
+            return Ok(response);
         }
     }
 }

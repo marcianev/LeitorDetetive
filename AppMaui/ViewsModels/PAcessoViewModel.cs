@@ -1,7 +1,10 @@
 ﻿using AppMaui.Core.DTOs;
+using AppMaui.Core.Services.Api.Interface;
 using AppMaui.Core.Services.Security;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Shared.DTOs.Requests;
+using Shared.DTOs.Responses;
 
 namespace AppMaui.ViewsModels
 {
@@ -22,14 +25,15 @@ namespace AppMaui.ViewsModels
         public Action? OnFecharPAcesso { get; set; }
 
         //injetar serviços necessários
-        private readonly SenhaService _senhaService;        
+        private readonly SenhaService _senhaService;       
+        private readonly IAuthApiService _authApiService;
         
 
-        public PAcessoViewModel(SenhaService senhaService)
+        public PAcessoViewModel(SenhaService senhaService, IAuthApiService authApiService)
         {
 
-            _senhaService = senhaService;          
-            
+            _senhaService = senhaService;    
+            _authApiService = authApiService;            
         }
 
         //comando para salvar nova senha
@@ -59,30 +63,30 @@ namespace AppMaui.ViewsModels
             }
 
 
-            /*criar dto
-            var usuarioDto = new CadastroProfessorDTO
+            //criar dto
+            var request = new AcessoProvisorioRequest()
             {
                 User = User,
-                Senha = NovaSenha,
+                NovaSenha = NovaSenha,
                 SenhaProvisoria = SenhaProvisoria
-            };          
+            };         
 
-            var resultado = await _senhaService.NovaSenhaDefinitiva(usuarioDto);*/
-            if (resultado == "Senha atualizada com sucesso.")
+           var resultado = await _authApiService.AcessoProvisorio(request);
+
+            if (resultado == null) 
             {
-                Mensagem = resultado;
-                await Task.Delay(3000);
-                Mensagem = "";
-                FecharPAcesso();                           
-            }
-            else
-            {
-                Mensagem = resultado;
+                Mensagem = "Erro de comunicação.";
                 await Task.Delay(3000);
                 Mensagem = "";
                 FecharPAcesso();
-                return;
             }
+            else
+            {
+                Mensagem = resultado.Mensagem;
+                await Task.Delay(3000);
+                Mensagem = "";
+                FecharPAcesso();
+            }         
         }
 
         //metodo esconde view de acesso provisório

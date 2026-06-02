@@ -57,6 +57,10 @@ namespace AppMaui
             {
                 client.BaseAddress = new Uri("https://localhost:7170/");
             });
+            builder.Services.AddHttpClient<ICadastroProfessorApiService, CadastrarProfessorApiService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7170/");
+            });
 
             //registra direto no DI
             builder.Services.AddSingleton(emailSettings!);
@@ -83,8 +87,7 @@ namespace AppMaui
             //cria os serviços de injeção de dependência para os serviços de negócio
             builder.Services.AddSingleton<AlunoService>();
             builder.Services.AddTransient<AvaliacaoService>();
-            builder.Services.AddSingleton<CadastroAlunoService>();
-            builder.Services.AddSingleton<CadastrarProfessorService>();
+            builder.Services.AddSingleton<CadastroAlunoService>();           
             builder.Services.AddSingleton<CriptogramaService>();
             builder.Services.AddSingleton<DesafioService>();
             builder.Services.AddSingleton<EmailService>();
@@ -123,7 +126,7 @@ namespace AppMaui
             
 
             //registrar as interfaces
-            builder.Services.AddSingleton<IAutenticacaoService, AutenticacaoService>();            
+            builder.Services.AddSingleton<IAutenticacaoService, AutenticacaoService>();           
             builder.Services.AddSingleton<ICriptoService, CriptoService>();
             builder.Services.AddSingleton<IDialogoService, DialogoService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();

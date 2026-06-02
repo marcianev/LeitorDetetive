@@ -1,6 +1,7 @@
 ﻿using AppMaui.Core.Services.Api.Interface;
 using Shared.DTOs.Requests;
 using Shared.DTOs.Requests.Auth;
+using Shared.DTOs.Responses;
 using Shared.DTOs.Responses.Auth;
 using System.Diagnostics;
 using System.Net.Http.Json;
@@ -60,9 +61,14 @@ namespace AppMaui.Core.Services.Api
                 throw;
             }
         }
+
+        public async Task<OperacaoResponse?> AcessoProvisorio(AcessoProvisorioRequest request)
+        {
+                var response = await _httpClient.PostAsJsonAsync(
+                    "api/auth/acesso-provisorio",
+                    request);
+
+                return await response.Content.ReadFromJsonAsync<OperacaoResponse>();          
+        }
     }
 }
-/*
-          
-           
-           */ 

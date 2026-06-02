@@ -1,5 +1,6 @@
 ﻿using ApiBackend.Data;
 using ApiBackend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiBackend.Repostiories
 {
@@ -12,6 +13,13 @@ namespace ApiBackend.Repostiories
             _context = context;
         }
 
+        public async Task<Usuario> AddAsync(Usuario usuario)
+        {
+            _context.Add(usuario);
+            await _context.SaveChangesAsync();
+            return usuario;
+        }
+
         public async Task<Usuario?> GetByUser(string user)
         {
             return _context.Usuarios.FirstOrDefault(u => u.User == user);
@@ -20,14 +28,19 @@ namespace ApiBackend.Repostiories
         public async Task<Usuario?> GetById(int id)
         {
             return _context.Usuarios.FirstOrDefault(u =>u.Id == id);
+        }    
+        
+        public async Task<Usuario?> UpdateAsync(Usuario usuario)
+        {
+            _context.Update(usuario);
+            await _context.SaveChangesAsync();
+            return usuario;
         }
 
-        public async Task Update(Usuario usuario)
+        public async Task<bool> UserExists(string user)
         {
-            _context.Usuarios.Update(usuario);
-            await _context.SaveChangesAsync();
+            return await _context.Usuarios.AnyAsync(u => u.User == user);
             
         }
-
     }
 }

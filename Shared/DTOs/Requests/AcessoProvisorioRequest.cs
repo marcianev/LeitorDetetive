@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Shared.DTOs.Requests
 {
-    internal class AcessoProvisorioRequest
+    public class AcessoProvisorioRequest
     {
+        public string User { get; set; } = string.Empty;
+
+        public string SenhaProvisoria { get; set; } = string.Empty;
+
+        public string NovaSenha { get; set; } = string.Empty;
     }
 }

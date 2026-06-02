@@ -6,14 +6,14 @@ namespace AppMaui.Core.DTOs
     /// </summary>
     public class CadastroProfessorDTO
     {
-        //dados vinculado a entidade usuario
+        //dados vinculado a entidade professor
         public int Id { get; set; }
         public int UsuarioId { get; set; }
         public string Nome { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Cpf { get; set; } = string.Empty;
 
-        //dados vinculados a entidade professor
+        //dados vinculados a entidade usuario
         public string User { get; set; } = string.Empty;
         public string Senha { get; set; } = string.Empty;
         public string SenhaProvisoria { get; set; } = string.Empty;       

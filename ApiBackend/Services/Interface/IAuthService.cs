@@ -1,5 +1,6 @@
 ﻿using Shared.DTOs.Requests;
 using Shared.DTOs.Requests.Auth;
+using Shared.DTOs.Responses;
 using Shared.DTOs.Responses.Auth;
 
 namespace ApiBackend.Services.Interface
@@ -8,5 +9,6 @@ namespace ApiBackend.Services.Interface
     {
         Task<LoginResponse?> Login(LoginRequest request);
         Task<bool> RecuperarSenha(RecuperarSenhaRequest request);
+        Task<OperacaoResponse> AcessoProvisorio(AcessoProvisorioRequest request);
     }
 }

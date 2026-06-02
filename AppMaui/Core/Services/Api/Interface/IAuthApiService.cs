@@ -1,4 +1,5 @@
 ﻿using Shared.DTOs.Requests;
+using Shared.DTOs.Responses;
 using Shared.DTOs.Responses.Auth;
 
 namespace AppMaui.Core.Services.Api.Interface
@@ -7,5 +8,6 @@ namespace AppMaui.Core.Services.Api.Interface
     {
         Task<LoginResponse?> Login(string user, string senha);
         Task<bool> RecuperarSenha(RecuperarSenhaRequest request);
+        Task<OperacaoResponse?> AcessoProvisorio(AcessoProvisorioRequest request);
     }
 }

@@ -43,29 +43,29 @@ namespace AppMaui.ViewsModels
 
         public NovaSenhaViewModel NovaSenhaVM { get; }
 
-        public PAcessoViewModel PrimeiroAcessoVM { get; }
-
-        private readonly IAutenticacaoService _auth;
+        public PAcessoViewModel PrimeiroAcessoVM { get; }      
 
         private readonly INavigationService _navigationService;
 
         private readonly IAuthApiService _authApiService;
 
+        private readonly SessaoService _sessaoService;
 
-        public LoginViewModel(IAutenticacaoService auth,
+
+        public LoginViewModel(
                 INavigationService nav,
-                IValidationService ivs,
-                CadastrarProfessorService cps,
+                IValidationService ivs,                
                 CadastroPViewModel cadastroPVM,
                 NovaSenhaViewModel novaSenhaVM,
                 PAcessoViewModel pAcessoVM,
-                IAuthApiService authApiService)
+                IAuthApiService authApiService,
+                SessaoService sessaoService)
         {
             CadastroPVM = cadastroPVM;
             NovaSenhaVM = novaSenhaVM;
-            PrimeiroAcessoVM = pAcessoVM;            
-            _auth = auth;
+            PrimeiroAcessoVM = pAcessoVM;    
             _authApiService = authApiService;
+            _sessaoService = sessaoService;
             _navigationService = nav;                 
             CadastroPVM.OnFecharCadastro = () => MostrarCadastro = false;
             CadastroPVM.OnCarregando = (valor) => Carregando = valor;
@@ -112,13 +112,13 @@ namespace AppMaui.ViewsModels
                     Mensagem = "";
                     return;
                 }
-                var user = await _auth.Autenticar(Usuario, Senha);
+                var user = await _authApiService.Login(Usuario, Senha);
                 
-
                 if (user != null && user.StatusSenha == true)
                 {
+                    await _sessaoService.LoginApi(user);
                     Usuario = string.Empty;
-                    Senha = string.Empty;
+                    Senha = string.Empty;                    
                     await _navigationService.NavegarPara("PaginaBase");
                 }
                 else

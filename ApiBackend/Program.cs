@@ -54,6 +54,7 @@ builder.Services.AddScoped<UsuarioRepository>();
 
 //registrar interfaces e serviços
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ICadastroService, CadastroService>();
 builder.Services.AddScoped<ICriptoService, CriptoService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IJwtService, JwtService>();

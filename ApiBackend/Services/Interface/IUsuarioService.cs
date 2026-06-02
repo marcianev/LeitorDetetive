@@ -4,8 +4,10 @@ namespace ApiBackend.Services.Interface
 {
     public interface IUsuarioService
     {
-        Task<Usuario?> BuscarPorUser(string user);
-        Task<Usuario?> BuscarPorId(int id);
-        Task Atualizar(Usuario usuario);
+        Task<Usuario> AddAsync(Usuario usuario);
+        Task<Usuario?> GetByIUser(string user);
+        Task<Usuario?> GetById(int id);
+        Task<Usuario?> UpdateAsync(Usuario usuario);
+        Task<bool> UserExists(string user);
     }
 }

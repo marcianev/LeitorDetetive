@@ -13,19 +13,29 @@ namespace ApiBackend.Services
             _usuarioRepository = usuarioRepository;
         }
 
-        public async Task<Usuario?> BuscarPorUser(string user)
+        public async Task<Usuario> AddAsync(Usuario usuario)
+        {
+            return await _usuarioRepository.AddAsync(usuario);
+        }
+
+        public async Task<Usuario?> GetByIUser(string user)
         {
             return await _usuarioRepository.GetByUser(user);
         }
 
-        public async Task<Usuario?> BuscarPorId(int id)
+        public async Task<Usuario?> GetById(int id)
         {
             return await _usuarioRepository.GetById(id);
         }
 
-        public async Task Atualizar(Usuario usuario)
+        public async Task<Usuario?> UpdateAsync(Usuario usuario)
         {
-            await _usuarioRepository.Update(usuario);
+            return await _usuarioRepository.UpdateAsync(usuario);
+        }
+
+        public async Task<bool> UserExists(string user)
+        {
+            return await _usuarioRepository.UserExists(user);
         }
     }
 }

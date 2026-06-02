@@ -1,10 +1,12 @@
 ﻿using AppMaui.Core.DTOs;
-using AppMaui.Core.Services.Application;
+using AppMaui.Core.Services.Api.Interface;
 using AppMaui.Core.Services.Interfaces;
 using AppMaui.Services;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Shared.DTOs.Requests;
+using System.Diagnostics;
 
 namespace AppMaui.ViewsModels
 {
@@ -35,17 +37,17 @@ namespace AppMaui.ViewsModels
 
         //injeta o serviço de professor 
         private CadastroProfessorDTO _dto;
-        private readonly CadastrarProfessorService _cps;      
+        private readonly ICadastroProfessorApiService _cadastroProfessorApiService;      
         private readonly IValidationService _validationService;
         private readonly ConectividadeService _conectividadeService;
         private readonly IDialogoService _dialogoService;
 
-        public CadastroPViewModel(CadastrarProfessorService cadPs, IValidationService validationService, 
+        public CadastroPViewModel(ICadastroProfessorApiService cadastroProfessorApiService, IValidationService validationService, 
            ConectividadeService conectividadeService, IDialogoService dialogoService)
         {
             
             _dto = new CadastroProfessorDTO();
-            _cps = cadPs;
+            _cadastroProfessorApiService = cadastroProfessorApiService;
             _validationService = validationService;
             _conectividadeService = conectividadeService;
             _dialogoService = dialogoService;
@@ -82,7 +84,7 @@ namespace AppMaui.ViewsModels
                     return;
                 }
                 //carrega o DTO
-                _dto = new CadastroProfessorDTO
+                var request = new CadastroProfessorRequest
                 {
                     Nome = Nome,
                     User = User,
@@ -142,8 +144,18 @@ namespace AppMaui.ViewsModels
                         return;
                     }
                 }
-
-                Mensagem = await _cps.CadastrarProfessor(_dto);
+                var resultado = await _cadastroProfessorApiService.CadastrarProfessor(request);
+                if(resultado == null)
+                {
+                    Debug.WriteLine(resultado.Mensagem);
+                    Mensagem = "Erro ao cadastrar professor.";
+                    await Task.Delay(3000);
+                    Mensagem = string.Empty;
+                    FecharCadastro();
+                    return;
+                }
+                    
+                Mensagem = resultado.Mensagem;
                 await Task.Delay(3000);
                 Mensagem = string.Empty;               
             }
