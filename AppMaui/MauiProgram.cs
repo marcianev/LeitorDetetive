@@ -7,7 +7,6 @@ using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.External;
 using AppMaui.Core.Services.Interfaces;
 using AppMaui.Core.Services.Local;
-using AppMaui.Core.Services.Logging;
 using AppMaui.Core.Services.Security;
 using AppMaui.Core.Services.Validation;
 using AppMaui.Core.Settings;
@@ -57,10 +56,25 @@ namespace AppMaui
             {
                 client.BaseAddress = new Uri("https://localhost:7170/");
             });
+            
             builder.Services.AddHttpClient<ICadastroProfessorApiService, CadastrarProfessorApiService>(client =>
             {
                 client.BaseAddress = new Uri("https://localhost:7170/");
             });
+            
+            builder.Services.AddHttpClient<IEventoApiService, EventoApiService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7170/");
+            });
+
+           /* builder.Services.AddHttpClient<INotificacaoApiService, NotificacaoApiService>(client =>
+           {
+               client.BaseAddress = new Uri("https://localhost:7170/");
+           });
+            builder.Services.AddHttpClient<ITrilhaApiService, TrilhaApiService>(client =>
+           {
+               client.BaseAddress = new Uri("https://localhost:7170/");
+           });*/
 
             //registra direto no DI
             builder.Services.AddSingleton(emailSettings!);

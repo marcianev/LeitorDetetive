@@ -1,7 +1,6 @@
 ﻿using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
-using AppMaui.Core.Services.Logging;
 
 
 namespace AppMaui.Core.Services.Local
@@ -32,7 +31,7 @@ namespace AppMaui.Core.Services.Local
                     EventoSistema eventoSistema = new()
                     {
                         Tabela = "Resposta",
-                        TipoEvento = Eventos.RespostaSalva,                       
+                                      
                         Descricao = "Aluno salvou resposta.",
                         ReferenciaId = resposta.DesafioId,
                         UsuarioId = resposta.AlunoId                        

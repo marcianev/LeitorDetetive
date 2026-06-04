@@ -1,7 +1,8 @@
 ﻿using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
-using AppMaui.Core.Services.Logging;
+using AppMaui.Core.Services.Local;
 using Shared.DTOs.Responses.Auth;
+using Shared.Enums;
 
 namespace AppMaui.Core.Services
 {
@@ -25,7 +26,7 @@ namespace AppMaui.Core.Services
             EventoSistema eventoSistema = new()
             {
                 Tabela = "Usuario",
-                TipoEvento = Eventos.Login,
+               
                 Descricao = "Usuario acessou o sistema",
                 ReferenciaId = usuario.Id,
                 UsuarioId = usuario.Id
@@ -49,16 +50,7 @@ namespace AppMaui.Core.Services
 
             };
             Token = response.Token;
-            LoginRemoto = true;
-            EventoSistema eventoSistema = new()
-            {
-                Tabela = "Usuario",
-                TipoEvento = Eventos.Login,
-                Descricao = "Usuário acessou o sistema pela API",
-                ReferenciaId = response.UsuarioId,
-                UsuarioId = response.UsuarioId
-            };
-            await eventoService.SalvarEvento(eventoSistema);
+            LoginRemoto = true;           
         }
 
         /// <summary>Encerra a sessão do usuário logado.</summary>

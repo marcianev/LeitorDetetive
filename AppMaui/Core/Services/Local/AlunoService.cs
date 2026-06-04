@@ -4,7 +4,6 @@ using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
 using AppMaui.Core.Services.External;
-using AppMaui.Core.Services.Logging;
 
 namespace AppMaui.Core.Services.Local
 {
@@ -149,7 +148,7 @@ namespace AppMaui.Core.Services.Local
                     EventoSistema eventoSistema = new()
                     {
                         Tabela = "Aluno",
-                        TipoEvento = Eventos.NivelUp,                        
+                                                
                         Descricao = "Subiu de nível.",
                         ReferenciaId = aluno.Id,
                         UsuarioId = aluno.UsuarioId

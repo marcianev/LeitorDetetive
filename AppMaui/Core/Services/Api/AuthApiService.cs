@@ -1,4 +1,5 @@
 ﻿using AppMaui.Core.Services.Api.Interface;
+using AppMaui.Core.Services.Local;
 using Shared.DTOs.Requests;
 using Shared.DTOs.Requests.Auth;
 using Shared.DTOs.Responses;
@@ -10,7 +11,7 @@ namespace AppMaui.Core.Services.Api
 {
     public class AuthApiService : IAuthApiService
     {
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient _httpClient;        
 
         public AuthApiService(HttpClient httpClient)
         {
@@ -33,8 +34,7 @@ namespace AppMaui.Core.Services.Api
                     request);
 
                 if (!response.IsSuccessStatusCode)
-                    return null;
-
+                    return null;               
                 return await response.Content.ReadFromJsonAsync<LoginResponse?>();
             }
             catch (Exception ex)

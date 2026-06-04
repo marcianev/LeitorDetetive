@@ -1,37 +1,61 @@
 ﻿using AppMaui.Core.Enums;
 using AppMaui.Core.Models;
 using AppMaui.Core.Repositories.AppMaui.Core.Repositories;
+using AppMaui.Core.Services.Api.Interface;
+using AppMaui.Services;
+using Shared.DTOs.Responses;
+using System.Diagnostics;
 
-namespace AppMaui.Core.Services.Logging
+namespace AppMaui.Core.Services.Local
 {
     /// <summary>
     /// Serviço para registrar eventos do sistema para auditoria e rastreamento.
     /// </summary>
-    public class EventoService(EventoRepository _repository)
+    public class EventoService(EventoRepository _repository, ConectividadeService _conectaddo, 
+        IEventoApiService eventoApiService)
     {
         /// <summary>Salva um evento do sistema com validações de dados obrigatórios.</summary>
-        public async Task<bool> SalvarEvento(EventoSistema evento)
+        public async Task<OperacaoResponse> SalvarEvento(EventoSistema evento)
         {
             try
             {
-                if(evento == null)
-                    return false;
+                if (evento == null)
+                    return new OperacaoResponse { Sucesso = false, Mensagem = "Evento não pode ser nulo." };
+
                 string s = evento.TipoEvento.ToString();
-                if (s.Length > 10 ||
+                if (string.IsNullOrWhiteSpace(s) || 
+                    s.Length > 10 ||
                     evento.Descricao.Length > 500 ||
-                    evento.Tabela == string.Empty ||
-                    evento.ReferenciaId <= 0 ||
+                     string.IsNullOrWhiteSpace(evento.Tabela) ||                    
                     evento.UsuarioId <= 0)
-                    return false;
+                    return new OperacaoResponse { Sucesso = false, Mensagem = "Dados do evento inválidos." };
 
                 evento.DataEvento = DateTime.Now;
 
+               
+
+                if (_conectaddo.TemInternet())
+                {
+                    Debug.WriteLine("Conexão disponível. Sincronizando evento com a API...");
+                    evento.Sincronizado = true;
+                    evento.DataSincronizado = DateTime.Now;
+
+                    var eventoApi = await eventoApiService.SalvarEvento(evento);
+                   
+                    if (eventoApi == null)
+                    {                        
+                        evento.Sincronizado = false;
+                        evento.DataSincronizado = null;
+                    }
+                }
+                
                 await _repository.Add(evento);
-                return true;
+                return new OperacaoResponse { Sucesso = true, Mensagem = "Evento salvo com sucesso." };
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao salvar log: {ex.Message}");
+                Debug.WriteLine(ex.ToString());
+                throw;
             }
         }
 

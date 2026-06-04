@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Constantes\" />
-    <Folder Include="Enums\" />
   </ItemGroup>
 
 </Project>

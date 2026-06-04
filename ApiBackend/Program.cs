@@ -50,7 +50,7 @@ builder.Services.Configure<EmailSettings>(
 //registrar os repositorios
 builder.Services.AddScoped<ProfessorRepository>();
 builder.Services.AddScoped<UsuarioRepository>();
-
+builder.Services.AddScoped<EventoRepository>();
 
 //registrar interfaces e serviços
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -60,6 +60,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IProfessorService, ProfessorService>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IEventoService, EventoService>();
 
 
 var app = builder.Build();

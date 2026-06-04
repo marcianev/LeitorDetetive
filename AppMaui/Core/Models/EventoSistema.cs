@@ -1,4 +1,4 @@
-﻿using AppMaui.Core.Enums;
+﻿using Shared.Enums;
 using SQLite;
 
 
@@ -16,7 +16,7 @@ namespace AppMaui.Core.Models
         public string Tabela { get; set; } = string.Empty;
 
         [NotNull, MaxLength(10)]
-        public Eventos TipoEvento { get; set; }
+        public EventosEnum TipoEvento { get; set; }
 
         [NotNull, MaxLength(50)]
         public string Descricao { get; set; } = string.Empty;
@@ -24,10 +24,13 @@ namespace AppMaui.Core.Models
         [NotNull]
         public DateTime DataEvento{ get; set; }
 
-        [NotNull]
-        public int ReferenciaId { get; set; }
+        public int? ReferenciaId { get; set; }
 
         [NotNull]
         public int UsuarioId { get; set; }
+
+        public bool Sincronizado { get; set; }
+
+        public DateTime? DataSincronizado { get; set; }
     }
 }

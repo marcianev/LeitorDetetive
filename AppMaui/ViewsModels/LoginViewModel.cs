@@ -1,10 +1,13 @@
-﻿using AppMaui.Core.Services;
+﻿using AppMaui.Core.Models;
+using AppMaui.Core.Services;
 using AppMaui.Core.Services.Api.Interface;
 using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.Interfaces;
+using AppMaui.Core.Services.Local;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Shared.Enums;
 using System.Diagnostics;
 
 namespace AppMaui.ViewsModels
@@ -51,6 +54,7 @@ namespace AppMaui.ViewsModels
 
         private readonly SessaoService _sessaoService;
 
+        private readonly EventoService _eventoService;
 
         public LoginViewModel(
                 INavigationService nav,
@@ -59,13 +63,15 @@ namespace AppMaui.ViewsModels
                 NovaSenhaViewModel novaSenhaVM,
                 PAcessoViewModel pAcessoVM,
                 IAuthApiService authApiService,
-                SessaoService sessaoService)
+                SessaoService sessaoService,
+                EventoService eventoService)
         {
             CadastroPVM = cadastroPVM;
             NovaSenhaVM = novaSenhaVM;
             PrimeiroAcessoVM = pAcessoVM;    
             _authApiService = authApiService;
             _sessaoService = sessaoService;
+            _eventoService = eventoService;
             _navigationService = nav;                 
             CadastroPVM.OnFecharCadastro = () => MostrarCadastro = false;
             CadastroPVM.OnCarregando = (valor) => Carregando = valor;
@@ -117,6 +123,15 @@ namespace AppMaui.ViewsModels
                 if (user != null && user.StatusSenha == true)
                 {
                     await _sessaoService.LoginApi(user);
+                    var evento = new EventoSistema
+                    {
+                        UsuarioId = user.UsuarioId,
+                        TipoEvento = EventosEnum.Login,
+                        Tabela = "Usuario",                       
+                        Descricao = $"Usuário {user.User} realizou login com sucesso."
+                    };
+
+                    await _eventoService.SalvarEvento(evento);
                     Usuario = string.Empty;
                     Senha = string.Empty;                    
                     await _navigationService.NavegarPara("PaginaBase");
