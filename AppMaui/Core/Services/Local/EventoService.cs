@@ -11,7 +11,7 @@ namespace AppMaui.Core.Services.Local
     /// <summary>
     /// Serviço para registrar eventos do sistema para auditoria e rastreamento.
     /// </summary>
-    public class EventoService(EventoRepository _repository, ConectividadeService _conectaddo, 
+    public class EventoService(EventoRepository _repository, ConectividadeService _conectaddo,
         IEventoApiService eventoApiService)
     {
         /// <summary>Salva um evento do sistema com validações de dados obrigatórios.</summary>
@@ -23,32 +23,30 @@ namespace AppMaui.Core.Services.Local
                     return new OperacaoResponse { Sucesso = false, Mensagem = "Evento não pode ser nulo." };
 
                 string s = evento.TipoEvento.ToString();
-                if (string.IsNullOrWhiteSpace(s) || 
+                if (string.IsNullOrWhiteSpace(s) ||
                     s.Length > 10 ||
                     evento.Descricao.Length > 500 ||
-                     string.IsNullOrWhiteSpace(evento.Tabela) ||                    
+                     string.IsNullOrWhiteSpace(evento.Tabela) ||
                     evento.UsuarioId <= 0)
                     return new OperacaoResponse { Sucesso = false, Mensagem = "Dados do evento inválidos." };
 
                 evento.DataEvento = DateTime.Now;
-
-               
+                evento.Identificador = Guid.NewGuid();
 
                 if (_conectaddo.TemInternet())
-                {
-                    Debug.WriteLine("Conexão disponível. Sincronizando evento com a API...");
+                {                  
                     evento.Sincronizado = true;
                     evento.DataSincronizado = DateTime.Now;
 
                     var eventoApi = await eventoApiService.SalvarEvento(evento);
-                   
+
                     if (eventoApi == null)
-                    {                        
+                    {
                         evento.Sincronizado = false;
                         evento.DataSincronizado = null;
                     }
                 }
-                
+
                 await _repository.Add(evento);
                 return new OperacaoResponse { Sucesso = true, Mensagem = "Evento salvo com sucesso." };
             }
@@ -74,17 +72,17 @@ namespace AppMaui.Core.Services.Local
         }
 
         ///<summary>Lista todos os registros de um determinado evento em um determinado tempo</summary>
-        public async Task<List<string>?> ListarEventoPorInatividade(Eventos evento,int idProfessor, int dias)
+        public async Task<List<string>?> ListarEventoPorInatividade(Eventos evento, int idProfessor, int dias)
         {
             try
             {
-                if (dias <= 0 || idProfessor <=0)
+                if (dias <= 0 || idProfessor <= 0)
                     return null;
                 return await _repository.BuscarAlunosInativos(evento, idProfessor, dias);
             }
             catch
-            { 
-                return null; 
+            {
+                return null;
             }
         }
 
@@ -107,10 +105,34 @@ namespace AppMaui.Core.Services.Local
         ///<summary>lista os alunos que subiram de nivel</summary>
         public async Task<List<string>?> BuscarPorNivelUp(int idProfessor, int dias)
         {
-            if(dias <= 0)
+            if (dias <= 0)
                 return null;
 
             return await _repository.BuscarAlunosNivelUp(idProfessor, dias);
+        }
+
+        ///<summary>Lista os eventos que não foram sincronizados com a API.</summary>
+        public async Task<List<EventoSistema>> ListarEventosNaoSincronizados()
+        {
+            return await _repository.GetEventosNaoSincronizados();
+        }
+
+        public async Task<bool> AtualizarEvento(EventoSistema evento)
+        {
+            try
+            {
+                if (evento == null || evento.Id <= 0)
+                    return false;
+                var result = await _repository.Update(evento);
+                if (result <= 0)
+                    return false;
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+                return false;
+            }
         }
     }
 }

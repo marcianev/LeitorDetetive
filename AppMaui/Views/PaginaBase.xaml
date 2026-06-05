@@ -117,7 +117,7 @@
               /-->
         <Label x:Name="lbTitulo2Sombra4" 
               Grid.Column="1"
-               TranslationX="{OnIdiom Phone= 134, Desktop= -150}"
+               TranslationX="{OnIdiom Phone= 134, Desktop= -149}"
                TranslationY="{OnIdiom Phone= -1, Desktop= -5}"
               Text="LEITORES DETETIVES" 
               Style="{StaticResource sLbSombra8}"
@@ -136,30 +136,63 @@
                     Grid.Column="1"
                     HorizontalOptions="End"
                     TranslationX="{OnIdiom Phone= -2}"
-                    TranslationY="-10"
+                    TranslationY="-4"
                     HeightRequest="{OnIdiom Phone= 40}"
-                    Text="&#9099;"
+                    Text="&#xf08b;"
+                    FontFamily="FontAwesome"
                     BackgroundColor="Transparent"
                     FontSize="{OnIdiom Phone= 22, Desktop=25}"
-                    TextColor="{StaticResource palhaClaro}"
-                    Command="{Binding SairCommand}"/>
-            <Label Grid.Row="1"
-                   Grid.Column="1"
-                   Text="SAIR"
-                   TextColor="{StaticResource begeClaro}"
-                   HorizontalOptions="End"
-                   VerticalOptions="End"
-                   Margin="16,0"
-                   FontSize="8"/>
+                    TextColor="{StaticResource begeClaro}"
+                    Command="{Binding SairCommand}"/>            
 
             <!-- Sino Notificação-->
-        <Image 
+        <Button
               Grid.Column="1"  
-              Margin="5" 
+              FontSize="23"
               HorizontalOptions="Start"
-              Source="sino.webp"
-              Style="{StaticResource sImgCabecalho}"
-              IsVisible="false"/>
+            TranslationY="-3"
+            TranslationX="-1"
+            FontFamily="FontAwesomeR"
+              Text="&#xf0f3;"
+            TextColor="{StaticResource begeClaro}"
+              BackgroundColor="Transparent"
+            />
+            <Button
+              Grid.Column="1"  
+              FontSize="15"
+              HorizontalOptions="Start"
+            TranslationY="-3"
+            TranslationX="1"
+            FontFamily="FontAwesomeR"
+              Text="&#xf0f3;"
+            TextColor="{StaticResource begeClaro}"
+              BackgroundColor="Transparent"
+            />
+            <Button
+              Grid.Column="1"  
+              FontSize="20"
+              HorizontalOptions="Start"
+            TranslationY="-3"
+            FontFamily="FontAwesomeR"
+              Text="&#xf0f3;"
+            TextColor="{StaticResource verdeEscuro}"
+              BackgroundColor="Transparent"
+            />
+        
+        <!--Botão sincronia-->
+            <Button
+              Grid.Column="1"  
+              FontSize="20"
+              HorizontalOptions="Start"
+            TranslationY="-2"
+                TranslationX="35"
+            FontFamily="FontAwesome"
+              Text="&#xf2f1;"
+            TextColor="{StaticResource begeClaro}"
+              BackgroundColor="Transparent"
+            />     
+        
+        <!--usuario e edição-->
         <Label x:Name="lbUsuario" 
                Text="{Binding User}"
               Grid.Row="1" 
@@ -169,9 +202,11 @@
                     Grid.Column="1"
                     HorizontalOptions="Start"
                     IsVisible="{Binding BotaoEdicao}"
-                    TranslationY="-3"                    
+                    TranslationY="-3"  
+                    FontFamily="FontAwesomeR"
+                    TextColor="{StaticResource begeClaro}"
                     FontSize="20"          
-                    Text="&#9999;"
+                    Text="&#xf044;"
                     BackgroundColor="Transparent"
                     Command="{Binding AbrirEdicaoUserCommand}"/>
 

@@ -1,10 +1,11 @@
 ﻿using AppMaui.Core.Models;
+using AppMaui.Core.Services;
 using AppMaui.Core.Services.Api.Interface;
 using AppMaui.Core.Services.Local;
 using AppMaui.Services.Interfaces;
 using System.Diagnostics;
 
-namespace AppMaui.Core.Services.Application
+namespace AppMaui.Services
 {
     /// <summary>
     /// Serviço responsável pela autenticação de usuários com validação de credenciais e hash.

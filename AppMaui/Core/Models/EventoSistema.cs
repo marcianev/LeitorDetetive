@@ -1,5 +1,6 @@
 ﻿using Shared.Enums;
 using SQLite;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace AppMaui.Core.Models
@@ -12,13 +13,16 @@ namespace AppMaui.Core.Models
         [PrimaryKey, AutoIncrement, NotNull, Unique]
         public int Id { get; set; }
 
+        [Required]
+        public Guid Identificador { get; set; }
+
         [NotNull]
         public string Tabela { get; set; } = string.Empty;
 
-        [NotNull, MaxLength(10)]
+        [NotNull]
         public EventosEnum TipoEvento { get; set; }
 
-        [NotNull, MaxLength(50)]
+        [NotNull]
         public string Descricao { get; set; } = string.Empty;
 
         [NotNull]

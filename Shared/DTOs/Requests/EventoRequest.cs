@@ -11,6 +11,9 @@ namespace Shared.DTOs.Requests
     public class EventoRequest
     {
         [Required]
+        public Guid Identificador { get; set; }
+
+        [Required]
         public string Tabela { get; set; } = string.Empty;
        
         public EventosEnum TipoEvento { get; set; }

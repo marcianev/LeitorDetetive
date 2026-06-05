@@ -105,6 +105,14 @@ namespace AppMaui.Core.Repositories
                     professorId
                 );
             }
+
+            //busca eventos não sincronizados
+            public async Task<List<EventoSistema>> GetEventosNaoSincronizados()
+            {
+                var sql = @"SELECT * FROM EventoSistema WHERE Sincronizado = 0";
+                return await _db.QueryAsync<EventoSistema>(sql);
+            }
+
         }
     }
 }

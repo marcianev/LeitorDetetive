@@ -1,5 +1,6 @@
 ﻿using ApiBackend.Data;
 using ApiBackend.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace ApiBackend.Repostiories
@@ -19,6 +20,12 @@ namespace ApiBackend.Repostiories
             await _context.SaveChangesAsync();
            
             return evento;
+        }
+
+        public async Task<Evento?> GetByIdentificador(Guid guid)
+        {
+            return await _context.Eventos.FirstOrDefaultAsync(e => e.Identificador == guid);
+        
         }
     }
 }

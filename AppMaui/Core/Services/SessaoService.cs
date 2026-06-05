@@ -1,8 +1,9 @@
-﻿using AppMaui.Core.Enums;
-using AppMaui.Core.Models;
+﻿using AppMaui.Core.Models;
 using AppMaui.Core.Services.Local;
 using Shared.DTOs.Responses.Auth;
-using Shared.Enums;
+using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text.Json;
 
 namespace AppMaui.Core.Services
 {
@@ -50,7 +51,68 @@ namespace AppMaui.Core.Services
 
             };
             Token = response.Token;
-            LoginRemoto = true;           
+            LoginRemoto = true;    
+            
+            string json = JsonSerializer.Serialize(response);
+            Debug.WriteLine(json);
+            await SecureStorage.SetAsync("sessaoUsuario", json);
+        }
+
+        //<sumary>Verifica se há uma sessão ativa e carrega os dados do usuário logado.</summary>
+        public async Task<bool> RestaurarSessao()
+        {
+            try
+            {
+                string? json = await SecureStorage.GetAsync("sessaoUsuario");
+
+                if (string.IsNullOrWhiteSpace(json))
+                    return false;
+
+                var response = JsonSerializer.Deserialize<LoginResponse>(json);
+
+                if (response == null)
+                    return false;
+
+                UsuarioLogado = new Usuario
+                {
+                    Id = response.UsuarioId,
+                    User = response.User,
+                    Tipo = response.Tipo,
+                    StatusSenha = response.StatusSenha,
+                    StatusUsuario = response.StatusUsuario
+                };
+
+                Token = response.Token;
+                LoginRemoto = true;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        ///<summary>Validar Token.</summary>
+        public async Task<bool> ValidarToken()
+        {
+            string? json = await SecureStorage.GetAsync("sessaoUsuario");
+
+            if (string.IsNullOrWhiteSpace(json))
+                return false;
+
+            var response = JsonSerializer.Deserialize<LoginResponse>(json);
+            
+            if(response == null || string.IsNullOrWhiteSpace(response.Token))
+                return false;
+
+            JwtSecurityTokenHandler handler = new();
+            
+            JwtSecurityToken jwt = handler.ReadJwtToken(response.Token);
+
+            DateTime expiracao = jwt.ValidTo;
+
+            return expiracao > DateTime.UtcNow;
         }
 
         /// <summary>Encerra a sessão do usuário logado.</summary>
@@ -59,6 +121,7 @@ namespace AppMaui.Core.Services
             UsuarioLogado = null;
             Token = null;
             LoginRemoto=false;
+            SecureStorage.Remove("sessao");
         }
     }
 }

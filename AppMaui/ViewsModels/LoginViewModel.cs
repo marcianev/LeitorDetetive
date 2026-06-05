@@ -1,9 +1,9 @@
 ﻿using AppMaui.Core.Models;
 using AppMaui.Core.Services;
 using AppMaui.Core.Services.Api.Interface;
-using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.Interfaces;
 using AppMaui.Core.Services.Local;
+using AppMaui.Core.Services.Local.Interfaces;
 using AppMaui.Services.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -41,6 +41,9 @@ namespace AppMaui.ViewsModels
         [ObservableProperty]
         private string olho;
 
+        [ObservableProperty]
+        private bool formulario;
+
 
         public CadastroPViewModel CadastroPVM { get; }
 
@@ -51,6 +54,8 @@ namespace AppMaui.ViewsModels
         private readonly INavigationService _navigationService;
 
         private readonly IAuthApiService _authApiService;
+
+        private readonly ISincronizacaoService _sincronizacaoService; 
 
         private readonly SessaoService _sessaoService;
 
@@ -64,7 +69,8 @@ namespace AppMaui.ViewsModels
                 PAcessoViewModel pAcessoVM,
                 IAuthApiService authApiService,
                 SessaoService sessaoService,
-                EventoService eventoService)
+                EventoService eventoService,
+                ISincronizacaoService sincronizacaoService)
         {
             CadastroPVM = cadastroPVM;
             NovaSenhaVM = novaSenhaVM;
@@ -72,13 +78,29 @@ namespace AppMaui.ViewsModels
             _authApiService = authApiService;
             _sessaoService = sessaoService;
             _eventoService = eventoService;
-            _navigationService = nav;                 
+            _navigationService = nav;
+            _sincronizacaoService = sincronizacaoService;
             CadastroPVM.OnFecharCadastro = () => MostrarCadastro = false;
             CadastroPVM.OnCarregando = (valor) => Carregando = valor;
             NovaSenhaVM.OnFecharNovaSenha = () => MostrarNovaSenha = false;
             PrimeiroAcessoVM.OnFecharPAcesso = () => MostrarPrimeiroAcesso = false;
+            Formulario = false;
             EhSenha = true;
             Olho = "\uf06e";
+            _ = Inicializar();
+        }
+
+        public async Task Inicializar()
+        {
+            Carregando = true;
+            if (await _sessaoService.ValidarToken())
+            {               
+                await _sessaoService.RestaurarSessao();
+                await _navigationService.NavegarPara("PaginaBase");
+                return;
+            }
+            Formulario = true;
+            Carregando = false;
         }
 
         //mostra a view de cadastro
@@ -132,6 +154,7 @@ namespace AppMaui.ViewsModels
                     };
 
                     await _eventoService.SalvarEvento(evento);
+                    await _sincronizacaoService.SincronizarTudo();
                     Usuario = string.Empty;
                     Senha = string.Empty;                    
                     await _navigationService.NavegarPara("PaginaBase");

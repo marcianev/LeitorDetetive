@@ -14,6 +14,9 @@ namespace ApiBackend.Models
         public int Id { get; set; }
 
         [Required]
+        public Guid Identificador { get; set; }
+
+        [Required]
         public string Tabela { get; set; } = string.Empty;
 
         [Required, MaxLength(10)]

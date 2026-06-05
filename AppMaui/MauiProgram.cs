@@ -7,6 +7,7 @@ using AppMaui.Core.Services.Application;
 using AppMaui.Core.Services.External;
 using AppMaui.Core.Services.Interfaces;
 using AppMaui.Core.Services.Local;
+using AppMaui.Core.Services.Local.Interfaces;
 using AppMaui.Core.Services.Security;
 using AppMaui.Core.Services.Validation;
 using AppMaui.Core.Settings;
@@ -32,6 +33,7 @@ namespace AppMaui
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("Font Awesome 6 Free-Solid-900.otf", "FontAwesome");
+                    fonts.AddFont("Font Awesome 6 Free-Regular-400.otf", "FontAwesomeR");
                 });
 
             //*congifurar o email settings
@@ -144,7 +146,9 @@ namespace AppMaui
             builder.Services.AddSingleton<ICriptoService, CriptoService>();
             builder.Services.AddSingleton<IDialogoService, DialogoService>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
-            builder.Services.AddSingleton<IValidationService, ValidationService>();      
+            builder.Services.AddSingleton<ISincronizacaoService, SincronizacaoService>();
+            builder.Services.AddSingleton<IValidationService, ValidationService>();
+           
             
 
             //registrar paginas

@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace ApiBackend.Services
 {
-    public class EventoService :IEventoService
+    public class EventoService : IEventoService
     {
         private readonly EventoRepository _repository;
 
@@ -20,6 +20,13 @@ namespace ApiBackend.Services
         {
             try
             {
+                if(request == null)
+                    return OperacaoResponse.Resposta(false, "Requisição inválida");
+
+                var eventoExistente = await _repository.GetByIdentificador(request.Identificador);
+                if(eventoExistente != null)
+                    return OperacaoResponse.Resposta(false, "Evento já existe");
+
                 var evento = new Evento
                 {
                     Tabela = request.Tabela,
@@ -27,7 +34,8 @@ namespace ApiBackend.Services
                     Descricao = request.Descricao,
                     DataEvento = request.DataEvento,
                     ReferenciaId = request.ReferenciaId,
-                    UsuarioId = request.UsuarioId
+                    UsuarioId = request.UsuarioId,
+                    Identificador = request.Identificador
                 };
 
                 var result = await _repository.Add(evento);
@@ -45,8 +53,8 @@ namespace ApiBackend.Services
                     false,
                     ex.ToString());
             }
-                      
-        }
-    }
+
+        }       
+    }          
 }
 

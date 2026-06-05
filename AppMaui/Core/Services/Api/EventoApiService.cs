@@ -32,7 +32,8 @@ namespace AppMaui.Core.Services.Api
                     TipoEvento = evento.TipoEvento,
                     Descricao = evento.Descricao,
                     DataEvento = evento.DataEvento,                   
-                    UsuarioId = evento.UsuarioId
+                    UsuarioId = evento.UsuarioId,
+                    Identificador = evento.Identificador
                 };
 
                 var response = await _httpClient.PostAsJsonAsync("api/evento/salvar-evento", registro);

@@ -106,7 +106,8 @@
              Stroke="{StaticResource azulMedio}" 
              WidthRequest="300"    
              HeightRequest="300"  
-             Style="{StaticResource sBrdPrincipal}">
+             Style="{StaticResource sBrdPrincipal}"
+                IsVisible ="{Binding Formulario}">
             <Grid>
                 <Grid.RowDefinitions >
                     <RowDefinition Height="0.7*"/>
