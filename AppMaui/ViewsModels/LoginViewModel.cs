@@ -93,13 +93,15 @@ namespace AppMaui.ViewsModels
         public async Task Inicializar()
         {
             Carregando = true;
-            if (await _sessaoService.ValidarToken())
-            {               
-                await _sessaoService.RestaurarSessao();
-                await _navigationService.NavegarPara("PaginaBase");
+            if (!await _sessaoService.ValidarToken())
+            {                
+                Formulario = true;
+                Carregando = false;
                 return;
-            }
-            Formulario = true;
+            }                             
+                await _sessaoService.RestaurarSessao();
+                await _navigationService.NavegarPara("PaginaBase");  
+         
             Carregando = false;
         }
 
@@ -161,7 +163,7 @@ namespace AppMaui.ViewsModels
                 }
                 else
                 {
-                    Mensagem = "Usuário ou senha inválido.";
+                    Mensagem = user.Mensagem;
                     await Task.Delay(3000);
                     Mensagem = "";
                     return;

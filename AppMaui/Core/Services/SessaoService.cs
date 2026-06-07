@@ -121,7 +121,7 @@ namespace AppMaui.Core.Services
             UsuarioLogado = null;
             Token = null;
             LoginRemoto=false;
-            SecureStorage.Remove("sessao");
+            SecureStorage.Remove("sessaoUsuario");
         }
     }
 }

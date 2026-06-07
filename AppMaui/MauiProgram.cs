@@ -52,30 +52,31 @@ namespace AppMaui
             var openAISettings = config
                 .GetSection("OpenAI")
                 .Get<OpenAISettings>();
+            var caminho = "http://192.168.0.15:8080";
 
             //registrar o endereço do serviço
             builder.Services.AddHttpClient<IAuthApiService, AuthApiService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:7170/");
+                client.BaseAddress = new Uri(caminho);
             });
             
             builder.Services.AddHttpClient<ICadastroProfessorApiService, CadastrarProfessorApiService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:7170/");
+                client.BaseAddress = new Uri(caminho);
             });
             
             builder.Services.AddHttpClient<IEventoApiService, EventoApiService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:7170/");
+                client.BaseAddress = new Uri(caminho);
             });
 
            /* builder.Services.AddHttpClient<INotificacaoApiService, NotificacaoApiService>(client =>
            {
-               client.BaseAddress = new Uri("https://localhost:7170/");
+               client.BaseAddress = new Uri(caminho);
            });
             builder.Services.AddHttpClient<ITrilhaApiService, TrilhaApiService>(client =>
            {
-               client.BaseAddress = new Uri("https://localhost:7170/");
+               client.BaseAddress = new Uri(caminho);
            });*/
 
             //registra direto no DI

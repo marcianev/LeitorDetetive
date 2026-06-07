@@ -1,5 +1,6 @@
 ﻿using AppMaui.Core.Services.Api.Interface;
 using AppMaui.Core.Services.Local;
+using AppMaui.Services;
 using Shared.DTOs.Requests;
 using Shared.DTOs.Requests.Auth;
 using Shared.DTOs.Responses;
@@ -11,17 +12,27 @@ namespace AppMaui.Core.Services.Api
 {
     public class AuthApiService : IAuthApiService
     {
-        private readonly HttpClient _httpClient;        
+        private readonly HttpClient _httpClient;
+        private readonly ConectividadeService _conectividade;
 
-        public AuthApiService(HttpClient httpClient)
+        public AuthApiService(HttpClient httpClient, ConectividadeService conectividadeService)
         {
             _httpClient = httpClient;
+            _conectividade = conectividadeService;
         }
 
         public async Task<LoginResponse?> Login(
             string user,
             string senha)
         {
+            if (!_conectividade.TemInternet())
+            {
+                LoginResponse resposta = new()
+                {
+                    Mensagem = "Internet necessária."
+                };
+                return resposta;
+            }                
             try
             {
                 LoginRequest request = new()

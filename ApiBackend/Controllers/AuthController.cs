@@ -19,6 +19,12 @@ namespace ApiBackend.Controllers
             _authService = authService;         
         }
 
+        [HttpGet("teste")]
+        public IActionResult Teste()
+        {
+            return Ok("API funcionando");
+        }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {           
