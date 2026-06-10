@@ -52,8 +52,10 @@ namespace AppMaui
             var openAISettings = config
                 .GetSection("OpenAI")
                 .Get<OpenAISettings>();
-            var caminho = "http://192.168.0.15:8080";
-
+            // casa
+            var caminho = "http://192.168.0.10:8080";
+            // minha sala var caminho = "http://192.168.15.22:8080";
+            // var caminho = "http://192.168.1.34:8080";
             //registrar o endereço do serviço
             builder.Services.AddHttpClient<IAuthApiService, AuthApiService>(client =>
             {
@@ -66,6 +68,11 @@ namespace AppMaui
             });
             
             builder.Services.AddHttpClient<IEventoApiService, EventoApiService>(client =>
+            {
+                client.BaseAddress = new Uri(caminho);
+            });
+
+            builder.Services.AddHttpClient<ITurmaApiService, TurmaApiService>(client =>
             {
                 client.BaseAddress = new Uri(caminho);
             });

@@ -79,7 +79,7 @@ namespace AppMaui.ViewsModels
         }
 
         public async void Inicializar()
-        {
+        {            
             try
             {                
                 Carregando = true;

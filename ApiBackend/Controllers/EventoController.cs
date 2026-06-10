@@ -7,19 +7,12 @@ namespace ApiBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventoController : ControllerBase
-    {
-        private readonly IEventoService _eventoService;
-
-        public EventoController(IEventoService eventoService)
-        {
-            _eventoService = eventoService;
-        }
-
+    public class EventoController(IEventoService eventoService) : ControllerBase
+    {   
         [HttpPost("salvar-evento")]
         public async Task<IActionResult> SalvarEvento(EventoRequest request)
         {
-            var resultado = await _eventoService.SalvarEvento(request);
+            var resultado = await eventoService.SalvarEvento(request);
             if (!resultado.Sucesso)
                 return BadRequest(resultado);
             return Ok(resultado);

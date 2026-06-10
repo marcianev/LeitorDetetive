@@ -19,7 +19,7 @@ namespace AppMaui
             await livroService.PopularLivros();
             await desafioService.PopularDesafios();
             await patenteService.PopularPatentes();
-            await mensagemService.PopularMensagens();
+            await mensagemService.PopularMensagens();           
         }
 
         protected override Window CreateWindow(IActivationState? activationState)

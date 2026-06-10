@@ -10,27 +10,27 @@ namespace AppMaui.Core.Models
     /// </summary>
     public class EventoSistema
     {
-        [PrimaryKey, AutoIncrement, NotNull, Unique]
+        [PrimaryKey, AutoIncrement, Required, Unique]
         public int Id { get; set; }
 
         [Required]
         public Guid Identificador { get; set; }
 
-        [NotNull]
+        [Required]
         public string Tabela { get; set; } = string.Empty;
 
-        [NotNull]
+        [Required]
         public EventosEnum TipoEvento { get; set; }
 
-        [NotNull]
+        [Required]
         public string Descricao { get; set; } = string.Empty;
 
-        [NotNull]
+        [Required]
         public DateTime DataEvento{ get; set; }
 
         public int? ReferenciaId { get; set; }
 
-        [NotNull]
+        [Required]
         public int UsuarioId { get; set; }
 
         public bool Sincronizado { get; set; }

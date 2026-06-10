@@ -154,7 +154,7 @@ namespace AppMaui.Core.Services.Local
                         UsuarioId = aluno.UsuarioId
                     };
                     await eventoService.SalvarEvento(eventoSistema);
-                    var professor = await professorService.BuscarPorTurma(aluno.TurmaId);
+                    var professor = await professorService.BuscarPorTurma(aluno.TurmaUui);
                     if(professor == null)
                         return false;
 

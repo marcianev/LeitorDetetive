@@ -59,7 +59,7 @@ namespace AppMaui.Core.Services.Application
                 var aluno = new Aluno
                 {
                     Nome = cadastroAlunoDTO.Nome,
-                    TurmaId = turma,
+                    TurmaUui = turma,
                     PatenteId = 1,
                     CodigoAcesso = cadastroAlunoDTO.CodAcess,
                     Nickname = nick
@@ -97,7 +97,15 @@ namespace AppMaui.Core.Services.Application
             if (professor == null)
                 return (string.Empty, 0);
 
-            int turma = await _turmaService.BuscarPorProfessor(professor.Id);
+            var lista = await _turmaService.BuscarPorProfessor(professor.Id);
+
+            if (!lista.Sucesso ||
+                lista.Dados == null)
+            {
+                return (string.Empty, 0);
+            }
+
+            int turma = lista.Dados.Value;
 
             char[] n = aluno.ToUpper().ToCharArray();
             char[] p = professor.Nome.ToUpper().ToCharArray();

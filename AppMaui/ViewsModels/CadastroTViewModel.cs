@@ -76,12 +76,7 @@ namespace AppMaui.ViewsModels
                 if (confirmacao)
                 {
                     var res = await _turmaService.AtualizarTurma(Turma);
-                    if (res)
-                        Mensagem = "Turma atualizada com sucesso!";
-                    else
-                    {
-                        Mensagem = "Erro ao atualizar turma.";
-                    }
+                    Mensagem = res.Mensagem;                   
                 }                             
             }
             else
@@ -90,16 +85,12 @@ namespace AppMaui.ViewsModels
                 Turma.ProfessorId = professor?.Id ?? 0;
                 Turma.TrilhaId = 1;
                 var resul = await _turmaService.SalvarTurma(Turma);
-                if (resul)
-                {
-                    Mensagem = "Turma salva com sucesso!";
+                Mensagem = resul.Mensagem;
+                if (resul.Sucesso)
+                {                    
                     WeakReferenceMessenger.Default.Send(new AdicionarTurma());
                     FecharCadastro();
-                }                    
-                else
-                {
-                    Mensagem = "Erro ao salvar turma.";                                    
-                }                   
+                }        
             }
 
             await Task.Delay(3000);
@@ -128,10 +119,7 @@ namespace AppMaui.ViewsModels
             {
                 Turma.Status = false;
                 var res = await _turmaService.AtualizarTurma(Turma);
-                if (res)
-                    Mensagem = "Turma arquivada com sucesso!";
-                else
-                    Mensagem = "Erro ao arquivar turma.";                
+                Mensagem = res.Mensagem;                            
             }
             await Task.Delay(3000);
             Mensagem = string.Empty;

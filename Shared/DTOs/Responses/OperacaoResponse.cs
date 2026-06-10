@@ -20,6 +20,12 @@ namespace Shared.DTOs.Responses
                 Mensagem = mensagem
             };
 
-        }
+        }       
     }
+
+    public class OperacaoResponse<T> : OperacaoResponse
+    {
+        public T? Dados { get; set; }
+    }
+
 }

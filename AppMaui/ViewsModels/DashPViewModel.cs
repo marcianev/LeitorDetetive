@@ -4,6 +4,7 @@ using AppMaui.Core.Services;
 using AppMaui.Core.Services.Local;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 
 namespace AppMaui.ViewsModels
@@ -19,7 +20,7 @@ namespace AppMaui.ViewsModels
         public DashPViewModel(AlunoService alunoService)
         {
             _alunoService = alunoService;
-            _usuario = new();
+            _usuario = new();           
             _ = Logado();
         }
         //receber dados do usuario logado
@@ -36,7 +37,7 @@ namespace AppMaui.ViewsModels
 
         //metodo de carregamento
         public async Task CarregarDados()
-        {          
+        {            
             if (_usuario.Tipo != "Professor")
                 return;
 

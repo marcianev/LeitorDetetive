@@ -21,7 +21,7 @@ namespace AppMaui.Core.Models
         [NotNull]
         public int UsuarioId { get; set; }
 
-        public int TurmaId { get; set; }
+        public int TurmaUui { get; set; }
 
         public int PatenteId { get; set; }
     }

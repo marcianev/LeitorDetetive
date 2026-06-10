@@ -92,8 +92,14 @@ namespace AppMaui.ViewsModels
             if (_usuario.Tipo != "Professor")
                 return;
             var lista = await _turmaService.ListarTurmaPorUsuario(_usuario.Id);
-            if (lista != null)
-                Turmas = new ObservableCollection<Turma>(lista);
+            if (!lista.Sucesso)
+            {
+                Mensagem = lista.Mensagem;
+                return;
+            }
+
+            Turmas = new ObservableCollection<Turma>(
+                lista.Dados ?? []);
         }
 
         //abrir overlay de cadastro

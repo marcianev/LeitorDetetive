@@ -53,33 +53,10 @@
               Source="professor.webp" 
                WidthRequest="{OnIdiom Phone=60, Desktop=60}"
               Style="{StaticResource sImgCabecalho}"
-          />
-
-        <!-- titulo-->
-        <!--Label x:Name="lbTitulo1Sombra1" 
-              Grid.Column="1"  
-               TranslationX="149"
-               TranslationY="-6"
-              Text="AGÊNCIA DOS JOVENS" 
-              Style="{StaticResource sLbSombra1}"          
-              />
-        <Label x:Name="lbTitulo1Sombra2" 
-              Grid.Column="1"  
-               TranslationX="151"
-               TranslationY="-4"
-              Text="AGÊNCIA DOS JOVENS" 
-              Style="{StaticResource sLbSombra2}"           
-              />
-        <Label x:Name="lbTitulo1Sombra3" 
-              Grid.Column="1" 
-                TranslationX="{OnIdiom Phone= -11, Desktop=151}"
-                TranslationY="{OnIdiom Phone= 3, Desktop=-6}"
-              Text="AGÊNCIA DOS JOVENS" 
-              Style="{StaticResource sLbSombra3}"            
-              /-->
+          />       
         <Label x:Name="lbTitulo1Sombra4" 
               Grid.Column="1"     
-                TranslationX="{OnIdiom Phone= -11, Desktop=149}"
+                TranslationX="{OnIdiom Phone= 124, Desktop=149}"
                 TranslationY="{OnIdiom Phone= 1, Desktop=-4}"
               Text="AGÊNCIA DOS JOVENS" 
               Style="{StaticResource sLbSombra4}"             
@@ -87,34 +64,10 @@
         <Label x:Name="lbTitulo1" 
               Grid.Column="1"        
               Text="AGÊNCIA DOS JOVENS" 
-               TranslationX="{OnIdiom Phone= -10, Desktop=150}"
+               TranslationX="{OnIdiom Phone=125, Desktop=150}"
                TranslationY="{OnIdiom Phone= 2, Desktop=-5}"
               Style="{StaticResource sLbTitulo}"           
-              />
-        <!--Label x:Name="lbTitulo2Sombra1" 
-              Grid.Column="1"
-              Text="LEITORES DETETIVES" 
-               TranslationX="-150"
-               TranslationY="-6"
-              Style="{StaticResource sLbSombra5}"
-              VerticalOptions="End"
-              />
-        <Label x:Name="lbTitulo2Sombra2" 
-              Grid.Column="1"
-              Text="LEITORES DETETIVES" 
-               TranslationX="-150"
-               TranslationY="-4"
-              Style="{StaticResource sLbSombra6}"
-              VerticalOptions="End"
-              />
-        <Label x:Name="lbTitulo2Sombra3" 
-              Grid.Column="1"
-              Text="LEITORES DETETIVES" 
-               TranslationX="-151"
-               TranslationY="-5"
-              Style="{StaticResource sLbSombra7}"
-              VerticalOptions="End"
-              /-->
+              />      
         <Label x:Name="lbTitulo2Sombra4" 
               Grid.Column="1"
                TranslationX="{OnIdiom Phone= 134, Desktop= -149}"
@@ -131,12 +84,12 @@
               Style="{StaticResource sLbTitulo1}"
               VerticalOptions="End"
               />      
-
+            <!-- botão sair-->
             <Button Grid.Row="1" 
                     Grid.Column="1"
                     HorizontalOptions="End"
                     TranslationX="{OnIdiom Phone= -2}"
-                    TranslationY="-4"
+                    TranslationY="{OnIdiom Phone=-2, Desktop=-4}"
                     HeightRequest="{OnIdiom Phone= 40}"
                     Text="&#xf08b;"
                     FontFamily="FontAwesome"
@@ -150,7 +103,7 @@
               Grid.Column="1"  
               FontSize="23"
               HorizontalOptions="Start"
-            TranslationY="-3"
+            TranslationY="{OnIdiom Phone= -4, Desktop=-3}"
             TranslationX="-1"
             FontFamily="FontAwesomeR"
               Text="&#xf0f3;"

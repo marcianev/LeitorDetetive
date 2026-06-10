@@ -34,16 +34,18 @@ namespace AppMaui.Core.Services.Local
                 evento.Identificador = Guid.NewGuid();
 
                 if (_conectaddo.TemInternet())
-                {                  
-                    evento.Sincronizado = true;
-                    evento.DataSincronizado = DateTime.Now;
-
+                {       
                     var eventoApi = await eventoApiService.SalvarEvento(evento);
 
-                    if (eventoApi == null)
+                    if (eventoApi.Sucesso)
                     {
-                        evento.Sincronizado = false;
-                        evento.DataSincronizado = null;
+                        evento.Sincronizado = true;
+                        evento.DataSincronizado = DateTime.Now;
+                    }
+                    else
+                    {
+                        evento.Sincronizado = true;
+                        evento.DataSincronizado = DateTime.Now;
                     }
                 }
 

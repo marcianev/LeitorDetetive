@@ -1,22 +1,22 @@
-﻿using SQLite;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
-namespace AppMaui.Core.Models
+namespace ApiBackend.Models
 {
-    /// <summary>
-    /// Representa uma turma com alunos, professores e trilha de aprendizado associada.
-    /// </summary>
     public class Turma
     {
-        [PrimaryKey, AutoIncrement, NotNull, Unique]
+        [Key]
         public int Id { get; set; }
 
-        [NotNull]
+        [Required]
         public Guid Uuid { get; set; }
 
-        [NotNull, MaxLength(100)]
+        [Required, MaxLength(100)]
         public string Nome { get; set; } = string.Empty;
-
-        [NotNull]
+        [Column(TypeName = "timestamp without time zone")]
+        [Required]
         public DateTime DataCriacao { get; set; }
 
         [MaxLength(4)]
@@ -24,21 +24,17 @@ namespace AppMaui.Core.Models
 
         public int TamanhoTrilha { get; set; }
 
-        [NotNull]
+        [Required]
         public bool? Status { get; set; }
 
-        [NotNull]
-        public string CodigoAcesso { get; set; } = string.Empty;
+        public string? CodigoAcesso { get; set; } = string.Empty;
 
-        [NotNull]
+        [Required]
         public int ProfessorId { get; set; }
 
         public int TrilhaId { get; set; }
 
-        public bool Sincronizado { get; set; }        
-
-        public DateTime? DataSincronizado { get; set; }
-
+        [Column(TypeName = "timestamp without time zone")]
         public DateTime? DataAlterado { get; set; }
     }
 }

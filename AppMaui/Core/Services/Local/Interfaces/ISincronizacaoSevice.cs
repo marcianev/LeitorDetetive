@@ -1,4 +1,7 @@
-﻿using Shared.DTOs.Responses;
+﻿using AppMaui.Core.Enums;
+using AppMaui.Core.Models;
+using AppMaui.Core.Models.Sincronizacao;
+using Shared.DTOs.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +14,7 @@ namespace AppMaui.Core.Services.Local.Interfaces
     {
         Task<OperacaoResponse> SincronizarEventos();
         Task<OperacaoResponse> SincronizarTudo();
+        Task<OperacaoResponse> SincronizarTurmas();
+        Task SalvarExclusoes(ExclusaoPendente exclusaoPendente);
     }
 }

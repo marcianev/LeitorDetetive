@@ -74,9 +74,14 @@ namespace AppMaui.ViewsModels
             {
                 var lista = await _turmaService.ListarTurmaPorUsuario(usuario.Id);
 
+                if (!lista.Sucesso)
+                {
+                    Mensagem = lista.Mensagem;
+                    return;
+                }
 
-                if (lista != null)
-                    Turmas = new ObservableCollection<Turma>(lista);
+                Turmas = new ObservableCollection<Turma>(
+                    lista.Dados ?? []);
             }
 
 

@@ -10,5 +10,6 @@ namespace ApiBackend.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Professor> Professores { get; set; }
         public DbSet<Evento> Eventos { get; set; }
+        public DbSet<Turma> Turmas { get; set; }
     }
 }

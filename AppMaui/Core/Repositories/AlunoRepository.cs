@@ -29,7 +29,7 @@ namespace AppMaui.Core.Repositories
             public async Task<List<Aluno>> GetByTurma(int turmaId)
             {
                 var alunos = await _db.Table<Aluno>()
-                                      .Where(a => a.TurmaId == turmaId)
+                                      .Where(a => a.TurmaUui == turmaId)
                                       .ToListAsync();
 
                 var usuariosAtivos = await _db.Table<Usuario>()

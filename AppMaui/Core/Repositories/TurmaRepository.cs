@@ -30,6 +30,9 @@ namespace AppMaui.Core.Repositories
             /// <summary>Retorna a turma ativa de um professor (assumindo apenas uma turma por professor).</summary>
             public async Task<Turma?> GetOneByProfessor(int id) => 
                 await _db.Table<Turma>().FirstOrDefaultAsync(t => t.ProfessorId == id && t.Status == true);
+
+            public async Task<List<Turma>> GetNaoSincronizadas() =>
+                await _db.Table<Turma>().Where(t => t.Sincronizado == false).ToListAsync();
         }
     }
 }
